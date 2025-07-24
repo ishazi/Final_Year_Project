@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="zxx" class="theme-light">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='solution/assets/css/bootstrap.min.css')}}">
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='solution/assets/css/animate.min.css')}}">
+    <!-- Meanmenu CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='solution/assets/css/meanmenu.css')}}">
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='solution/assets/css/fontawesome.min.css')}}">
+    <!-- Flaticon CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='solution/assets/css/flaticon.css')}}">
+    <!-- Nice Select CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='solution/assets/css/nice-select.min.css')}}">
+    <!-- Odometer CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='solution/assets/css/odometer.min.css')}}">
+    <!-- Magnific CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='solution/assets/css/magnific-popup.min.css')}}">
+    <!-- Carousel CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='solution/assets/css/owl.carousel.min.css')}}">
+    <!-- Carousel Default CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='solution/assets/css/owl.theme.default.min.css')}}">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='solution/assets/css/style.css')}}">
+    <!-- Dark CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='solution/assets/css/dark.css')}}">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='solution/assets/css/responsive.css')}}">
+
+    <title>Tinzer - Telemedicine & Telehealth Services Bootstrap 5 Template</title>
+
+    <link rel="icon" type="image/png" href="{{url_for('static', filename='solution/assets/img/favicon.png')}}">
+</head>
+
+<body>
+
+    <!-- Start Preloader Area -->
+    <div class="preloader">
+        <div class="spinner"></div>
+    </div>
+    <!-- End Preloader Area -->
+
+    <!-- Start Header Area -->
+    <header class="header-area">
+        <div class="top-header">
+            <div class="container">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-lg-6">
+                        <ul class="top-list">
+                            <li>
+                                <i class='flaticon-clock'></i> Mon-Fri 09-18.00
+                            </li>
+                            <li>
+                                <i class='flaticon-phone-call'></i>
+                                <a href="tel:821-456-241">Call Us: +821-456-241</a>
+                            </li>
+                            <li>
+                                <i class='flaticon-paper-plane'></i>
+                                <a href="/cdn-cgi/l/email-protection#4129242d2d2e01282f272e6f222e2c"><span class="__cf_email__" data-cfemail="2d45484141426d44434b42034e4240">[email&#160;protected]</span></a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <ul class="top-social">
+                            <li>
+                                <a href="https://www.facebook.com/login/" target="_blank" class="facebook">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/i/flow/login" target="_blank" class="twitter">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.pinterest.com/" target="_blank" class="pinterest">
+                                        <i class="fab fa-pinterest-p"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" class="instagram">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="sign-in.html" class="log-in">
+                                        Sign In
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="sign-up.html" class="sign-in">
+                                        Sign Up
+                                    </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Start Navbar Area -->
+        <div class="navbar-area navbar-two">
+            <div class="main-responsive-nav">
+                <div class="container">
+                    <div class="main-responsive-menu">
+                        <div class="logo">
+                            <a href="index.html">
+                                <img src="{{url_for('static', filename='solution/assets/img/logo.png')}}" class="black-logo" alt="image">
+                                <img src="{{url_for('static', filename='solution/assets/img/logo-2.png')}}" class="white-logo" alt="image">        
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-navbar">
+                <div class="container">
+                    <nav class="navbar navbar-expand-md navbar-light">
+                        <a href="index.html">
+                                <img src="{{url_for('static', filename='solution/assets/img/logo.png')}}" class="black-logo" alt="image">
+                                <img src="{{url_for('static', filename='solution/assets/img/logo-2.png')}}" class="white-logo" alt="image">        
+                            </a>
+
+                        <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                            Home 
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="index.html" class="nav-link">
+                                                    Home One
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="index-2.html" class="nav-link">
+                                                    Home Two
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="index-3.html" class="nav-link">
+                                                    Home Three
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="index-4.html" class="nav-link">
+                                                    Home Four
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="index-5.html" class="nav-link">
+                                                    Home Five
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="index-6.html" class="nav-link">
+                                                    Video Home
+                                                </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="about.html" class="nav-link">
+                                            About
+                                        </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link active">
+                                            Solution 
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="solution.html" class="nav-link active">
+                                                    Solution
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="solution-details.html" class="nav-link">
+                                                    Solution Details
+                                                </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                            Pages 
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="about.html" class="nav-link">
+                                                    About
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="team.html" class="nav-link">
+                                                    Team
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="faq.html" class="nav-link">
+                                                    FAQ
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="appointment.html" class="nav-link">
+                                                    Appointment
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="testimonials.html" class="nav-link">
+                                                    Testimonials
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="how-it-works.html" class="nav-link">
+                                                    How It Works
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                    Projects 
+                                                    <i class="fa fa-angle-down"></i>
+                                                </a>
+
+                                            <ul class="dropdown-menu">
+                                                <li class="nav-item">
+                                                    <a href="projects.html" class="nav-link">
+                                                            Projects
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="single-projects.html" class="nav-link">
+                                                            Projects details
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                    Services 
+                                                    <i class="fa fa-angle-down"></i>
+                                                </a>
+                                            <ul class="dropdown-menu">
+                                                <li class="nav-item">
+                                                    <a href="services.html" class="nav-link">
+                                                            Services
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="single-services.html" class="nav-link">
+                                                            Services Details
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                    Shop 
+                                                    <i class="fa fa-angle-down"></i>
+                                                </a>
+
+                                            <ul class="dropdown-menu">
+                                                <li class="nav-item">
+                                                    <a href="shop.html" class="nav-link">
+                                                            Shop
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="cart.html" class="nav-link">
+                                                            Cart
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="checkout.html" class="nav-link">
+                                                            Checkout
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="single-product.html" class="nav-link">
+                                                            Products Details
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                    User 
+                                                    <i class="fa fa-angle-down"></i>
+                                                </a>
+
+                                            <ul class="dropdown-menu">
+                                                <li class="nav-item">
+                                                    <a href="sign-in.html" class="nav-link">
+                                                            Sign In
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="sign-up.html" class="nav-link">
+                                                            Sign Up
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="terms-condition.html" class="nav-link">
+                                                    Terms & Conditions
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="privacy-policy.html" class="nav-link">
+                                                    Privacy Policy
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="error-404.html" class="nav-link">
+                                                    404 Error
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="contact.html" class="nav-link">
+                                                    Contact
+                                                </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                            Blog 
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="blog-1.html" class="nav-link">
+                                                    Blog Grid
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="blog-2.html" class="nav-link">
+                                                    Blog Right Sidebar
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="blog-details.html" class="nav-link">
+                                                    Blog Details
+                                                </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="contact.html" class="nav-link">
+                                            Contact
+                                        </a>
+                                </li>
+                            </ul>
+
+                            <div class="others-options">
+                                <a href="appointment.html" class="default-btn-two">
+                                        Get a Quote
+                                        <span></span>
+                                    </a>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- End Navbar Area -->
+    </header>
+    <!-- End Header Area -->
+
+    <!-- Start Page Title Area -->
+    <div class="page-title-area item-bg-6">
+        <div class="d-table">
+            <div class="d-table-cell">
+                <div class="container">
+                    <div class="page-title-content">
+                        <h2>Solution</h2>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li>Solution</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Title Area -->
+
+    <!-- Start Step One Area -->
+    <section class="step-one ptb-100">
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-lg-6">
+                    <div class="step-one-image">
+                        <img src="{{url_for('static', filename='solution/assets/img/step-one-image.jpg')}}" alt="image">
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="step-one-content">
+                        <span>Step 1</span>
+                        <h3>Book an appointment that’s convenient for you.</h3>
+                        <p>Many healthcare systems around the world together with government agencies and startup companies are building and delivering Telehealth</p>
+                        <b>No matter where you are or how busy your life gets, you can talk to one of our many friendly and knowledgable doctors online at a time that works with your schedule.</b>
+
+                        <div class="step-btn">
+                            <a href="#" class="default-btn">
+                                    Make Appointment
+                                    <span></span>
+                                </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Step One Area -->
+
+    <!-- Start Step Two Area -->
+    <section class="step-two ptb-100">
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-lg-6">
+                    <div class="step-two-content">
+                        <span>Step 2</span>
+                        <h3>Use Our App to Talk to One of Our Doctor now.</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy</p>
+                        <b>Get quality care right from your smartphone. It’s quick and easy to sign up and start talking to a doctor to get diagnosed right now.</b>
+
+                        <div class="step-btn">
+                            <a href="#" class="default-btn">
+                                    Download
+                                    <span></span>
+                                </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="step-two-image">
+                        <img src="{{url_for('static', filename='solution/assets/img/step-two-image.png')}}" alt="image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Step Two Area -->
+
+    <!-- Start Step Three Area -->
+    <section class="step-three ptb-100">
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-lg-6">
+                    <div class="step-three-image">
+                        <img src="{{url_for('static', filename='solution/assets/img/step-three-image.png')}}" alt="image">
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="step-three-content">
+                        <span>Step 3</span>
+                        <h3>Pick Up Your Prescription from Your Local Doctor.</h3>
+                        <p>Many healthcare systems around the world together with government agencies and startup companies are building and delivering Telehealth</p>
+                        <b>We can send your prescription directly to your local pharmacy for easy pick-up. Many healthcare systems around the world together with government agencies and startup companies are building and delivering Telehealth</b>
+
+                        <div class="step-btn">
+                            <a href="#" class="default-btn">
+                                    Make Appointment
+                                    <span></span>
+                                </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Step Three Area -->
+
+    <!-- Start Step Four Area -->
+    <section class="step-four pb-100">
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-lg-6">
+                    <div class="step-four-content">
+                        <span>Step 4</span>
+                        <h3>Chat with Our care team anytime you need to.</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy</p>
+                        <b>Get helpful answers and ease your concerns right at your fingertips with unlimited messaging with your dedicated doctor and our care team right from our app.Personalized.</b>
+
+                        <div class="step-btn">
+                            <a href="#" class="default-btn">
+                                    Download
+                                    <span></span>
+                                </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="step-four-image">
+                        <img src="{{url_for('static', filename='solution/assets/img/step-four-image.png')}}" alt="image">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-shape">
+            <img src="{{url_for('static', filename='solution/assets/img/step-shape.png')}}" class="white-image" alt="image">
+            <img src="{{url_for('static', filename='solution/assets/img/step-shape-dark.png')}}" class="black-image" alt="image">
+        </div>
+    </section>
+    <!-- End Step Four Area -->
+
+    <!-- Start Consult Area -->
+    <section class="consult-area ptb-100">
+        <div class="container-fluid pl-0">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-lg-7">
+                    <div class="consult-image">
+                        <img src="{{url_for('static', filename='solution/assets/img/consult.jpg')}}" alt="image">
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="consult-content">
+                        <span>Online Consult</span>
+                        <h3>Get 24/7 Care Right From Your Phone</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy</p>
+
+                        <ul class="list">
+                            <li>
+                                <i class="flaticon-check-1"></i> Get unlimited 24/7 Video Chat with a provider at no extra cost
+                            </li>
+                            <li>
+                                <i class="flaticon-check-1"></i> Easily book appointments and renew prescriptions
+                            </li>
+                            <li>
+                                <i class="flaticon-check-1"></i> Skip unnecessary trips to the ER or urgent care
+                            </li>
+                            <li>
+                                <i class="flaticon-check-1"></i> Have a Remote Visit with your primary care provider over video
+                            </li>
+                            <li>
+                                <i class="flaticon-check-1"></i> Message with your provider
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Consult Area -->
+
+    <!-- Start Footer Area -->
+    <section class="footer-area pt-100 pb-70">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h3>Tinzer</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore aliqua.</p>
+                        <ul class="footer-social">
+                            <li>
+                                <a href="https://www.facebook.com/login/" target="_blank" class="facebook">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/i/flow/login" target="_blank" class="twitter">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.pinterest.com/" target="_blank" class="pinterest">
+                                        <i class="fab fa-pinterest-p"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" class="instagram">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-footer-widget pl-5">
+                        <h3>Departments</h3>
+
+                        <ul class="footer-quick-links">
+                            <li>
+                                <a href="single-services.html">COVID-19 Testing</a>
+                            </li>
+                            <li>
+                                <a href="single-services.html">Birth Control</a>
+                            </li>
+                            <li>
+                                <a href="single-services.html">Orthopedics</a>
+                            </li>
+                            <li>
+                                <a href="single-services.html">Nuclear Magnetic</a>
+                            </li>
+                            <li>
+                                <a href="single-services.html">Eye Treatment</a>
+                            </li>
+                            <li>
+                                <a href="single-services.html">X-Ray</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-footer-widget pl-5">
+                        <h3>Useful Links</h3>
+
+                        <ul class="footer-quick-links">
+                            <li>
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li>
+                                <a href="about.html">About</a>
+                            </li>
+                            <li>
+                                <a href="solution.html">Solution</a>
+                            </li>
+                            <li>
+                                <a href="services.html">Services</a>
+                            </li>
+                            <li>
+                                <a href="blog.html">Blog</a>
+                            </li>
+                            <li>
+                                <a href="contact.html">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h3>Contact</h3>
+
+                        <div class="footer-info-contact">
+                            <i class="flaticon-call"></i>
+                            <h3>Phone</h3>
+                            <span><a href="tel:123456123">+123(456)123</a></span>
+                        </div>
+
+                        <div class="footer-info-contact">
+                            <i class="flaticon-email"></i>
+                            <h3>Email</h3>
+                            <span><a href="/cdn-cgi/l/email-protection#b6dfd8d0d9f6c2dfd8ccd3c498d5d9db"><span class="__cf_email__" data-cfemail="f59c9b939ab5819c9b8f9087db969a98">[email&#160;protected]</span></a>
+                            </span>
+                        </div>
+
+                        <div class="footer-info-contact">
+                            <i class="flaticon-pin"></i>
+                            <h3>Address</h3>
+                            <span>3254-425 NW-2nd Ave, Miami USA</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lines">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+
+        <div class="shape">
+            <img src="{{url_for('static', filename='solution/assets/img/footer-shape.png')}}" alt="image">
+        </div>
+    </section>
+    <!-- End Footer Area -->
+
+    <!-- Start Copy Right Section -->
+    <div class="copyright-area">
+        <div class="container">
+            <p>© <strong>Tinzer </strong> is Proudly Owned by <a href="https://envytheme.com/" target="_blank">  EnvyTheme </a></p>
+        </div>
+    </div>
+    <!-- End Copy Right Section -->
+
+    <!-- Start Go Top Area -->
+    <div class="go-top">
+        <i class="fa fa-chevron-up"></i>
+        <i class="fa fa-chevron-up"></i>
+    </div>
+    <!-- End Go Top Area -->
+
+    <!-- dark version -->
+    <div class="dark-version">
+        <label id="switch" class="switch">
+                <input type="checkbox" onchange="toggleTheme()" id="slider">
+                <span class="slider round"></span>
+            </label>
+    </div>
+    <!-- dark version -->
+
+    <!-- Jquery Slim JS -->
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="{{url_for('static', filename='solution/assets/js/jquery.min.js')}}"></script>
+    <!-- Bootstrap JS -->
+    <script src="{{url_for('static', filename='solution/assets/js/bootstrap.bundle.min.js')}}"></script>
+    <!-- Meanmenu JS -->
+    <script src="{{url_for('static', filename='solution/assets/js/jquery.meanmenu.js')}}"></script>
+    <!-- Nice Select JS -->
+    <script src="{{url_for('static', filename='solution/assets/js/jquery.nice-select.min.js')}}"></script>
+    <!-- Odometer JS -->
+    <script src="{{url_for('static', filename='solution/assets/js/odometer.min.js')}}"></script>
+    <!-- Appear JS -->
+    <script src="{{url_for('static', filename='solution/assets/js/jquery.appear.js')}}"></script>
+    <!-- Datepicker JS -->
+    <script src="{{url_for('static', filename='solution/assets/js/datepicker.min.js')}}"></script>
+    <!-- Magnific JS -->
+    <script src="{{url_for('static', filename='solution/assets/js/jquery.magnific-popup.min.js')}}"></script>
+    <!-- Carousel JS -->
+    <script src="{{url_for('static', filename='solution/assets/js/owl.carousel.min.js')}}"></script>
+    <!-- Form Ajaxchimp JS -->
+    <script src="{{url_for('static', filename='solution/assets/js/jquery.ajaxchimp.min.js')}}"></script>
+    <!-- Form Validator JS -->
+    <script src="{{url_for('static', filename='solution/assets/js/form-validator.min.js')}}"></script>
+    <!-- Contact JS -->
+    <script src="{{url_for('static', filename='solution/assets/js/contact-form-script.js')}}"></script>
+    <!-- Custom JS -->
+    <script src="{{url_for('static', filename='solution/assets/js/main.js')}}"></script>
+</body>
+
+</html>

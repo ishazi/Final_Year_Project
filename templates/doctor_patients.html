@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en" class="theme-light">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='services/assets/css/bootstrap.min.css')}}">
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='services/assets/css/fontawesome.min.css')}}">
+    <link rel="icon" type="image/png" href="{{url_for('static', filename='index/assets/img/favicon.png')}}">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #00a3c8;
+            --secondary-color: #007bff;
+            --dark-color: #343a40;
+            --light-color: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: #495057;
+        }
+        
+        .management-header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .patient-card {
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: none;
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+        
+        .patient-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .patient-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: rgba(0, 163, 200, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+        
+        .patient-name {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 0.25rem;
+        }
+        
+        .patient-meta {
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+        
+        .badge-contact {
+            padding: 0.35rem 0.65rem;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 0.75rem;
+        }
+        
+        .badge-phone {
+            background-color: rgba(0, 123, 255, 0.1);
+            color: var(--secondary-color);
+        }
+        
+        .badge-email {
+            background-color: rgba(108, 117, 125, 0.1);
+            color: #6c757d;
+        }
+        
+        .last-visit {
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+        
+        .btn-view {
+            border-radius: 50px;
+            padding: 0.35rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .btn-appointment {
+            border-radius: 50px;
+            padding: 0.35rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .empty-state {
+            padding: 3rem;
+            text-align: center;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .empty-state-icon {
+            font-size: 3rem;
+            color: #dee2e6;
+            margin-bottom: 1rem;
+        }
+        
+        .toggle-view-btn {
+            border-radius: 50px;
+            padding: 0.5rem 1.25rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .table th {
+            border-top: none;
+            font-weight: 600;
+            color: var(--dark-color);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .table td {
+            vertical-align: middle;
+        }
+        
+        .table-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(0, 163, 200, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 1rem;
+            margin-right: 0.75rem;
+        }
+        
+        .table-actions .btn {
+            padding: 0.35rem 0.65rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+        }
+        
+        .section-title {
+            position: relative;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: white;
+        }
+    </style>
+    <title>Patient Management</title>
+</head>
+
+<body>
+    <!-- Start Preloader Area -->
+    <div class="preloader">
+        <div class="spinner"></div>
+    </div>
+    <!-- End Preloader Area -->
+
+    <!-- Management Header -->
+    <div class="container py-4">
+        <div class="management-header p-4 mb-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="h4 mb-0 text-white">
+                        <i class="fas fa-user-injured me-2"></i>Patient Management
+                    </h1>
+                    <p class="text-white-50 mb-0">Your active patients list</p>
+                </div>
+                <a href="{{ url_for('doctor_dashboard') }}" class="btn btn-light btn-sm">
+                    <i class="fas fa-arrow-left me-1"></i> Dashboard
+                </a>
+            </div>
+        </div>
+
+        <!-- View Toggle -->
+        <div class="text-end mb-4">
+            <button class="btn toggle-view-btn btn-outline-secondary" id="toggleView">
+                <i class="fas fa-table me-1"></i> Switch to Table View
+            </button>
+        </div>
+
+        <!-- Card View -->
+        <div class="row" id="cardView">
+            {% for patient, last_appointment in patients %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card patient-card h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-start">
+                            <div class="patient-avatar">
+                                {% if patient.gender == 'Male' %}
+                                    <i class="fas fa-male"></i>
+                                {% else %}
+                                    <i class="fas fa-female"></i>
+                                {% endif %}
+                            </div>
+                            <div>
+                                <h5 class="patient-name">{{ patient.first_name }} {{ patient.surname }}</h5>
+                                <div class="d-flex flex-wrap gap-2 mb-2">
+                                    <span class="badge badge-contact badge-phone">
+                                        <i class="fas fa-phone-alt me-1"></i> {{ patient.phone_number }}
+                                    </span>
+                                    <span class="badge badge-contact badge-email">
+                                        <i class="fas fa-envelope me-1"></i> {{ patient.email|truncate(15) }}
+                                    </span>
+                                </div>
+                                <p class="last-visit mb-0">
+                                    <i class="far fa-calendar me-1"></i>
+                                    {% if last_appointment %}
+                                        Last visit: {{ last_appointment.strftime('%b %d, %Y') }}
+                                    {% else %}
+                                        No visits yet
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent border-top d-flex justify-content-end">
+                        <a href="{{ url_for('view_patient', patient_id=patient.id) }}" 
+                           class="btn btn-view btn-outline-primary me-2">
+                           <i class="far fa-eye me-1"></i> View
+                        </a>
+                        
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-12">
+                <div class="empty-state">
+                    <i class="fas fa-user-injured empty-state-icon"></i>
+                    <h4 class="text-muted">No patients found</h4>
+                    <p class="text-muted mb-4">You currently don't have any active patients</p>
+                    <a href="{{ url_for('doctor_dashboard') }}" class="btn btn-primary">
+                        <i class="fas fa-arrow-left me-1"></i> Back to Dashboard
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Table View (hidden by default) -->
+        <div class="card shadow d-none" id="tableView">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Patient</th>
+                                <th>Contact</th>
+                                <th>Last Visit</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for patient, last_appointment in patients %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="table-avatar">
+                                            {% if patient.gender == 'Male' %}
+                                                <i class="fas fa-male"></i>
+                                            {% else %}
+                                                <i class="fas fa-female"></i>
+                                            {% endif %}
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0 patient-name">{{ patient.first_name }} {{ patient.surname }}</h6>
+                                            <small class="text-muted">ID: {{ patient.id }}</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex flex-column">
+                                        <small><i class="fas fa-phone me-1"></i> {{ patient.phone_number }}</small>
+                                        <small><i class="fas fa-envelope me-1"></i> {{ patient.email|truncate(20) }}</small>
+                                    </div>
+                                </td>
+                                <td>
+                                    {% if last_appointment %}
+                                    <span class="badge bg-primary bg-opacity-10 text-primary">
+                                        {{ last_appointment.strftime('%b %d, %Y') }}
+                                    </span>
+                                    {% else %}
+                                    <span class="badge bg-secondary bg-opacity-10">Never</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-end table-actions">
+                                    <div class="btn-group">
+                                        <a href="{{ url_for('view_patient', patient_id=patient.id) }}" 
+                                           class="btn btn-sm btn-outline-primary"
+                                           data-bs-toggle="tooltip" 
+                                           title="View Profile">
+                                            <i class="far fa-eye"></i>
+                                        </a>
+                                        <a href="{{ url_for('new_appointment') }}?patient_id={{ patient.id }}" 
+                                           class="btn btn-sm btn-outline-success"
+                                           data-bs-toggle="tooltip" 
+                                           title="New Appointment">
+                                            <i class="fas fa-calendar-plus"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    
+                    {% if not patients %}
+                    <div class="empty-state p-5">
+                        <i class="fas fa-user-injured empty-state-icon"></i>
+                        <h4 class="text-muted">No patients found</h4>
+                        <p class="text-muted mb-4">You currently don't have any active patients</p>
+                        <a href="{{ url_for('doctor_dashboard') }}" class="btn btn-primary">
+                            <i class="fas fa-arrow-left me-1"></i> Back to Dashboard
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="{{url_for('static', filename='services/assets/js/bootstrap.bundle.min.js')}}"></script>
+    <!-- Custom JS -->
+    <script>
+        // Toggle between card and table views
+        document.getElementById('toggleView').addEventListener('click', function() {
+            const tableView = document.getElementById('tableView');
+            const cardView = document.getElementById('cardView');
+            const isHidden = tableView.classList.contains('d-none');
+            
+            tableView.classList.toggle('d-none');
+            cardView.classList.toggle('d-none');
+            
+            this.innerHTML = isHidden 
+                ? '<i class="fas fa-th-large me-1"></i> Switch to Card View' 
+                : '<i class="fas fa-table me-1"></i> Switch to Table View';
+        });
+
+        // Initialize tooltips
+        document.addEventListener('DOMContentLoaded', function() {
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        });
+
+        // Remove preloader when page loads
+        window.addEventListener('load', function() {
+            document.querySelector('.preloader').style.display = 'none';
+        });
+    </script>
+</body>
+
+</html>

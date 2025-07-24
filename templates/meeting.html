@@ -1,0 +1,208 @@
+<html>
+<head>
+    <style>
+        #root {
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        /* Style for notification messages */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            z-index: 1000;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            max-width: 300px;
+        }
+        
+        .success {
+            background-color: #4CAF50;
+        }
+        
+        .error {
+            background-color: #f44336;
+        }
+        
+        .copy-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .copy-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <!-- Add Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div id="root"></div>
+</body>
+<script src="https://unpkg.com/@zegocloud/zego-uikit-prebuilt/zego-uikit-prebuilt.js"></script>
+<script>
+window.onload = function () {
+    // Validate room parameters before proceeding
+    function getUrlParams(url) {
+        let urlStr = url.split('?')[1];
+        if (!urlStr) {
+            return {};
+        }
+        const urlSearchParams = new URLSearchParams(urlStr);
+        return Object.fromEntries(urlSearchParams.entries());
+    }
+
+    // Get URL parameters
+    const urlParams = getUrlParams(window.location.href);
+    const appointmentID = urlParams['appointment_id'] || null;
+    const roomID = urlParams['roomID'] || (Math.floor(Math.random() * 10000) + "");
+    const userID = Math.floor(Math.random() * 10000) + "";
+    const userName = "userName" + userID;
+    const appID = 1127127622;
+    const serverSecret = "ae748bb1fb9329b67c37331ff5d45caf";
+
+    // Validate room parameters
+    if (!roomID && !appointmentID) {
+        alert('No meeting room specified');
+        window.location.href = '/dashboard';  // Redirect to dashboard if no room info
+        return;  // Stop execution
+    }
+
+    // Function to show notification
+    function showNotification(message, type = 'success') {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.innerHTML = `
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+            <span style="margin-left: 10px;">${message}</span>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.style.opacity = '0';
+            setTimeout(() => notification.remove(), 500);
+        }, 5000);
+    }
+
+    // Generate Zego token
+    const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomID, userID, userName);
+
+    // Initialize and join room
+    const zp = ZegoUIKitPrebuilt.create(kitToken);
+    zp.joinRoom({
+        container: document.querySelector("#root"),
+        sharedLinks: [{
+            name: 'Personal link',
+            url: window.location.protocol + '//' + window.location.host + window.location.pathname + '?roomID=' + roomID,
+        }],
+        scenario: {
+            mode: ZegoUIKitPrebuilt.VideoConference,
+        },
+        turnOnMicrophoneWhenJoining: true,
+        turnOnCameraWhenJoining: true,
+        showMyCameraToggleButton: true,
+        showMyMicrophoneToggleButton: true,
+        showAudioVideoSettingsButton: true,
+        showScreenSharingButton: true,
+        showTextChat: true,
+        showUserList: true,
+        maxUsers: 2,
+        layout: "Auto",
+        showLayoutButton: false,
+    });
+
+    // After room is created, save meeting ID to database if this is a doctor's appointment
+    if (appointmentID) {
+        // Create the shared link
+        const sharedLink = window.location.protocol + '//' + 
+                          window.location.host + 
+                          window.location.pathname + 
+                          '?roomID=' + roomID;
+
+        // Save meeting details to database
+        fetch('/save_meeting_id', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                appointment_id: appointmentID,
+                meeting_id: roomID,
+                meeting_link: sharedLink
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to save meeting details');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Meeting details saved:', data);
+            showNotification('Meeting room created successfully!');
+        })
+        .catch(error => {
+            console.error('Error saving meeting details:', error);
+            showNotification('Failed to save meeting details. Please refresh and try again.', 'error');
+            
+            // Additional error handling as requested
+            const errorDiv = document.createElement('div');
+            errorDiv.style.position = 'fixed';
+            errorDiv.style.top = '20px';
+            errorDiv.style.right = '20px';
+            errorDiv.style.padding = '15px';
+            errorDiv.style.backgroundColor = '#ff4444';
+            errorDiv.style.color = 'white';
+            errorDiv.style.borderRadius = '5px';
+            errorDiv.style.zIndex = '1000';
+            errorDiv.textContent = 'Failed to save meeting details. Please refresh and try again.';
+            document.body.appendChild(errorDiv);
+            
+            setTimeout(() => {
+                errorDiv.remove();
+            }, 5000);
+        });
+    }
+
+    // Generate the full meeting URL
+    const meetingUrl = window.location.protocol + '//' + 
+                       window.location.host + 
+                       window.location.pathname + 
+                       '?roomID=' + roomID;
+
+    // Function to copy the meeting URL
+    const copyMeetingUrl = () => {
+        navigator.clipboard.writeText(meetingUrl).then(() => {
+            showNotification('Meeting URL copied to clipboard!');
+        }).catch(err => {
+            console.error('Failed to copy meeting URL:', err);
+            showNotification('Failed to copy URL. Please try again.', 'error');
+        });
+    };
+
+    // Create a floating button to copy meeting URL
+    const copyButton = document.createElement('button');
+    copyButton.className = 'copy-btn';
+    copyButton.innerHTML = '<i class="fas fa-copy"></i> Copy Meeting URL';
+    copyButton.onclick = copyMeetingUrl;
+    document.body.appendChild(copyButton);
+}
+</script>
+</html>

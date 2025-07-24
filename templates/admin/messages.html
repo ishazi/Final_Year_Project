@@ -1,0 +1,85 @@
+{% extends "admin/base_admin.html" %}
+{% block content %}
+<div class="container-fluid">
+    <h2 class="mb-4">Patient Messages</h2>
+    
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">All Messages</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>From</th>
+                            <th>Subject</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for message in messages %}
+                        <tr class="{{ 'table-warning' if not message.is_read else '' }}">
+                            <td>{{ message.date_submitted.strftime('%Y-%m-%d %H:%M') }}</td>
+                            <td>{{ message.name }}<br><small>{{ message.email }}</small></td>
+                            <td>{{ message.subject }}</td>
+                            <td>
+                                {% if message.is_read %}
+                                    <span class="badge badge-success">Read</span><br>
+                                    <small>by {{ message.read_by }}</small>
+                                {% else %}
+                                    <span class="badge badge-danger">Unread</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="#messageDetails{{ message.id }}" 
+                                   class="btn btn-info btn-sm" 
+                                   data-toggle="modal" 
+                                   data-target="#messageDetails{{ message.id }}">
+                                    View
+                                </a>
+                                <a href="{{ url_for('mark_message_read', message_id=message.id) }}" 
+                                   class="btn btn-success btn-sm">
+                                    Mark Read
+                                </a>
+                            </td>
+                        </tr>
+                        
+                        <!-- Modal for each message -->
+                        <div class="modal fade" id="messageDetails{{ message.id }}" tabindex="-1" role="dialog">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">{{ message.subject }}</h5>
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span>&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p><strong>From:</strong> {{ message.name }} &lt;{{ message.email }}&gt;</p>
+                                        <p><strong>Phone:</strong> {{ message.phone_number }}</p>
+                                        <p><strong>Date:</strong> {{ message.date_submitted.strftime('%Y-%m-%d %H:%M') }}</p>
+                                        <hr>
+                                        <div class="message-content">
+                                            {{ message.message|replace('\n', '<br>')|safe }}
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <a href="mailto:{{ message.email }}" class="btn btn-primary">
+                                            <i class="fas fa-reply"></i> Reply
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

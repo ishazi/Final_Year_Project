@@ -1,0 +1,173 @@
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="text-center mb-5">
+                <h1 class="display-5 fw-bold text-primary">
+                    <i class="fas fa-calendar-plus me-2"></i>Book Telemedicine Appointment
+                </h1>
+                <p class="lead text-muted">Schedule your virtual consultation with our specialists</p>
+            </div>
+            
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0"><i class="fas fa-video me-2"></i> Appointment Details</h3>
+                </div>
+                <div class="card-body p-4 p-md-5">
+                    <form method="POST" action="{{ url_for('new_appointment') }}" id="appointmentForm">
+                        {{ form.hidden_tag() }}
+                        
+                        <!-- Doctor Selection -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">
+                                <i class="fas fa-user-md me-2"></i>Select Doctor
+                            </label>
+                            {{ form.doctor_id(class="form-select form-control-lg") }}
+                            {% if form.doctor_id.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.doctor_id.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <small class="text-muted">All consultations will be via video conference</small>
+                        </div>
+                        
+                        <!-- Appointment Time -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">
+                                <i class="far fa-clock me-2"></i>Appointment Date & Time
+                            </label>
+                            {{ form.appointment_date(class="form-control form-control-lg", placeholder="Select date and time") }}
+                            <div class="form-text">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Available hours: 9:00 AM - 5:00 PM ({{ config.get('TIMEZONE', 'UTC') }})
+                            </div>
+                            {% if form.appointment_date.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.appointment_date.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Duration -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">
+                                <i class="fas fa-stopwatch me-2"></i>Duration
+                            </label>
+                            {{ form.duration(class="form-select form-control-lg") }}
+                            <small class="text-muted">Standard consultation is 30 minutes</small>
+                        </div>
+                        
+                        <!-- Symptoms -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">
+                                <i class="fas fa-notes-medical me-2"></i>Symptoms
+                            </label>
+                            {{ form.symptoms(class="form-control form-control-lg", rows=4, 
+                                placeholder="Describe your symptoms in detail to help the doctor prepare") }}
+                            {% if form.symptoms.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.symptoms.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Additional Notes -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">
+                                <i class="fas fa-sticky-note me-2"></i>Additional Notes
+                            </label>
+                            {{ form.notes(class="form-control form-control-lg", rows=3,
+                                placeholder="Any special requests or information") }}
+                        </div>
+                        
+                        <!-- Consent Checkbox -->
+                        <div class="mb-4 form-check">
+                            <input type="checkbox" class="form-check-input" id="consentCheck" required>
+                            <label class="form-check-label" for="consentCheck">
+                                I consent to a video consultation and understand I'll receive a meeting link upon approval
+                            </label>
+                        </div>
+                        
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg py-3">
+                                <i class="fas fa-calendar-check me-2"></i>Book Virtual Appointment
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Video Consultation Info -->
+            <div class="card shadow mt-4 border-info">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0"><i class="fas fa-question-circle me-2"></i>About Video Consultations</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <i class="fas fa-check-circle text-success me-2"></i>
+                            You'll receive a secure video link after doctor approval
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-check-circle text-success me-2"></i>
+                            Test your microphone and camera before the appointment
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-check-circle text-success me-2"></i>
+                            Join 5 minutes early to ensure proper connection
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Enhanced DateTime Picker -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize datetime picker with business hours
+        flatpickr("#appointment_date", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            minDate: "today",
+            minTime: "09:00",
+            maxTime: "17:00",
+            disable: [
+                function(date) {
+                    // Disable weekends
+                    return (date.getDay() === 0 || date.getDay() === 6);
+                }
+            ],
+            time_24hr: true,
+            minuteIncrement: 15,
+            onReady: function() {
+                // Highlight doctor's available hours
+                this.set('disable', [
+                    {
+                        from: "12:00",
+                        to: "13:00"
+                    }
+                ]);
+            }
+        });
+
+        // Form validation
+        document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+            if (!document.getElementById('consentCheck').checked) {
+                e.preventDefault();
+                alert('Please consent to video consultation to proceed');
+            }
+        });
+    });
+</script>
+{% endblock %}

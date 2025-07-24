@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Diseases Information</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="{{url_for('static', filename='index/assets/img/favicon.png')}}">
+
+    <style>
+        .disease-card {
+            background-color: #dc3545;
+            color: white;
+            margin: 8px;
+            border: none;
+            transition: all 0.3s;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .disease-card:hover {
+            background-color: #bb2d3b;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .category-btn.active {
+            background-color: #6c757d;
+            color: white;
+        }
+        .search-container {
+            position: relative;
+        }
+        .search-container i {
+            position: absolute;
+            left: 15px;
+            top: 12px;
+            color: #6c757d;
+        }
+        #searchInput {
+            padding-left: 40px;
+        }
+
+
+        .disease-header {
+        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        color: white;
+        padding: 5rem 0;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .disease-header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 Q50,80 0,100 Z"></path></svg>');
+        background-size: 100% auto;
+        background-repeat: no-repeat;
+        background-position: bottom;
+    }
+    
+    .disease-header h1 {
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        letter-spacing: 0.5px;
+    }
+    
+    .disease-header .lead {
+        opacity: 0.9;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    @media (max-width: 768px) {
+        .disease-header {
+            padding: 3rem 0;
+        }
+        .disease-header h1 {
+            font-size: 2.5rem;
+        }
+    }
+
+
+    .navbar-medical {
+            background-color: #1a365d; /* Dark blue */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+        .nav-link {
+            color: rgba(255,255,255,0.85);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            margin: 0 0.25rem;
+            transition: all 0.3s;
+        }
+        .nav-link:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+        .nav-link i {
+            margin-right: 6px;
+        }
+        .logout-btn {
+            background-color: #e53e3e;
+            border-radius: 6px;
+            padding: 0.5rem 1.25rem;
+            transition: all 0.3s;
+        }
+        .logout-btn:hover {
+            background-color: #c53030;
+            transform: translateY(-2px);
+        }
+        @media (max-width: 992px) {
+            .navbar-collapse {
+                padding-top: 1rem;
+            }
+            .nav-item {
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        .footer {
+    background-color: #1a365d;
+    color: rgba(255,255,255,0.85);
+}
+
+.footer a {
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.footer a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+
+
+    </style>
+</head>
+<body>
+    
+      <!-- Navigation Bar -->
+      <nav class="navbar navbar-expand-lg navbar-dark navbar-medical sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-heartbeat me-2"></i>MedRec
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('patient_dashboard') if current_user.role == 'patient' 
+    else url_for('doctor_dashboard') }}">
+                            <i class="fas fa-tachometer-alt"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('index')}}">
+                            <i class="fas fa-home"></i>Home
+                        </a>
+                    </li>
+                </ul>
+                
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link logout-btn" href="{{url_for('logout')}}">
+                            <i class="fas fa-sign-out-alt"></i>Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid py-5 bg-light min-vh-100">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 text-center">
+                <div class="container-fluid disease-header py-5">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-10 text-center text-white">
+                            <h1 class="display-4 fw-bold mb-3">All Available Diseases</h1>
+                            <p class="lead mb-4 fs-4">Explore diseases our medical recommender system can identify</p>
+                            <div class="d-flex justify-content-center gap-3">
+                                <a href="#diseaseContainer" class="btn btn-light btn-lg px-4">
+                                    <i class="fas fa-arrow-down me-2"></i>View Diseases
+                                </a>
+                                <a href="#" class="btn btn-outline-light btn-lg px-4">
+                                    <i class="fas fa-search me-2"></i>How It Works
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <!-- Search Box -->
+                <div class="row justify-content-center mt-5 mb-4">  <!-- Added mt-5 -->
+                    <div class="col-md-8 search-container">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" class="form-control form-control-lg" placeholder="Search diseases...">
+                    </div>
+                </div>
+                
+                <!-- Category Filters -->
+                <div class="d-flex flex-wrap justify-content-center mb-4 gap-2">
+                    <button class="btn btn-outline-secondary category-btn active" data-category="all">All</button>
+                    <button class="btn btn-outline-secondary category-btn" data-category="infectious">Infectious</button>
+                    <button class="btn btn-outline-secondary category-btn" data-category="chronic">Chronic</button>
+                    <button class="btn btn-outline-secondary category-btn" data-category="digestive">Digestive</button>
+                    <button class="btn btn-outline-secondary category-btn" data-category="other">Other</button>
+                </div>
+                
+                <!-- Disease Grid -->
+                <div id="diseaseContainer" class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
+                    <!-- Disease cards will be dynamically filtered -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+<footer class="footer mt-auto py-3 navbar-medical">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 text-center text-md-start">
+                <span class="text-white">&copy; 2025 MedRec. All rights reserved.</span>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+                <a href="#" class="text-white me-3"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
+                <a href="#" class="text-white"><i class="fas fa-file-contract"></i> Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Disease data with categories
+        const diseases = [
+            { name: "Fungal infection", category: "infectious" },
+            { name: "Allergy", category: "chronic" },
+            { name: "GERD", category: "digestive" },
+            { name: "Chronic cholestasis", category: "digestive" },
+            { name: "Drug Reaction", category: "other" },
+            { name: "Peptic ulcer diseae", category: "digestive" },
+            { name: "AIDS", category: "infectious" },
+            { name: "Diabetes", category: "chronic" },
+            { name: "Gastroenteritis", category: "digestive" },
+            { name: "Bronchial Asthma", category: "chronic" },
+            { name: "Hypertension", category: "chronic" },
+            { name: "Migraine", category: "chronic" },
+            { name: "Cervical spondylosis", category: "chronic" },
+            { name: "Paralysis (brain hemorrhage)", category: "chronic" },
+            { name: "Jaundice", category: "digestive" },
+            { name: "Malaria", category: "infectious" },
+            { name: "Chicken pox", category: "infectious" },
+            { name: "Dengue", category: "infectious" },
+            { name: "Typhoid", category: "infectious" },
+            { name: "hepatitis A", category: "infectious" },
+            { name: "Hepatitis B", category: "infectious" },
+            { name: "Hepatitis C", category: "infectious" },
+            { name: "Hepatitis D", category: "infectious" },
+            { name: "Hepatitis E", category: "infectious" },
+            { name: "Alcoholic hepatitis", category: "digestive" },
+            { name: "Tuberculosis", category: "infectious" },
+            { name: "Common Cold", category: "infectious" },
+            { name: "Pneumonia", category: "infectious" },
+            { name: "Dimorphic hemmorhoids(piles)", category: "digestive" },
+            { name: "Heart attack", category: "chronic" },
+            { name: "Varicose veins", category: "chronic" },
+            { name: "Hypothyroidism", category: "chronic" },
+            { name: "Hyperthyroidism", category: "chronic" },
+            { name: "Hypoglycemia", category: "chronic" },
+            { name: "Osteoarthristis", category: "chronic" },
+            { name: "Arthritis", category: "chronic" },
+            { name: "(vertigo) Paroymsal Positional Vertigo", category: "other" },
+            { name: "Acne", category: "other" },
+            { name: "Urinary tract infection", category: "infectious" },
+            { name: "Psoriasis", category: "chronic" },
+            { name: "Impetigo", category: "infectious" }
+        ];
+
+        // Initialize disease cards
+        function renderDiseases(filteredDiseases = diseases) {
+            const container = document.getElementById('diseaseContainer');
+            container.innerHTML = '';
+            
+            filteredDiseases.forEach(disease => {
+                const card = document.createElement('div');
+                card.className = 'col';
+                card.innerHTML = `
+                    <a href="/disease-info/${encodeURIComponent(disease.name)}" class="card disease-card text-decoration-none">
+                        <div class="card-body">
+                            <h5 class="card-title">${disease.name}</h5>
+                            <span class="badge bg-secondary">${disease.category}</span>
+                        </div>
+                    </a>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const filtered = diseases.filter(disease => 
+                disease.name.toLowerCase().includes(searchTerm)
+        );
+            renderDiseases(filtered);
+        });
+
+        // Category filtering
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const category = this.dataset.category;
+                if (category === 'all') {
+                    renderDiseases();
+                } else {
+                    const filtered = diseases.filter(disease => disease.category === category);
+                    renderDiseases(filtered);
+                }
+            });
+        });
+
+        // Initial render
+        renderDiseases();
+    </script>
+</body>
+</html>

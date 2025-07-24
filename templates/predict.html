@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symptom Checker</title>
+    <!-- Bootstrap CSS (optional) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Symptom Checker</h1>
+        
+        <!-- Flash error messages (if any) -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Symptom Input Form -->
+        <form action="{{ url_for('predict') }}" method="POST">
+            <div class="mb-3">
+                <label for="symptoms" class="form-label">
+                    <strong>Enter Symptoms (comma-separated):</strong>
+                </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="symptoms"
+                    name="symptoms"
+                    placeholder="Example: fever, cough, headache"
+                    required
+                >
+                <small class="text-muted">Separate symptoms with commas (e.g., "fatigue, sore throat").</small>
+            </div>
+            <button type="submit" class="btn btn-primary">Predict Disease</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

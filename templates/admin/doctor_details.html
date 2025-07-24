@@ -1,0 +1,35 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Doctor Details</h2>
+    <div class="card mt-4">
+        <div class="card-body">
+            <h4 class="card-title">{{ doctor.first_name }} {{ doctor.surname }}</h4>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <p><strong>Email:</strong> {{ doctor.email }}</p>
+                    <p><strong>Phone:</strong> {{ doctor.phone_number }}</p>
+                    <p><strong>Date of Birth:</strong> {{ doctor.date_of_birth.strftime('%Y-%m-%d') }}</p>
+                    <p><strong>Gender:</strong> {{ doctor.gender }}</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Specialization:</strong> {{ doctor.specialization }}</p>
+                    <p><strong>License Number:</strong> {{ doctor.license_number }}</p>
+                    <p><strong>Hospital Affiliation:</strong> {{ doctor.hospital_affiliation }}</p>
+                    <p><strong>Registration Date:</strong> {{ doctor.created_at.strftime('%Y-%m-%d') }}</p>
+                </div>
+            </div>
+            <div class="mt-4">
+                <form method="POST" action="{{ url_for('approve_doctor', doctor_id=doctor.id) }}" class="d-inline">
+                    <button type="submit" class="btn btn-success">Approve</button>
+                </form>
+                <form method="POST" action="{{ url_for('reject_doctor', doctor_id=doctor.id) }}" class="d-inline ml-2">
+                    <button type="submit" class="btn btn-danger">Reject</button>
+                </form>
+                <a href="{{ url_for('approve_doctors') }}" class="btn btn-secondary ml-2">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

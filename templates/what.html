@@ -1,0 +1,124 @@
+this is the book appointment code 
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="text-center mb-5">
+                <h1 class="display-5 fw-bold text-primary">
+                    <i class="fas fa-calendar-plus me-2"></i>Book Appointment
+                </h1>
+                <p class="lead text-muted">Schedule your consultation with our specialists</p>
+            </div>
+            
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0"><i class="fas fa-calendar-check me-2"></i> Appointment Details</h3>
+                </div>
+                <div class="card-body p-4 p-md-5">
+                    <form method="POST" action="{{ url_for('book_appointment') }}">
+                        {{ form.hidden_tag() }}
+                        
+                        <!-- Doctor Selection -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">
+                                <i class="fas fa-user-md me-2"></i>Select Doctor
+                            </label>
+                            {{ form.doctor_id(class="form-select form-control-lg") }}
+                            {% if form.doctor_id.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.doctor_id.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Appointment Time -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">
+                                <i class="far fa-clock me-2"></i>Appointment Date & Time
+                            </label>
+                            {{ form.appointment_time(class="form-control form-control-lg") }}
+                            <small class="text-muted">Format: YYYY-MM-DD HH:MM (24-hour format)</small>
+                            {% if form.appointment_time.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.appointment_time.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Reason for Appointment -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">
+                                <i class="fas fa-comment-medical me-2"></i>Reason for Appointment
+                            </label>
+                            {{ form.notes(class="form-control form-control-lg", rows=4) }}
+                            {% if form.notes.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.notes.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-calendar-check me-2"></i>Book Appointment
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Flatpickr for better datetime input -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    // Initialize datetime picker
+    document.addEventListener('DOMContentLoaded', function() {
+        flatpickr("#appointment_time", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            minDate: "today",
+            minTime: "09:00",
+            maxTime: "17:00",
+            time_24hr: true
+        });
+    });
+</script>
+
+<script>
+     // Add a button to copy meeting ID (optional)
+     const copyMeetingId = () => {
+        navigator.clipboard.writeText(roomID).then(() => {
+            alert('Meeting ID copied to clipboard!');
+        }).catch(err => {
+            console.error('Failed to copy meeting ID:', err);
+        });
+    };
+
+
+    // Create a floating button to copy meeting ID
+    const copyButton = document.createElement('button');
+    copyButton.textContent = 'Copy Meeting ID';
+    copyButton.style.position = 'fixed';
+    copyButton.style.bottom = '20px';
+    copyButton.style.right = '20px';
+    copyButton.style.zIndex = '1000';
+    copyButton.style.padding = '10px';
+    copyButton.style.backgroundColor = '#4CAF50';
+    copyButton.style.color = 'white';
+    copyButton.style.border = 'none';
+    copyButton.style.borderRadius = '5px';
+    copyButton.style.cursor = 'pointer';
+    copyButton.onclick = copyMeetingId;
+    document.body.appendChild(copyButton);
+
+</script>
+{% endblock %} if there are any changes needed please do

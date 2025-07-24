@@ -1,0 +1,70 @@
+<form action="/predict" method="post">
+    <div class="form-group">
+        <label class="form-label fs-4 fw-bold text-success">Select Your Symptoms:</label>
+        
+        <!-- Dropdown 1: Common Physical Symptoms -->
+        <div class="mb-3">
+            <label class="form-label">Physical Symptoms</label>
+            <select class="form-select" name="symptom1">
+                <option value="">Select a physical symptom...</option>
+                <option value="itching">Itching</option>
+                <option value="skin_rash">Skin rash</option>
+                <option value="joint_pain">Joint pain</option>
+                <option value="headache">Headache</option>
+                <option value="fatigue">Fatigue</option>
+                <option value="fever">High fever</option>
+                <option value="chills">Chills</option>
+                <option value="sweating">Sweating</option>
+            </select>
+        </div>
+
+        <!-- Dropdown 2: Digestive Symptoms -->
+        <div class="mb-3">
+            <label class="form-label">Digestive Symptoms</label>
+            <select class="form-select" name="symptom2">
+                <option value="">Select a digestive symptom...</option>
+                <option value="stomach_pain">Stomach pain</option>
+                <option value="vomiting">Vomiting</option>
+                <option value="nausea">Nausea</option>
+                <option value="diarrhoea">Diarrhea</option>
+                <option value="constipation">Constipation</option>
+                <option value="indigestion">Indigestion</option>
+                <option value="loss_of_appetite">Loss of appetite</option>
+            </select>
+        </div>
+
+        <!-- Dropdown 3: Respiratory Symptoms -->
+        <div class="mb-3">
+            <label class="form-label">Respiratory Symptoms</label>
+            <select class="form-select" name="symptom3">
+                <option value="">Select a respiratory symptom...</option>
+                <option value="cough">Cough</option>
+                <option value="breathlessness">Breathlessness</option>
+                <option value="chest_pain">Chest pain</option>
+                <option value="runny_nose">Runny nose</option>
+                <option value="congestion">Nasal congestion</option>
+                <option value="phlegm">Phlegm</option>
+                <option value="continuous_sneezing">Continuous sneezing</option>
+            </select>
+        </div>
+
+        <!-- Dropdown 4: Neurological Symptoms -->
+        <div class="mb-3">
+            <label class="form-label">Neurological Symptoms</label>
+            <select class="form-select" name="symptom4">
+                <option value="">Select a neurological symptom...</option>
+                <option value="dizziness">Dizziness</option>
+                <option value="headache">Headache</option>
+                <option value="blurred_vision">Blurred vision</option>
+                <option value="muscle_weakness">Muscle weakness</option>
+                <option value="loss_of_balance">Loss of balance</option>
+                <option value="numbness">Numbness/tingling</option>
+                <option value="mood_swings">Mood swings</option>
+            </select>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-danger" style="padding: 14px; margin: 10px;">
+        Predict Your Disease
+    </button>
+</form>

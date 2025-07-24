@@ -1,0 +1,981 @@
+<!doctype html>
+<html lang="zxx" class="theme-light">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='blog-1/assets/css/bootstrap.min.css')}}">
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='blog-1/assets/css/animate.min.css')}}">
+    <!-- Meanmenu CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='blog-1/assets/css/meanmenu.css')}}">
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='blog-1/assets/css/fontawesome.min.css')}}">
+    <!-- Flaticon CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='blog-1/assets/css/flaticon.css')}}">
+    <!-- Nice Select CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='blog-1/assets/css/nice-select.min.css')}}">
+    <!-- Odometer CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='blog-1/assets/css/odometer.min.css')}}">
+    <!-- Magnific CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='blog-1/assets/css/magnific-popup.min.css')}}">
+    <!-- Carousel CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='blog-1/assets/css/owl.carousel.min.css')}}">
+    <!-- Carousel Default CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='blog-1/assets/css/owl.theme.default.min.css')}}">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='blog-1/assets/css/style.css')}}">
+    <!-- Dark CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='blog-1/assets/css/dark.css')}}">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='blog-1/assets/css/responsive.css')}}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <title>Artificial Intelligence-Powered Medical Recommender System with Telemedicine Support</title>
+
+    <link rel="icon" type="image/png" href="{{url_for('static', filename='blog-1/assets/img/favicon.png')}}">
+
+    <style>
+        /* Add the new styles while preserving existing ones */
+        :root {
+            --primary: #2a7fba;
+            --secondary: #3bb77e;
+            --accent: #ff7e5f;
+        }
+        
+        .blog-card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            height: 100%;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .blog-category {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .blog-meta {
+            color: #777;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .blog-meta i {
+            margin-right: 5px;
+            color: var(--primary);
+        }
+        
+        .read-more {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .read-more:hover {
+            color: var(--secondary);
+        }
+        
+        .read-more i {
+            margin-left: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .read-more:hover i {
+            transform: translateX(5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Start Preloader Area -->
+    <div class="preloader">
+        <div class="spinner"></div>
+    </div>
+    <!-- End Preloader Area -->
+
+    
+    <!-- Start Header Area -->
+    <header class="header-area">
+        <div class="top-header">
+            <div class="container">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-lg-6">
+                        <ul class="top-list">
+                            <li>
+                                <i class='flaticon-clock'></i> Mon-Sun 06-00:00
+                            </li>
+                            <li>
+                                <i class='flaticon-phone-call'></i>
+                                <a href="tel:821-456-241">Call Us: +263-776-060-788</a>
+                            </li>
+                            <li>
+                                <i class='flaticon-paper-plane'></i>
+                                <a href="/cdn-cgi/l/email-protection#ff979a939390bf96919990d19c9092"><span class="__cf_email__" data-cfemail="0b636e6767644b62656d6425686466">ic@gmail.com</span></a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <ul class="top-social">
+                            <li>
+                                <a href="https://www.facebook.com/login/" target="_blank" class="facebook">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/i/flow/login" target="_blank" class="twitter">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.pinterest.com/" target="_blank" class="pinterest">
+                                        <i class="fab fa-pinterest-p"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" class="instagram">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                            </li>
+
+                            {% if current_user.is_authenticated and current_user.role == 'admin' %}
+                            <li>
+                                <a href="{{ url_for('admin_dashboard')}}" class="log-in">
+                                        Admin Dashboard
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('logout')}}" class="log-in">
+                                        Logout
+                                    </a>
+                            </li>
+                            {% elif current_user.is_authenticated and current_user.role == 'patient' %}
+
+                            <li>
+                                <a href="{{ url_for('patient_dashboard')}}" class="log-in">
+                                        Patient Dashboard
+                                    </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ url_for('logout')}}" class="log-in">
+                                        Logout
+                                    </a>
+                            </li>
+
+                            {% elif current_user.is_authenticated and current_user.role == 'doctor' %}
+
+                            <li>
+                                <a href="{{ url_for('doctor_dashboard')}}" class="log-in">
+                                        Doctor Dashboard
+                                    </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ url_for('logout')}}" class="log-in">
+                                        Logout
+                                    </a>
+                            </li>
+
+
+                            {% else %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle log-in" href="#" id="signinDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Sign In
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="signinDropdown">
+                                    <li><a class="dropdown-item" href="{{ url_for('patient_login') }}">Patient</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('doctor_login') }}">Doctor</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('admin_login') }}">Admin</a></li>
+                                </ul>
+                            </li>
+
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle sign-in" href="#" id="signupDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Sign Up
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="signupDropdown">
+                                    <li><a class="dropdown-item" href="{{ url_for('patient_signup') }}">Patient</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('doctor_signup') }}">Doctor</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('admin_signup') }}">Admin</a></li>
+                                </ul>
+                            </li>
+                            
+
+
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Start Navbar Area -->
+        <div class="navbar-area navbar-two">
+            <div class="main-responsive-nav">
+                <div class="container">
+                    <div class="main-responsive-menu">
+                        <div class="logo">
+                            <a href="index.html">
+                                <img src="{{url_for('static', filename='blog-1/assets/img/logo.png')}}" class="black-logo" alt="image">
+                                <img src="{{url_for('static', filename='blog-1/assets/img/logo-2.png')}}" class="white-logo" alt="image">        
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-navbar">
+                <div class="container">
+                    <nav class="navbar navbar-expand-md navbar-light">
+                        <a href="index.html">
+                                <img src="{{url_for('static', filename='blog-1/assets/img/logo.png')}}" class="black-logo" alt="image">
+                                <img src="{{url_for('static', filename='blog-1/assets/img/logo-2.png')}}" class="white-logo" alt="image">        
+                            </a>
+
+                        <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a href="{{url_for('index')}}" class="nav-link">
+                                            Home 
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="{{url_for('index')}}" class="nav-link">
+                                                    Home One
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="index-6.html" class="nav-link">
+                                                    Video Home
+                                                </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{url_for('about')}}" class="nav-link">
+                                            About
+                                        </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{url_for('services')}}" class="nav-link">
+                                            Services 
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="{{url_for('services')}}" class="nav-link">
+                                                    Services
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="{{url_for('singleServices')}}" class="nav-link">
+                                                    Services Details
+                                                </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                            Pages 
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="about.html" class="nav-link">
+                                                    About
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="team.html" class="nav-link">
+                                                    Team
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="faq.html" class="nav-link">
+                                                    FAQ
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="appointment.html" class="nav-link">
+                                                    Appointment
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="testimonials.html" class="nav-link">
+                                                    Testimonials
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="how-it-works.html" class="nav-link">
+                                                    How It Works
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                    Projects 
+                                                    <i class="fa fa-angle-down"></i>
+                                                </a>
+
+                                            <ul class="dropdown-menu">
+                                                <li class="nav-item">
+                                                    <a href="projects.html" class="nav-link">
+                                                            Projects
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="single-projects.html" class="nav-link">
+                                                            Projects details
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                    Solution 
+                                                    <i class="fa fa-angle-down"></i>
+                                                </a>
+                                            <ul class="dropdown-menu">
+                                                <li class="nav-item">
+                                                    <a href="solution.html" class="nav-link">
+                                                            Solution
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="solution-details.html" class="nav-link">
+                                                            Solution Details
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                    Shop 
+                                                    <i class="fa fa-angle-down"></i>
+                                                </a>
+
+                                            <ul class="dropdown-menu">
+                                                <li class="nav-item">
+                                                    <a href="shop.html" class="nav-link">
+                                                            Shop
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="cart.html" class="nav-link">
+                                                            Cart
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="checkout.html" class="nav-link">
+                                                            Checkout
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="single-product.html" class="nav-link">
+                                                            Products Details
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                    User 
+                                                    <i class="fa fa-angle-down"></i>
+                                                </a>
+
+                                            <ul class="dropdown-menu">
+                                                
+                                                <li class="nav-item">
+                                                    <a href="sign-in.html" class="nav-link">
+                                                            Sign In
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="sign-up.html" class="nav-link">
+                                                            Sign Up
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="terms-condition.html" class="nav-link">
+                                                    Terms & Conditions
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="privacy-policy.html" class="nav-link">
+                                                    Privacy Policy
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="error-404.html" class="nav-link">
+                                                    404 Error
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="{{url_for('contact')}}" class="nav-link">
+                                                    Contact
+                                                </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{url_for('blog1')}}" class="nav-link active">
+                                            Blog 
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="{{url_for('blog1')}}" class="nav-link active">
+                                                    Blog Grid
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="{{url_for('blog2')}}" class="nav-link">
+                                                    Blog Right Sidebar
+                                                </a>
+                                        </li>
+                                        
+
+                                        <li class="nav-item">
+                                            <a href="{{url_for('singleDetails')}}" class="nav-link">
+                                                    Blog Details
+                                                </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{url_for('contact')}}" class="nav-link">
+                                            Contact
+                                        </a>
+                                </li>
+                            </ul>
+
+                            <div class="others-options">
+                                <a href="{{url_for('appointment')}}" class="default-btn-two">
+                                        Get a Quote
+                                        <span></span>
+                                    </a>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- End Navbar Area -->
+    </header>
+    <!-- End Header Area -->
+
+    <!-- Start Page Title Area -->
+    <div class="page-title-area item-bg-5">
+        <div class="d-table">
+            <div class="d-table-cell">
+                <div class="container">
+                    <div class="page-title-content">
+                        <h2>AI Health Insights</h2>
+                        <ul>
+                            <li><a href="{{url_for('index')}}">Home</a></li>
+                            <li>Blog</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Title Area -->
+
+    <!-- Start Blog Area -->
+    <section class="blog-area ptb-100">
+        <div class="container">
+            <div class="section-title">
+                <span>AI & Telemedicine</span>
+                <h2>Latest Healthcare Innovations</h2>
+                <p>Stay updated with breakthroughs in AI-powered diagnosis, telemedicine best practices, and success stories from our intelligent healthcare platform.</p>
+            </div>  
+
+            <div class="row justify-content-center">
+                <!-- Blog Post 1 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="blog-card">
+                        <div class="image">
+                            <a href="{{url_for('singleDetails')}}">
+                                <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef" alt="AI Diagnosis">
+                            </a>
+                            <a href="#" class="date">15 June, 2023</a>
+                        </div>
+
+                        <div class="content">
+                            <span class="blog-category">Technology</span>
+                            <h3>
+                                <a href="{{url_for('singleDetails')}}">How Our AI Predicts Diseases with 94% Accuracy</a>
+                            </h3>
+                            <div class="blog-meta">
+                                <span><i class="far fa-calendar-alt"></i> June 15, 2023</span>
+                                <span class="ms-3"><i class="far fa-user"></i> Dr. Sarah Johnson</span>
+                            </div>
+                            <p>Explore how our SVC model analyzes symptoms and medical history to provide accurate disease predictions and personalized treatment plans.</p>
+                            <a href="{{url_for('singleDetails')}}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blog Post 2 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="blog-card">
+                        <div class="image">
+                            <a href="{{url_for('singleDetails')}}">
+                                <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118" alt="Telemedicine">
+                            </a>
+                            <a href="#" class="date">28 May, 2023</a>
+                        </div>
+
+                        <div class="content">
+                            <span class="blog-category">Patient Care</span>
+                            <h3>
+                                <a href="{{url_for('singleDetails')}}">24/7 Telemedicine: A Game Changer for Rural Patients</a>
+                            </h3>
+                            <div class="blog-meta">
+                                <span><i class="far fa-calendar-alt"></i> May 28, 2023</span>
+                                <span class="ms-3"><i class="far fa-user"></i> HealthTech Team</span>
+                            </div>
+                            <p>Learn how our platform bridges healthcare gaps with instant video consultations and AI-powered preliminary diagnosis for remote communities.</p>
+                            <a href="{{url_for('singleDetails')}}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blog Post 3 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="blog-card">
+                        <div class="image">
+                            <a href="{{url_for('singleDetails')}}">
+                                <img src="https://images.unsplash.com/photo-1505751172876-fa1923c5c528" alt="Medication">
+                            </a>
+                            <a href="#" class="date">10 May, 2023</a>
+                        </div>
+
+                        <div class="content">
+                            <span class="blog-category">Treatment</span>
+                            <h3>
+                                <a href="{{url_for('singleDetails')}}">AI-Generated Treatment Plans: What Doctors Need to Know</a>
+                            </h3>
+                            <div class="blog-meta">
+                                <span><i class="far fa-calendar-alt"></i> May 10, 2023</span>
+                                <span class="ms-3"><i class="far fa-user"></i> Dr. Michael Chen</span>
+                            </div>
+                            <p>How physicians are using our system's medication recommendations to enhance their prescriptions and reduce adverse drug interactions.</p>
+                            <a href="{{url_for('singleDetails')}}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blog Post 4 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="blog-card">
+                        <div class="image">
+                            <a href="{{url_for('singleDetails')}}">
+                                <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352" alt="Nutrition">
+                            </a>
+                            <a href="#" class="date">22 April, 2023</a>
+                        </div>
+
+                        <div class="content">
+                            <span class="blog-category">Wellness</span>
+                            <h3>
+                                <a href="{{url_for('singleDetails')}}">Personalized Nutrition: How AI Creates Your Perfect Diet</a>
+                            </h3>
+                            <div class="blog-meta">
+                                <span><i class="far fa-calendar-alt"></i> April 22, 2023</span>
+                                <span class="ms-3"><i class="far fa-user"></i> Nutrition Team</span>
+                            </div>
+                            <p>Our algorithm considers your health condition, allergies, and preferences to generate customized meal plans that accelerate recovery.</p>
+                            <a href="{{url_for('singleDetails')}}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blog Post 5 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="blog-card">
+                        <div class="image">
+                            <a href="{{url_for('singleDetails')}}">
+                                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b" alt="Exercise">
+                            </a>
+                            <a href="#" class="date">5 April, 2023</a>
+                        </div>
+
+                        <div class="content">
+                            <span class="blog-category">Fitness</span>
+                            <h3>
+                                <a href="{{url_for('singleDetails')}}">Smart Workouts: Exercise Plans Tailored to Your Health</a>
+                            </h3>
+                            <div class="blog-meta">
+                                <span><i class="far fa-calendar-alt"></i> April 5, 2023</span>
+                                <span class="ms-3"><i class="far fa-user"></i> Fitness Experts</span>
+                            </div>
+                            <p>Discover how our AI recommends physical activities based on your medical condition, mobility, and recovery progress.</p>
+                            <a href="{{url_for('singleDetails')}}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blog Post 6 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="blog-card">
+                        <div class="image">
+                            <a href="{{url_for('singleDetails')}}">
+                                <img src="https://images.unsplash.com/photo-1581056771107-24ca5f033842" alt="Case Study">
+                            </a>
+                            <a href="#" class="date">18 March, 2023</a>
+                        </div>
+
+                        <div class="content">
+                            <span class="blog-category">Case Study</span>
+                            <h3>
+                                <a href="{{url_for('singleDetails')}}">From Diagnosis to Recovery: A Diabetes Patient's Journey</a>
+                            </h3>
+                            <div class="blog-meta">
+                                <span><i class="far fa-calendar-alt"></i> March 18, 2023</span>
+                                <span class="ms-3"><i class="far fa-user"></i> Patient Stories</span>
+                            </div>
+                            <p>How our AI system and telemedicine support helped John manage his diabetes with personalized treatment and continuous monitoring.</p>
+                            <a href="{{url_for('singleDetails')}}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination-area">
+                <a href="#" class="prev page-numbers">
+                    <i class="fa fa-chevron-left"></i>
+                </a>
+                <a href="#" class="page-numbers">1</a>
+                <span class="page-numbers current" aria-current="page">2</span>
+                <a href="#" class="page-numbers">3</a>
+                <a href="#" class="page-numbers">4</a>
+                <a href="#" class="next page-numbers">
+                    <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Start Features Section -->
+    <section class="features-section ptb-100 bg-f9f9f9">
+        <div class="container">
+            <div class="section-title">
+                <span>Why Choose Us</span>
+                <h2>Our Platform Benefits</h2>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="single-features-box">
+                        <div class="icon">
+                            <i class="fas fa-robot feature-icon"></i>
+                        </div>
+                        <h3>AI-Powered Diagnosis</h3>
+                        <p>Advanced machine learning models for accurate disease prediction</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="single-features-box">
+                        <div class="icon">
+                            <i class="fas fa-user-md feature-icon"></i>
+                        </div>
+                        <h3>24/7 Doctor Access</h3>
+                        <p>Instant video consultations and live chat with licensed physicians</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="single-features-box">
+                        <div class="icon">
+                            <i class="fas fa-pills feature-icon"></i>
+                        </div>
+                        <h3>Smart Treatment Plans</h3>
+                        <p>Personalized medication, diet, and exercise recommendations</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="single-features-box">
+                        <div class="icon">
+                            <i class="fas fa-lock feature-icon"></i>
+                        </div>
+                        <h3>Secure & Private</h3>
+                        <p>HIPAA-compliant platform protecting your health data</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Features Section -->
+
+    <!-- Start Newsletter Section -->
+    <section class="newsletter-section ptb-100">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="section-title">
+                        <h2>Stay Updated with AI Healthcare</h2>
+                        <p>Subscribe to our newsletter for the latest in medical AI, telemedicine innovations, and health tips.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <form class="newsletter-form">
+                        <input type="email" class="input-newsletter" placeholder="Your email address" required>
+                        <button type="submit" class="default-btn">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Newsletter Section -->
+
+    <!-- Start Footer Area -->
+    <!-- Your existing footer content remains unchanged -->
+    <!-- ... -->
+
+    <!-- Start Footer Area -->
+    <section class="footer-area pt-100 pb-70">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h3>AI-MedCare</h3>
+                        <p>An intelligent healthcare platform that delivers personalized medical recommendations and telemedicine support, improving access to quality care anytime, anywhere.</p>
+                        <ul class="footer-social">
+                            <li>
+                                <a href="https://www.facebook.com/login/" target="_blank" class="facebook">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/i/flow/login" target="_blank" class="twitter">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.pinterest.com/" target="_blank" class="pinterest">
+                                        <i class="fab fa-pinterest-p"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" class="instagram">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h3>Instagram</h3>
+
+                        <ul class="instagram">
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='blog-1/assets/img/instagram/1.jpg')}}" alt="image">
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='blog-1/assets/img/instagram/2.jpg')}}" alt="image">
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='blog-1/assets/img/instagram/3.jpg')}}" alt="image">
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='blog-1/assets/img/instagram/4.jpg')}}" alt="image">
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='blog-1/assets/img/instagram/1.jpg')}}" alt="image">
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='blog-1/assets/img/instagram/2.jpg')}}" alt="image">
+                                    </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-footer-widget pl-5">
+                        <h3>Useful Links</h3>
+
+                        <ul class="footer-quick-links">
+                            <li>
+                                <a href="{{url_for('index')}}">Home</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('about')}}">About</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('solution')}}">Solution</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('services')}}">Services</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('blog1')}}">Blog</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('contact')}}">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h3>Contact</h3>
+
+                        <div class="footer-info-contact">
+                            <i class="flaticon-call"></i>
+                            <h3>Phone</h3>
+                            <span><a href="tel:123456123">+263-776-060-788</a></span>
+                        </div>
+
+                        <div class="footer-info-contact">
+                            <i class="flaticon-email"></i>
+                            <h3>Email</h3>
+                            <span><a href="/cdn-cgi/l/email-protection#721b1c141d32061b1c0817005c111d1f"><span class="__cf_email__" data-cfemail="9bf2f5fdf4dbeff2f5e1fee9b5f8f4f6">ichirume99@gmail.com</span></a>
+                            </span>
+                        </div>
+
+                        <div class="footer-info-contact">
+                            <i class="flaticon-pin"></i>
+                            <h3>Address</h3>
+                            <span>630 Churchill Avenue, Mt Pleasant, Harare</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lines">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </section>
+    <!-- End Footer Area -->
+
+
+    <!-- Start Go Top Area -->
+    <div class="go-top">
+        <i class="fa fa-chevron-up"></i>
+        <i class="fa fa-chevron-up"></i>
+    </div>
+    <!-- End Go Top Area -->
+
+    <!-- dark version -->
+    <div class="dark-version">
+        <label id="switch" class="switch">
+            <input type="checkbox" onchange="toggleTheme()" id="slider">
+            <span class="slider round"></span>
+        </label>
+    </div>
+    <!-- dark version -->
+
+    <!-- Jquery Slim JS -->
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="{{url_for('static', filename='blog-1/assets/js/jquery.min.js')}}"></script>
+    <!-- Bootstrap JS -->
+    <script src="{{url_for('static', filename='blog-1/assets/js/bootstrap.bundle.min.js')}}"></script>
+    <!-- Meanmenu JS -->
+    <script src="{{url_for('static', filename='blog-1/assets/js/jquery.meanmenu.js')}}"></script>
+    <!-- Nice Select JS -->
+    <script src="{{url_for('static', filename='blog-1/assets/js/jquery.nice-select.min.js')}}"></script>
+    <!-- Odometer JS -->
+    <script src="{{url_for('static', filename='blog-1/assets/js/odometer.min.js')}}"></script>
+    <!-- Appear JS -->
+    <script src="{{url_for('static', filename='blog-1/assets/js/jquery.appear.js')}}"></script>
+    <!-- Datepicker JS -->
+    <script src="{{url_for('static', filename='blog-1/assets/js/datepicker.min.js')}}"></script>
+    <!-- Magnific JS -->
+    <script src="{{url_for('static', filename='blog-1/assets/js/jquery.magnific-popup.min.js')}}"></script>
+    <!-- Carousel JS -->
+    <script src="{{url_for('static', filename='blog-1/assets/js/owl.carousel.min.js')}}"></script>
+    <!-- Form Ajaxchimp JS -->
+    <script src="{{url_for('static', filename='blog-1/assets/js/jquery.ajaxchimp.min.js')}}"></script>
+    <!-- Form Validator JS -->
+    <script src="{{url_for('static', filename='blog-1/assets/js/form-validator.min.js')}}"></script>
+    <!-- Contact JS -->
+    <script src="{{url_for('static', filename='blog-1/assets/js/contact-form-script.js')}}"></script>
+    <!-- Custom JS -->
+    <script src="{{url_for('static', filename='blog-1/assets/js/main.js')}}"></script>
+</body>
+</html>

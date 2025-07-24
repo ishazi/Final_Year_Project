@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Prescriptions | MedCare Patient Portal</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="icon" type="image/png" href="{{url_for('static', filename='index/assets/img/favicon.png')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #2980b9;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding-top: 56px; /* For fixed navbar */
+        }
+        
+        /* Navigation Bar */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 600;
+        }
+        
+        .nav-user-info {
+            color: rgba(255, 255, 255, 0.85);
+            margin-right: 15px;
+        }
+        
+        .btn-nav {
+            border-color: rgba(255, 255, 255, 0.3);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-nav:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: white;
+            transform: translateY(-1px);
+        }
+        
+        /* Main Content */
+        .page-header {
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(52, 152, 219, 0.2);
+        }
+        
+        .prescription-card {
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            height: 100%;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .prescription-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        .card-header {
+            border-radius: 10px 10px 0 0 !important;
+            padding: 1.25rem 1.5rem;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .card-footer {
+            background-color: transparent;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 1rem 1.5rem;
+        }
+        
+        .badge {
+            font-weight: 500;
+            padding: 0.35em 0.65em;
+            font-size: 0.85em;
+        }
+        
+        .btn-outline-primary {
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(52, 152, 219, 0.2);
+        }
+        
+        .empty-state {
+            padding: 3rem;
+            text-align: center;
+        }
+        
+        .empty-state-icon {
+            font-size: 4rem;
+            color: #adb5bd;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .card-body {
+                padding: 1.25rem;
+            }
+            
+            .page-header {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-heartbeat me-2"></i>MedCare Patient
+            </a>
+            <div class="d-flex align-items-center">
+                <span class="nav-user-info me-3">{{ current_user.first_name }} {{ current_user.surname }}</span>
+                <a href="{{ url_for('patient_dashboard') }}" class="btn btn-nav btn-outline-light btn-sm me-2">
+                    <i class="fas fa-arrow-left me-1"></i> Back to Dashboard
+                </a>
+                <a href="{{ url_for('logout') }}" class="btn btn-nav btn-outline-light btn-sm">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <div class="page-header">
+            <h2><i class="fas fa-prescription-bottle-alt me-2"></i>My Prescriptions</h2>
+        </div>
+        
+        {% if prescriptions_data %}
+        <div class="row">
+            {% for item in prescriptions_data %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card prescription-card {% if item.prescription.is_active %}border-primary{% endif %}">
+                    <div class="card-header d-flex justify-content-between align-items-center {% if item.prescription.is_active %}bg-primary text-white{% endif %}">
+                        <h5 class="mb-0">
+                            <i class="fas fa-pills me-2"></i>{{ item.prescription.medication }}
+                        </h5>
+                        {% if item.prescription.is_active %}
+                        <span class="badge bg-light text-primary">
+                            <i class="fas fa-check-circle me-1"></i> Active
+                        </span>
+                        {% else %}
+                        <span class="badge bg-light text-secondary">
+                            <i class="fas fa-times-circle me-1"></i> Inactive
+                        </span>
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <p class="mb-1 text-muted"><small><strong>DOSAGE</strong></small></p>
+                                <p class="fw-medium">{{ item.prescription.dosage }}</p>
+                            </div>
+                            <div class="col-6">
+                                <p class="mb-1 text-muted"><small><strong>PRESCRIBED ON</strong></small></p>
+                                <p class="fw-medium">{{ item.prescription.prescribed_date.strftime('%b %d, %Y') }}</p>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <p class="mb-1 text-muted"><small><strong>INSTRUCTIONS</strong></small></p>
+                            <p class="fw-medium">{{ item.prescription.instructions }}</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-top">
+                            <p class="mb-0 text-muted"><small><strong>PRESCRIBED BY</strong></small></p>
+                            <p class="fw-medium">{{ item.doctor_name }}</p>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent d-flex justify-content-between align-items-center">
+                        <small class="text-muted">
+                            {% if item.prescription.is_active %}
+                            <i class="fas fa-circle text-success me-1"></i> Currently active
+                            {% else %}
+                            <i class="fas fa-circle text-secondary me-1"></i> No longer active
+                            {% endif %}
+                        </small>
+                        <a href="{{ url_for('view_prescription', prescription_id=item.prescription.id) }}" 
+                           class="btn btn-sm btn-outline-primary"
+                           data-bs-toggle="tooltip" 
+                           title="View full prescription">
+                            <i class="fas fa-file-prescription me-1"></i> Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="card empty-state">
+            <div class="card-body">
+                <div class="empty-state-icon">
+                    <i class="fas fa-prescription-bottle-alt"></i>
+                </div>
+                <h3 class="text-muted mb-3">No Prescriptions Found</h3>
+                <p class="text-muted mb-4">You don't have any active prescriptions at this time.</p>
+                <a href="{{ url_for('patient_dashboard') }}" class="btn btn-primary">
+                    <i class="fas fa-arrow-left me-2"></i> Return to Dashboard
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <!-- Initialize tooltips -->
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+    </script>
+</body>
+</html>

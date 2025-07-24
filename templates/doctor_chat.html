@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Chat Interface</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="{{url_for('static', filename='index/assets/img/favicon.png')}}">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --doctor-color: #2980b9;
+            --patient-color: #ecf0f1;
+            --bot-color: #95a5a6;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+        }
+        
+        .navbar-brand {
+            font-weight: 600;
+        }
+        
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+        
+        .card-header {
+            border-radius: 10px 10px 0 0 !important;
+        }
+        
+        /* Patient List Styles */
+        .patient-list {
+            height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .patient-list .list-group-item {
+            border-radius: 8px;
+            margin-bottom: 5px;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        
+        .patient-list .list-group-item:hover {
+            transform: translateX(5px);
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .patient-list .list-group-item.active {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .patient-list .badge {
+            font-size: 0.75rem;
+            padding: 0.35em 0.5em;
+        }
+        
+        /* Chat Area Styles */
+        .chat-messages {
+            height: 60vh;
+            overflow-y: auto;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .message-card {
+            max-width: 80%;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .doctor-message {
+            background-color: var(--doctor-color);
+            color: white;
+            border-radius: 12px 12px 0 12px;
+        }
+        
+        .patient-message {
+            background-color: var(--patient-color);
+            border-radius: 12px 12px 12px 0;
+        }
+        
+        .bot-message {
+            background-color: var(--bot-color);
+            color: white;
+            border-radius: 12px 12px 12px 0;
+        }
+        
+        .message-time {
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
+        
+        /* Chat Form Styles */
+        #doctor-chat-form textarea {
+            border-radius: 8px;
+            resize: none;
+        }
+        
+        #doctor-send-btn {
+            border-radius: 8px;
+            padding: 8px 20px;
+            font-weight: 500;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #bdc3c7;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #95a5a6;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .patient-list {
+                height: 30vh;
+                margin-bottom: 20px;
+            }
+            
+            .chat-messages {
+                height: 50vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-user-md me-2"></i>Doctor Portal
+            </a>
+            <div class="d-flex align-items-center">
+                <!-- Back to Dashboard Button -->
+                <a href="{{ url_for('doctor_dashboard') }}" class="btn btn-outline-light btn-sm me-3">
+                    <i class="fas fa-arrow-left me-1"></i> Back To Your Dashboard
+                </a>
+            </div>
+            <div class="d-flex align-items-center">
+                <span class="text-white me-3">Dr. {{ current_user.first_name }} {{ current_user.surname }}</span>
+                <a href="{{ url_for('logout') }}" class="btn btn-outline-light btn-sm">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <!-- Patient List Column -->
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="fas fa-users me-2"></i>Active Patients</h5>
+                    </div>
+                    <div class="card-body patient-list">
+                        {% if patients %}
+                            <div class="list-group">
+                                {% for patient in patients %}
+                                <a href="{{ url_for('doctor_chat', patient_id=patient.id) }}" 
+                                   class="list-group-item list-group-item-action {% if current_patient_id == patient.id %}active{% endif %} d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong>{{ patient.first_name }} {{ patient.surname }}</strong>
+                                        <div class="text-muted small">{{ patient.email }}</div>
+                                    </div>
+                                    {% if patient.chat_messages|selectattr('is_read', 'equalto', False)|list|length > 0 %}
+                                    <span class="badge bg-danger rounded-pill">
+                                        {{ patient.chat_messages|selectattr('is_read', 'equalto', False)|list|length }}
+                                    </span>
+                                    {% endif %}
+                                </a>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="alert alert-info mb-0">No active patients with unread messages</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chat Column -->
+            <div class="col-md-9">
+                {% if current_patient_id %}
+                <div class="card h-100">
+                    <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="fas fa-comments me-2"></i>Chat with 
+                            {% if current_patient %}
+                                {{ current_patient.first_name }} {{ current_patient.surname }}
+                            {% else %}
+                                Patient #{{ current_patient_id }}
+                            {% endif %}
+                        </h5>
+                        <span class="badge bg-light text-dark">
+                            <i class="fas fa-circle text-success me-1"></i> Online
+                        </span>
+                    </div>
+                    <div class="card-body">
+                        <div id="doctor-chat-messages" class="chat-messages">
+                            {% for message in messages %}
+                            <div class="mb-3">
+                                <div class="d-flex {% if message.sender_type == 'doctor' %}justify-content-end{% else %}justify-content-start{% endif %}">
+                                    <div class="card message-card {% if message.sender_type == 'doctor' %}doctor-message{% elif message.sender_type == 'user' %}patient-message{% else %}bot-message{% endif %}">
+                                        <div class="card-body p-3">
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <h6 class="card-title mb-0">
+                                                    {% if message.sender_type == 'doctor' %}
+                                                        <i class="fas fa-user-md me-1"></i>You
+                                                    {% elif message.sender_type == 'user' %}
+                                                        <i class="fas fa-user me-1"></i>
+                                                        {% if message.user %}
+                                                            {{ message.user.first_name }}
+                                                        {% else %}
+                                                            Patient
+                                                        {% endif %}
+                                                    {% else %}
+                                                        <i class="fas fa-robot me-1"></i>MedBot
+                                                    {% endif %}
+                                                </h6>
+                                                <small class="message-time">{{ message.timestamp.strftime('%Y-%m-%d %H:%M') }}</small>
+                                            </div>
+                                            <p class="card-text">{{ message.message }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle me-2"></i>No messages yet in this conversation
+                            </div>
+                            {% endfor %}
+                        </div>
+                        
+                        <form id="doctor-chat-form" class="mt-3">
+                            <div class="form-group mb-3">
+                                <textarea class="form-control" id="doctor-message" placeholder="Type your response..." rows="3"></textarea>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn btn-primary" id="doctor-send-btn">
+                                    <i class="fas fa-paper-plane me-2"></i>Send
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                {% else %}
+                <div class="card h-100">
+                    <div class="card-body text-center d-flex flex-column justify-content-center align-items-center">
+                        <div class="display-4 text-muted mb-4">
+                            <i class="fas fa-comment-medical"></i>
+                        </div>
+                        <h3>Select a patient to start chatting</h3>
+                        <p class="text-muted">Patients with unread messages are marked with notification badges</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Socket.IO -->
+    {% if current_patient_id %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script>
+        // Initialize with default values
+        let roomId = '';
+        let patientId = 0;
+        
+        // Get values from data attributes
+        document.addEventListener('DOMContentLoaded', function() {
+            roomId = "{{ room_id }}";
+            patientId = parseInt("{{ current_patient_id }}");
+            
+            initializeSocketIO();
+            
+            // Auto-scroll to bottom on load
+            const chatContainer = document.getElementById('doctor-chat-messages');
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        });
+
+        function initializeSocketIO() {
+            const socket = io();
+            
+            // Join room on page load
+            socket.emit('join', { room_id: roomId });
+            
+            // Scroll to bottom of chat
+            function scrollToBottom() {
+                const chatContainer = document.getElementById('doctor-chat-messages');
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+            
+            // Handle send button click
+            document.getElementById('doctor-send-btn').addEventListener('click', function() {
+                const messageInput = document.getElementById('doctor-message');
+                const message = messageInput.value.trim();
+                
+                if (message) {
+                    // Disable button during send
+                    const sendBtn = document.getElementById('doctor-send-btn');
+                    sendBtn.disabled = true;
+                    sendBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...';
+                    
+                    try {
+                        // Send via SocketIO
+                        socket.emit('doctor_send_message', {
+                            message: message,
+                            patient_id: patientId,
+                            room_id: roomId,
+                            doctor_name: "{{ current_user.first_name }} {{ current_user.surname }}",
+                            timestamp: new Date().toISOString()
+                        }, (response) => {
+                            // Re-enable button
+                            sendBtn.disabled = false;
+                            sendBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Send';
+                            
+                            if (response && response.status === 'error') {
+                                showAlert('Failed to send message: ' + response.message, 'danger');
+                                return;
+                            }
+                            
+                            // Clear input on success
+                            messageInput.value = '';
+                            
+                            // Auto-scroll to bottom
+                            scrollToBottom();
+                        });
+                    } catch (error) {
+                        console.error('Send error:', error);
+                        sendBtn.disabled = false;
+                        sendBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Send';
+                        showAlert('Failed to send message', 'danger');
+                    }
+                }
+            });
+            
+            // Helper function to show alerts
+            function showAlert(message, type) {
+                const alertDiv = document.createElement('div');
+                alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+                alertDiv.innerHTML = `
+                    <i class="fas fa-exclamation-circle me-2"></i>${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
+                
+                const container = document.getElementById('doctor-chat-form');
+                container.insertBefore(alertDiv, container.firstChild);
+                
+                // Auto-dismiss after 5 seconds
+                setTimeout(() => {
+                    const bsAlert = new bootstrap.Alert(alertDiv);
+                    bsAlert.close();
+                }, 5000);
+            }
+            
+            // Handle incoming messages
+            socket.on('new_message', function(data) {
+                const chatContainer = document.getElementById('doctor-chat-messages');
+                
+                // Create message element
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'mb-3';
+                
+                const alignClass = data.sender === 'doctor' ? 'justify-content-end' : 'justify-content-start';
+                const messageType = data.sender === 'doctor' ? 'doctor-message' : 
+                                  (data.sender === 'user' ? 'patient-message' : 'bot-message');
+                const senderIcon = data.sender === 'doctor' ? 'fa-user-md' : 
+                                 (data.sender === 'user' ? 'fa-user' : 'fa-robot');
+                const senderName = data.sender === 'doctor' ? 'You' : 
+                                 (data.sender === 'user' ? data.sender_name : 'MedBot');
+                
+                messageDiv.innerHTML = `
+                    <div class="d-flex ${alignClass}">
+                        <div class="card message-card ${messageType}">
+                            <div class="card-body p-3">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h6 class="card-title mb-0">
+                                        <i class="fas ${senderIcon} me-1"></i>${senderName}
+                                    </h6>
+                                    <small class="message-time">${new Date(data.timestamp).toLocaleString()}</small>
+                                </div>
+                                <p class="card-text">${data.message}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                chatContainer.appendChild(messageDiv);
+                scrollToBottom();
+            });
+        }
+    </script>
+    {% endif %}
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

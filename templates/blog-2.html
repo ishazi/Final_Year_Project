@@ -1,0 +1,984 @@
+<!doctype html>
+<html lang="zxx" class="theme-light">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='blog-2/assets/css/bootstrap.min.css')}}">
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='blog-2/assets/css/animate.min.css')}}">
+    <!-- Meanmenu CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='blog-2/assets/css/meanmenu.css')}}">
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='blog-2/assets/css/fontawesome.min.css')}}">
+    <!-- Flaticon CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='blog-2/assets/css/flaticon.css')}}">
+    <!-- Nice Select CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='blog-2/assets/css/nice-select.min.css')}}">
+    <!-- Odometer CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='blog-2/assets/css/odometer.min.css')}}">
+    <!-- Magnific CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='blog-2/assets/css/magnific-popup.min.css')}}">
+    <!-- Carousel CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='blog-2/assets/css/owl.carousel.min.css')}}">
+    <!-- Carousel Default CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='blog-2/assets/css/owl.theme.default.min.css')}}">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='blog-2/assets/css/style.css')}}">
+    <!-- Dark CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='blog-2/assets/css/dark.css')}}">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='blog-2/assets/css/responsive.css')}}">
+
+    <title>Artificial Intelligence-Powered Medical Recommender System with Telemedicine Support </title>
+
+    <link rel="icon" type="image/png" href="{{url_for('static', filename='blog-2/assets/img/favicon.png')}}">
+</head>
+
+<body>
+
+    <!-- Start Preloader Area -->
+    <div class="preloader">
+        <div class="spinner"></div>
+    </div>
+    <!-- End Preloader Area -->
+
+    <!-- Start Header Area -->
+    <header class="header-area">
+        <div class="top-header">
+            <div class="container">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-lg-6">
+                        <ul class="top-list">
+                            <li>
+                                <i class='flaticon-clock'></i> Mon-Fri 06-00:00
+                            </li>
+                            <li>
+                                <i class='flaticon-phone-call'></i>
+                                <a href="tel:821-456-241">Call Us: +263-776-060-788</a>
+                            </li>
+                            <li>
+                                <i class='flaticon-paper-plane'></i>
+                                <a href="/cdn-cgi/l/email-protection#bbd3ded7d7d4fbd2d5ddd495d8d4d6"><span class="__cf_email__" data-cfemail="85ede0e9e9eac5ecebe3eaabe6eae8">ic@gmail.com</span></a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <ul class="top-social">
+                            <li>
+                                <a href="https://www.facebook.com/login/" target="_blank" class="facebook">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/i/flow/login" target="_blank" class="twitter">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.pinterest.com/" target="_blank" class="pinterest">
+                                        <i class="fab fa-pinterest-p"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" class="instagram">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                            </li>
+
+                            {% if current_user.is_authenticated and current_user.role == 'admin' %}
+                            <li>
+                                <a href="{{ url_for('admin_dashboard')}}" class="log-in">
+                                        Admin Dashboard
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('logout')}}" class="log-in">
+                                        Logout
+                                    </a>
+                            </li>
+                            {% elif current_user.is_authenticated and current_user.role == 'patient' %}
+
+                            <li>
+                                <a href="{{ url_for('patient_dashboard')}}" class="log-in">
+                                        Patient Dashboard
+                                    </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ url_for('logout')}}" class="log-in">
+                                        Logout
+                                    </a>
+                            </li>
+
+                            {% elif current_user.is_authenticated and current_user.role == 'doctor' %}
+
+                            <li>
+                                <a href="{{ url_for('doctor_dashboard')}}" class="log-in">
+                                        Doctor Dashboard
+                                    </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ url_for('logout')}}" class="log-in">
+                                        Logout
+                                    </a>
+                            </li>
+
+
+                            {% else %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle log-in" href="#" id="signinDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Sign In
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="signinDropdown">
+                                    <li><a class="dropdown-item" href="{{ url_for('patient_login') }}">Patient</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('doctor_login') }}">Doctor</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('admin_login') }}">Admin</a></li>
+                                </ul>
+                            </li>
+
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle sign-in" href="#" id="signupDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Sign Up
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="signupDropdown">
+                                    <li><a class="dropdown-item" href="{{ url_for('patient_signup') }}">Patient</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('doctor_signup') }}">Doctor</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('admin_signup') }}">Admin</a></li>
+                                </ul>
+                            </li>
+                            
+
+
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Start Navbar Area -->
+        <div class="navbar-area navbar-two">
+            <div class="main-responsive-nav">
+                <div class="container">
+                    <div class="main-responsive-menu">
+                        <div class="logo">
+                            <a href="index.html">
+                                <img src="{{url_for('static', filename='blog-2/assets/img/logo.png')}}" class="black-logo" alt="image">
+                                <img src="{{url_for('static', filename='blog-2/assets/img/logo-2.png')}}" class="white-logo" alt="image">        
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-navbar">
+                <div class="container">
+                    <nav class="navbar navbar-expand-md navbar-light">
+                        <a href="index.html">
+                                <img src="{{url_for('static', filename='blog-2/assets/img/logo.png')}}" class="black-logo" alt="image">
+                                <img src="{{url_for('static', filename='blog-2/assets/img/logo-2.png')}}" class="white-logo" alt="image">        
+                            </a>
+
+                        <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                            Home 
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="{{url_for('index')}}" class="nav-link">
+                                                    Home One
+                                                </a>
+                                        </li>
+
+                                       
+                                        <li class="nav-item">
+                                            <a href="index-6.html" class="nav-link">
+                                                    Video Home
+                                                </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{url_for('about')}}" class="nav-link">
+                                            About
+                                        </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{url_for('services')}}" class="nav-link">
+                                            Services 
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="{{url_for('services')}}" class="nav-link">
+                                                    Services
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="{{url_for('singleServices')}}" class="nav-link">
+                                                    Services Details
+                                                </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                            Pages 
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="about.html" class="nav-link">
+                                                    About
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="team.html" class="nav-link">
+                                                    Team
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="faq.html" class="nav-link">
+                                                    FAQ
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="appointment.html" class="nav-link">
+                                                    Appointment
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="testimonials.html" class="nav-link">
+                                                    Testimonials
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="how-it-works.html" class="nav-link">
+                                                    How It Works
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                    Projects 
+                                                    <i class="fa fa-angle-down"></i>
+                                                </a>
+
+                                            <ul class="dropdown-menu">
+                                                <li class="nav-item">
+                                                    <a href="projects.html" class="nav-link">
+                                                            Projects
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="single-projects.html" class="nav-link">
+                                                            Projects details
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="{{url_for('solution')}}" class="nav-link">
+                                                    Solution 
+                                                    <i class="fa fa-angle-down"></i>
+                                                </a>
+                                            <ul class="dropdown-menu">
+                                                <li class="nav-item">
+                                                    <a href="{{url_for('solution')}}" class="nav-link">
+                                                            Solution
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="{{url_for('solutionDetails')}}" class="nav-link">
+                                                            Solution Details
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                    Shop 
+                                                    <i class="fa fa-angle-down"></i>
+                                                </a>
+
+                                            <ul class="dropdown-menu">
+                                                <li class="nav-item">
+                                                    <a href="shop.html" class="nav-link">
+                                                            Shop
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="cart.html" class="nav-link">
+                                                            Cart
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="checkout.html" class="nav-link">
+                                                            Checkout
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="single-product.html" class="nav-link">
+                                                            Products Details
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                    User 
+                                                    <i class="fa fa-angle-down"></i>
+                                                </a>
+
+                                            <ul class="dropdown-menu">
+
+                                                <li class="nav-item">
+                                                    <a href="sign-in.html" class="nav-link">
+                                                            Sign In
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="sign-up.html" class="nav-link">
+                                                            Sign Up
+                                                        </a>
+                                                </li>
+                                                
+                                            </ul>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="terms-condition.html" class="nav-link">
+                                                    Terms & Conditions
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="privacy-policy.html" class="nav-link">
+                                                    Privacy Policy
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="error-404.html" class="nav-link">
+                                                    404 Error
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="contact.html" class="nav-link">
+                                                    Contact
+                                                </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{url_for('blog1')}}" class="nav-link active">
+                                            Blog 
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="{{url_for('blog1')}}" class="nav-link">
+                                                    Blog Grid
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="{{url_for('blog2')}}" class="nav-link active">
+                                                    Blog Right Sidebar
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="{{url_for('singleDetails')}}" class="nav-link">
+                                                    Blog Details
+                                                </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{url_for('contact')}}" class="nav-link">
+                                            Contact
+                                        </a>
+                                </li>
+                            </ul>
+
+                            <div class="others-options">
+                                <a href="{{url_for('appointment')}}" class="default-btn-two">
+                                        Get a Quote
+                                        <span></span>
+                                    </a>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- End Navbar Area -->
+    </header>
+    <!-- End Header Area -->
+
+    <!-- Start Page Title Area -->
+    <div class="page-title-area item-bg-2">
+        <div class="d-table">
+            <div class="d-table-cell">
+                <div class="container">
+                    <div class="page-title-content">
+                        <h2>Blog Right Sidebar</h2>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li>Blog Right Sidebar</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Title Area -->
+
+    <!-- Start Blog Area -->
+    <section class="blog-area ptb-100">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-6 col-md-6">
+                            <div class="blog-item">
+                                <div class="image">
+                                    <a href="single-blog.html">
+                                            <img src="{{url_for('static', filename='blog-2/assets/img/blog/image1.jpg')}}" alt="image">
+                                        </a>
+
+                                    <a href="blog-details.html" class="date">20 April, 2024</a>
+                                </div>
+
+                                <div class="content">
+                                    <h3>
+                                        <a href="single-blog.html">Telehealth Is Here To Stay. In Your Facility Ready?</a>
+                                    </h3>
+
+                                    <a href="single-blog.html" class="blog-btn">Read More +</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6">
+                            <div class="blog-item">
+                                <div class="image">
+                                    <a href="single-blog.html">
+                                            <img src="{{url_for('static', filename='blog-2/assets/img/blog/image2.jpg')}}" alt="image">
+                                        </a>
+
+                                    <a href="blog-details.html" class="date">20 April, 2024</a>
+                                </div>
+
+                                <div class="content">
+                                    <h3>
+                                        <a href="single-blog.html">Coronavirus stimulus checks: What you need to know</a>
+                                    </h3>
+
+                                    <a href="single-blog.html" class="blog-btn">Read More +</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6">
+                            <div class="blog-item">
+                                <div class="image">
+                                    <a href="single-blog.html">
+                                            <img src="{{url_for('static', filename='blog-2/assets/img/blog/image3.jpg')}}" alt="image">
+                                        </a>
+
+                                    <a href="blog-details.html" class="date">20 April, 2024</a>
+                                </div>
+
+                                <div class="content">
+                                    <h3>
+                                        <a href="single-blog.html">People worldwide adjust to new life amid COVID-19</a>
+                                    </h3>
+
+                                    <a href="single-blog.html" class="blog-btn">Read More +</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6">
+                            <div class="blog-item">
+                                <div class="image">
+                                    <a href="single-blog.html">
+                                            <img src="{{url_for('static', filename='blog-2/assets/img/blog/image4.jpg')}}" alt="image">
+                                        </a>
+
+                                    <a href="blog-details.html" class="date">20 April, 2024</a>
+                                </div>
+
+                                <div class="content">
+                                    <h3>
+                                        <a href="single-blog.html">New Africa coronavirus crisis looms with internal spread</a>
+                                    </h3>
+
+                                    <a href="single-blog.html" class="blog-btn">Read More +</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6">
+                            <div class="blog-item">
+                                <div class="image">
+                                    <a href="single-blog.html">
+                                            <img src="{{url_for('static', filename='blog-2/assets/img/blog/image5.jpg')}}" alt="image">
+                                        </a>
+
+                                    <a href="blog-details.html" class="date">20 April, 2024</a>
+                                </div>
+
+                                <div class="content">
+                                    <h3>
+                                        <a href="single-blog.html">Spain death toll up by almost 400 as cases rise around the globe</a>
+                                    </h3>
+
+                                    <a href="single-blog.html" class="blog-btn">Read More +</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6">
+                            <div class="blog-item">
+                                <div class="image">
+                                    <a href="single-blog.html">
+                                            <img src="{{url_for('static', filename='blog-2/assets/img/blog/image6.jpg')}}" alt="image">
+                                        </a>
+
+                                    <a href="blog-details.html" class="date">20 April, 2024</a>
+                                </div>
+
+                                <div class="content">
+                                    <h3>
+                                        <a href="single-blog.html">Can a face mask protect me from coronavirus-2024?</a>
+                                    </h3>
+
+                                    <a href="single-blog.html" class="blog-btn">Read More +</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6">
+                            <div class="blog-item">
+                                <div class="image">
+                                    <a href="single-blog.html">
+                                            <img src="{{url_for('static', filename='blog-2/assets/img/blog/image1.jpg')}}" alt="image">
+                                        </a>
+
+                                    <a href="blog-details.html" class="date">20 April, 2024</a>
+                                </div>
+
+                                <div class="content">
+                                    <h3>
+                                        <a href="single-blog.html">Telehealth Is Here To Stay. In Your Facility Ready?</a>
+                                    </h3>
+
+                                    <a href="single-blog.html" class="blog-btn">Read More +</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6">
+                            <div class="blog-item">
+                                <div class="image">
+                                    <a href="single-blog.html">
+                                            <img src="{{url_for('static', filename='blog-2/assets/img/blog/image2.jpg')}}" alt="image">
+                                        </a>
+
+                                    <a href="blog-details.html" class="date">20 April, 2024</a>
+                                </div>
+
+                                <div class="content">
+                                    <h3>
+                                        <a href="single-blog.html">Coronavirus stimulus checks: What you need to know</a>
+                                    </h3>
+
+                                    <a href="single-blog.html" class="blog-btn">Read More +</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6">
+                            <div class="blog-item">
+                                <div class="image">
+                                    <a href="single-blog.html">
+                                            <img src="{{url_for('static', filename='blog-2/assets/img/blog/image3.jpg')}}" alt="image">
+                                        </a>
+
+                                    <a href="blog-details.html" class="date">20 April, 2024</a>
+                                </div>
+
+                                <div class="content">
+                                    <h3>
+                                        <a href="single-blog.html">People worldwide adjust to new life amid COVID-19</a>
+                                    </h3>
+
+                                    <a href="single-blog.html" class="blog-btn">Read More +</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6">
+                            <div class="blog-item">
+                                <div class="image">
+                                    <a href="single-blog.html">
+                                            <img src="{{url_for('static', filename='blog-2/assets/img/blog/image7.jpg')}}" alt="image">
+                                        </a>
+
+                                    <a href="blog-details.html" class="date">20 April, 2024</a>
+                                </div>
+
+                                <div class="content">
+                                    <h3>
+                                        <a href="single-blog.html">New Africa coronavirus crisis looms with internal spread</a>
+                                    </h3>
+
+                                    <a href="single-blog.html" class="blog-btn">Read More +</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12">
+                            <div class="pagination-area">
+                                <a href="blog-2.html" class="prev page-numbers">
+                                        <i class="fa fa-chevron-left"></i>
+                                    </a>
+                                <a href="blog-2.html" class="page-numbers">1</a>
+                                <span class="page-numbers current" aria-current="page">2</span>
+                                <a href="blog-2.html" class="page-numbers">3</a>
+                                <a href="blog-2.html" class="page-numbers">4</a>
+                                <a href="blog-2.html" class="next page-numbers">
+                                        <i class="fa fa-chevron-right"></i>
+                                    </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <aside class="widget-area" id="secondary">
+                        <section class="widget widget_search">
+                            <h3 class="widget-title">Search</h3>
+
+                            <form class="search-form search-top">
+                                <label>
+                                        <span class="screen-reader-text">Search for:</span>
+                                        <input type="search" class="search-field" placeholder="Search...">
+                                    </label class="">
+                                    <button type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </form>
+                            </section>
+
+                            <section class="widget widget_content">
+                                <h3 class="widget-title">Department</h3>
+
+                                <ul class="list">
+                                    <li>
+                                        <a href="blog-details.html">
+                                            Orthopeadic
+                                            <i class="fa fa-chevron-right"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="blog-details.html">
+                                            Diabetic Test
+                                            <i class="fa fa-chevron-right"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="blog-details.html">
+                                            Behaviour health
+                                            <i class="fa fa-chevron-right"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="blog-details.html">
+                                            COVID-Test
+                                            <i class="fa fa-chevron-right"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="blog-details.html">
+                                            Live Video
+                                            <i class="fa fa-chevron-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </section>
+
+                            <section class="widget widget_tinzer_posts_thumb">
+                                <h3 class="widget-title">Recent Posts</h3>
+                                <article class="item">
+                                    <a href="blog-details.html" class="thumb">
+                                        <span class="fullimage cover bg1" role="img"></span>
+                                    </a>
+                                    <div class="info">
+                                        <time class="2024-06-30">30 January</time>
+                                        <h4 class="title usmall">
+                                            <a href="index.html">Ensure at the Hygenic office</a>
+                                        </h4>
+                                    </div>
+                                </article>
+
+                                <article class="item">
+                                    <a href="blog-details.html" class="thumb">
+                                        <span class="fullimage cover bg2" role="img"></span>
+                                    </a>
+                                    <div class="info">
+                                        <time class="2024-06-30">17 May</time>
+                                        <h4 class="title usmall">
+                                            <a href="index.html">Aliqua tuatorn grate hjyrdre</a>
+                                        </h4>
+                                    </div>
+                                </article>
+
+                                <article class="item">
+                                    <a href="blog-details.html" class="thumb">
+                                        <span class="fullimage cover bg3" role="img"></span>
+                                    </a>
+                                    <div class="info">
+                                        <time class="2024-06-30">18 March</time>
+                                        <h4 class="title usmall">
+                                            <a href="index.html">How to protect from Germ</a>
+                                        </h4>
+                                    </div>
+                                </article>
+                            </section>
+
+                            <section class="widget widget-image">
+                                <img src="{{url_for('static', filename='blog-2/assets/img/solution-details/image5.jpg')}}" alt="image">
+                                <div class="click-btn">
+                                    <a href="contact.html">Click Here</a>
+                                </div>
+                            </section>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Blog Area -->
+
+        <!-- Start Footer Area -->
+        <section class="footer-area pt-100 pb-70">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="single-footer-widget">
+                             <h3>AI-MedCare</h3>
+                             <p>An intelligent healthcare platform that delivers personalized medical recommendations and telemedicine support, improving access to quality care anytime, anywhere.</p>
+                             <ul class="footer-social">
+                                <li>
+                                    <a href="https://www.facebook.com/login/" target="_blank" class="facebook">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://twitter.com/i/flow/login" target="_blank" class="twitter">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.pinterest.com/" target="_blank" class="pinterest">
+                                        <i class="fab fa-pinterest-p"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.instagram.com/" class="instagram">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="single-footer-widget">
+                            <h3>Instagram</h3>
+
+                            <ul class="instagram">
+                                <li>
+                                    <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='blog-2/assets/img/instagram/1.jpg')}}" alt="image">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='blog-2/assets/img/instagram/2.jpg')}}" alt="image">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='blog-2/assets/img/instagram/3.jpg')}}" alt="image">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='blog-2/assets/img/instagram/4.jpg')}}" alt="image">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='blog-2/assets/img/instagram/1.jpg')}}" alt="image">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='blog-2/assets/img/instagram/2.jpg')}}" alt="image">
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="single-footer-widget pl-5">
+                            <h3>Useful Links</h3>
+                            
+                            <ul class="footer-quick-links">
+                                <li>
+                                    <a href="{{url_for('index')}}">Home</a>
+                                </li>
+                                <li>
+                                    <a href="{{url_for('about')}}">About</a>
+                                </li>
+                                <li>
+                                    <a href="{{url_for('solution')}}">Solution</a>
+                                </li>
+                                <li>
+                                    <a href="{{url_for('services')}}">Services</a>
+                                </li>
+                                <li>
+                                    <a href="{{url_for('blog1')}}">Blog</a>
+                                </li>
+                                <li>
+                                    <a href="{{url_for('contact')}}">Contact</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="single-footer-widget">
+                            <h3>Contact</h3>
+
+                            <div class="footer-info-contact">
+                                <i class="flaticon-call"></i>
+                                <h3>Phone</h3>
+                                <span><a href="tel:123456123">+263-776-060-788</a></span>
+                            </div>
+
+                            <div class="footer-info-contact">
+                                <i class="flaticon-email"></i>
+                                <h3>Email</h3>
+                                <span><a href="/cdn-cgi/l/email-protection#6c05020a032c18050216091e420f0301"><span class="__cf_email__" data-cfemail="b1d8dfd7def1c5d8dfcbd4c39fd2dedc">ichirume99@gmail.com</span></a></span>
+                            </div>
+
+                            <div class="footer-info-contact">
+                                <i class="flaticon-pin"></i>
+                                <h3>Address</h3>
+                                <span>630 Churchill Avenue, Mt Pleasant, Harare</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lines">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+        </section>
+        <!-- End Footer Area -->
+
+        <!-- Start Copy Right Section -->
+        <div class="copyright-area">
+            <div class="container">
+                <p>© <strong>Tinzer </strong> is Proudly Owned by <a href="https://envytheme.com/" target="_blank">  EnvyTheme </a></p>
+            </div>
+        </div>
+        <!-- End Copy Right Section -->
+
+        <!-- Start Go Top Area -->
+        <div class="go-top">
+            <i class="fa fa-chevron-up"></i>
+            <i class="fa fa-chevron-up"></i>
+        </div>
+        <!-- End Go Top Area -->
+
+        <!-- dark version -->
+        <div class="dark-version">
+            <label id="switch" class="switch">
+                <input type="checkbox" onchange="toggleTheme()" id="slider">
+                <span class="slider round"></span>
+            </label>
+                </div>
+                <!-- dark version -->
+
+                <!-- Jquery Slim JS -->
+                <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+                <script src="{{url_for('static', filename='blog-2/assets/js/jquery.min.js')}}"></script>
+                <!-- Bootstrap JS -->
+                <script src="{{url_for('static', filename='blog-2/assets/js/bootstrap.bundle.min.js')}}"></script>
+                <!-- Meanmenu JS -->
+                <script src="{{url_for('static', filename='blog-2/assets/js/jquery.meanmenu.js')}}"></script>
+                <!-- Nice Select JS -->
+                <script src="{{url_for('static', filename='blog-2/assets/js/jquery.nice-select.min.js')}}"></script>
+                <!-- Odometer JS -->
+                <script src="{{url_for('static', filename='blog-2/assets/js/odometer.min.js')}}"></script>
+                <!-- Appear JS -->
+                <script src="{{url_for('static', filename='blog-2/assets/js/jquery.appear.js')}}"></script>
+                <!-- Datepicker JS -->
+                <script src="{{url_for('static', filename='blog-2/assets/js/datepicker.min.js')}}"></script>
+                <!-- Magnific JS -->
+                <script src="{{url_for('static', filename='blog-2/assets/js/jquery.magnific-popup.min.js')}}"></script>
+                <!-- Carousel JS -->
+                <script src="{{url_for('static', filename='blog-2/assets/js/owl.carousel.min.js')}}"></script>
+                <!-- Form Ajaxchimp JS -->
+                <script src="{{url_for('static', filename='blog-2/assets/js/jquery.ajaxchimp.min.js')}}"></script>
+                <!-- Form Validator JS -->
+                <script src="{{url_for('static', filename='blog-2/assets/js/form-validator.min.js')}}"></script>
+                <!-- Contact JS -->
+                <script src="{{url_for('static', filename='blog-2/assets/js/contact-form-script.js')}}"></script>
+                <!-- Custom JS -->
+                <script src="{{url_for('static', filename='blog-2/assets/js/main.js')}}"></script>
+</body>
+
+</html>

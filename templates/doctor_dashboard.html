@@ -1,0 +1,1162 @@
+<!doctype html>
+<html lang="zxx" class="theme-light">
+<head>
+    <!-- Head content same as your template -->
+     <!-- Required meta tags -->
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+ 
+     <!-- Bootstrap CSS -->
+     <link rel="stylesheet" href="{{url_for('static', filename='dashboard/assets/css/bootstrap.min.css')}}">
+     <!-- Animate CSS -->
+     <link rel="stylesheet" href="{{url_for('static', filename='dashboard/assets/css/animate.min.css')}}">
+     <!-- Meanmenu CSS -->
+     <link rel="stylesheet" href="{{url_for('static', filename='dashboard/assets/css/meanmenu.css')}}">
+     <!-- Fontawesome CSS -->
+     <link rel="stylesheet" href="{{url_for('static', filename='dashboard/assets/css/fontawesome.min.css')}}">
+     <!-- Flaticon CSS -->
+     <link rel="stylesheet" href="{{url_for('static', filename='dashboard/assets/css/flaticon.css')}}">
+     <!-- Nice Select CSS -->
+     <link rel="stylesheet" href="{{url_for('static', filename='dashboard/assets/css/nice-select.min.css')}}">
+     <!-- Odometer CSS -->
+     <link rel="stylesheet" href="{{url_for('static', filename='dashboard/assets/css/odometer.min.css')}}">
+     <!-- Magnific CSS -->
+     <link rel="stylesheet" href="{{url_for('static', filename='dashboard/assets/css/magnific-popup.min.css')}}">
+     <!-- Carousel CSS -->
+     <link rel="stylesheet" href="{{url_for('static', filename='dashboard/assets/css/owl.carousel.min.css')}}">
+     <!-- Carousel Default CSS -->
+     <link rel="stylesheet" href="{{url_for('static', filename='dashboard/assets/css/owl.theme.default.min.css')}}">
+     <!-- Style CSS -->
+     <link rel="stylesheet" href="{{url_for('static', filename='dashboard/assets/css/style.css')}}">
+     <!-- Dark CSS -->
+     <link rel="stylesheet" href="{{url_for('static', filename='dashboard/assets/css/dark.css')}}">
+     <!-- Responsive CSS -->
+     <link rel="stylesheet" href="{{url_for('static', filename='dashboard/assets/css/responsive.css')}}">
+
+     
+     <title>Doctor Dashboard - Medical System</title>
+ 
+     <link rel="icon" type="image/png" href="{{url_for('static', filename='dashboard/assets/img/favicon.png')}}">
+     <!-- Font Awesome -->
+     <link
+       rel="stylesheet"
+       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+     />
+     <!-- Google Fonts Roboto -->
+     <link
+       rel="stylesheet"
+       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+     />
+     <!-- MDB -->
+     <link rel="stylesheet" href="static/mdb/css/mdb.min.css" />
+    <style>
+        .stat-card {
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+        .stat-card:hover {
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
+        }
+        .bg-appointments {
+            background-color: #4e73df;
+        }
+        .bg-patients {
+            background-color: #1cc88a;
+        }
+        .bg-prescriptions {
+            background-color: #36b9cc;
+        }
+        .bg-messages {
+            background-color: #f6c23e;
+        }
+
+                /* Dashboard Button Styling */
+.dashboard-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 180px;
+    height: 180px;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: #1a365d;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.dashboard-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    color: white;
+    background-color: #2c5282;
+}
+
+.dashboard-btn:active {
+    transform: translateY(0);
+}
+
+.btn-icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+/* Ripple effect */
+.dashboard-btn::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 1%, transparent 1%) center/15000%;
+    opacity: 0;
+    transition: opacity 0.5s, background-size 0.5s;
+}
+
+.dashboard-btn:active::after {
+    background-size: 100%;
+    opacity: 1;
+    transition: background-size 0s;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .dashboard-btn {
+        width: 140px;
+        height: 140px;
+        font-size: 1rem;
+    }
+    
+    .btn-icon {
+        font-size: 2rem;
+    }
+}
+
+/* Doctor Chat Link/Card Styles */
+.doctor-chat-link {
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+}
+
+.doctor-chat-card {
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.doctor-chat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, #e9ecef, #dee2e6);
+}
+
+.chat-icon {
+    font-size: 2.5rem;
+    color: #2980b9;
+    background: white;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.card-text {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+.notification-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 0.7rem;
+    padding: 5px 8px;
+    border-radius: 10px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* For a more button-like appearance */
+.doctor-chat-card.active {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+}
+
+.doctor-chat-card.active .chat-icon {
+    color: white;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.doctor-chat-card.active .card-title,
+.doctor-chat-card.active .card-text {
+    color: white;
+}
+    </style>
+</head>
+<body>
+    <!-- Header same as your template -->
+     <!-- Start Preloader Area -->
+     <div class="preloader">
+        <div class="spinner"></div>
+    </div>
+    <!-- End Preloader Area -->
+
+    <!-- Start Header Area -->
+    <header class="header-area">
+        <div class="top-header">
+            <div class="container">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-lg-6">
+                        <ul class="top-list">
+                            <li>
+                                <i class='flaticon-clock'></i> Mon-Sun 06-00:00
+                            </li>
+                            <li>
+                                <i class='flaticon-phone-call'></i>
+                                <a href="tel:821-456-241">Call Us: +263-776-060-788</a>
+                            </li>
+                            <li>
+                                <i class='flaticon-paper-plane'></i>
+                                <a href="/cdn-cgi/l/email-protection#38505d5454577851565e57165b5755"><span class="__cf_email__" data-cfemail="2d45484141426d44434b42034e4240">ich@gmail.com</span></a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <ul class="top-social">
+                            <li>
+                                <a href="https://www.facebook.com/login/" target="_blank" class="facebook">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/i/flow/login" target="_blank" class="twitter">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.pinterest.com/" target="_blank" class="pinterest">
+                                        <i class="fab fa-pinterest-p"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" class="instagram">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                            </li>
+
+                            {% if current_user.is_authenticated%}
+                            <li>
+                                <a href="{{ url_for('logout')}}" class="log-in">
+                                        Logout
+                                    </a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="sign-in.html" class="log-in">
+                                        Sign In
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="sign-up.html" class="sign-in">
+                                        Sign Up
+                                    </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Start Navbar Area -->
+        <div class="navbar-area navbar-two">
+            <div class="main-responsive-nav">
+                <div class="container">
+                    <div class="main-responsive-menu">
+                        <div class="logo">
+                            <a href="index.html">
+                                <img src="{{url_for('static', filename='dashboard/assets/img/logo.png')}}" class="black-logo" alt="image">
+                                <img src="{{url_for('static', filename='dashboard/assets/img/logo-2.png')}}" class="white-logo" alt="image">        
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-navbar">
+                <div class="container">
+                    <nav class="navbar navbar-expand-md navbar-light">
+                        <a href="index.html">
+                                <img src="{{url_for('static', filename='dashboard/assets/img/logo.png')}}" class="black-logo" alt="image">
+                                <img src="{{url_for('static', filename='dashboard/assets/img/logo-2.png')}}" class="white-logo" alt="image">        
+                            </a>
+
+                        <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a href="{{url_for('index')}}" class="nav-link">
+                                            Home 
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="{{url_for('index')}}" class="nav-link">
+                                                    Home One
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="index-6.html" class="nav-link">
+                                                    Video Home
+                                                </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{url_for('about')}}" class="nav-link">
+                                            About
+                                        </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{url_for('services')}}" class="nav-link">
+                                            Services 
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="{{url_for('services')}}" class="nav-link">
+                                                    Services
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="{{url_for('singleServices')}}" class="nav-link">
+                                                    Services Details
+                                                </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link active">
+                                            Pages 
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="about.html" class="nav-link">
+                                                    About
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="team.html" class="nav-link">
+                                                    Team
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="faq.html" class="nav-link">
+                                                    FAQ
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="appointment.html" class="nav-link">
+                                                    Appointment
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="testimonials.html" class="nav-link">
+                                                    Testimonials
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="how-it-works.html" class="nav-link">
+                                                    How It Works
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                    Projects 
+                                                    <i class="fa fa-angle-down"></i>
+                                                </a>
+
+                                            <ul class="dropdown-menu">
+                                                <li class="nav-item">
+                                                    <a href="projects.html" class="nav-link">
+                                                            Projects
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="single-projects.html" class="nav-link">
+                                                            Projects details
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                    Solution 
+                                                    <i class="fa fa-angle-down"></i>
+                                                </a>
+                                            <ul class="dropdown-menu">
+                                                <li class="nav-item">
+                                                    <a href="solution.html" class="nav-link">
+                                                            Solution
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="solution-details.html" class="nav-link">
+                                                            Solution Details
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                    Shop 
+                                                    <i class="fa fa-angle-down"></i>
+                                                </a>
+
+                                            <ul class="dropdown-menu">
+                                                <li class="nav-item">
+                                                    <a href="shop.html" class="nav-link">
+                                                            Shop
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="cart.html" class="nav-link">
+                                                            Cart
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="checkout.html" class="nav-link">
+                                                            Checkout
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="single-product.html" class="nav-link">
+                                                            Products Details
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                    User 
+                                                    <i class="fa fa-angle-down"></i>
+                                                </a>
+
+                                            <ul class="dropdown-menu">
+                                                <li class="nav-item">
+                                                    <a href="sign-in.html" class="nav-link">
+                                                            Sign In
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="sign-up.html" class="nav-link">
+                                                            Sign Up
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="terms-condition.html" class="nav-link active">
+                                                    Terms & Conditions
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="privacy-policy.html" class="nav-link">
+                                                    Privacy Policy
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="error-404.html" class="nav-link">
+                                                    404 Error
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="{{url_for('contact')}}" class="nav-link">
+                                                    Contact
+                                                </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{url_for('blog1')}}" class="nav-link">
+                                            Blog 
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="{{url_for('blog1')}}" class="nav-link">
+                                                    Blog Grid
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="blog-2.html" class="nav-link">
+                                                    Blog Right Sidebar
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="{{url_for('blog2')}}" class="nav-link">
+                                                    Blog Details
+                                                </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{url_for('contact')}}" class="nav-link">
+                                            Contact
+                                        </a>
+                                </li>
+                            </ul>
+
+                            <div class="others-options">
+                                <a href="{{url_for('appointment')}}" class="default-btn-two">
+                                        Get a Quote
+                                        <span></span>
+                                    </a>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- End Navbar Area -->
+    </header>
+    <!-- End Header Area -->
+
+
+    <!-- Page Title Area -->
+    <div class="page-title-area item-bg-2">
+        <div class="d-table">
+            <div class="d-table-cell">
+                <div class="container">
+                    <div class="page-title-content">
+                        <h2>Welcome, Dr. {{ current_user.first_name }}!</h2>
+                        <ul>
+                            <li><a href="{{url_for('index')}}">Home</a></li>
+                            <li>Doctor Dashboard</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Content -->
+    <section class="conditions-area ptb-100">
+        <div class="container">
+            <!-- Stats Cards -->
+            <div class="row mb-4">
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card stat-card border-left-primary shadow h-100 py-2 bg-appointments">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-white text-uppercase mb-1">
+                                        Today's Appointments</div>
+                                        <small class="d-block text-white-50">{{ today_date }}</small>
+                                    <div class="h5 mb-0 font-weight-bold text-white">
+                                        {{ todays_appointments_count }}
+                                    </div>
+                                    <div class="mt-2">
+                                        <small class="text-white-50">
+                                            {% if todays_appointments_count == 0 %}
+                                                No appointments scheduled
+                                            {% elif todays_appointments_count == 1 %}
+                                                1 appointment today
+                                            {% else %}
+                                                {{ todays_appointments_count }} appointments today
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                    <div class="mt-2 small">
+                                        {% for status, count in todays_stats %}
+                                        <span class="badge bg-{{ 'success' if status == 'Completed' else 'primary' }} mr-1">
+                                            {{ count }} {{ status }}
+                                        </span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-calendar fa-2x text-white"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card stat-card border-left-success shadow h-100 py-2 bg-patients">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-white text-uppercase mb-1">
+                                        Active Patients</div>
+                                    <div class="h5 mb-0 font-weight-bold text-white">
+                                        {{ active_patients_count|default('0') }}
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-user-injured fa-2x text-white"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card stat-card border-left-info shadow h-100 py-2 bg-prescriptions">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-white text-uppercase mb-1">
+                                        Prescriptions This Month</div>
+                                    <div class="h5 mb-0 font-weight-bold text-white">87</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-prescription fa-2x text-white"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+
+                
+
+                <!-- Messages Card -->
+<div class="col-xl-3 col-md-6 mb-4">
+    <div class="card stat-card border-left-warning shadow h-100 py-2 bg-messages">
+        <div class="card-body">
+            <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-white text-uppercase mb-1">
+                        Unread Messages</div>
+                    <div class="h5 mb-0 font-weight-bold text-white">{{ unread_count }}</div>
+                </div>
+                <div class="col-auto">
+                    <i class="fas fa-comments fa-2x text-white"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Message Modal -->
+<div class="modal fade" id="messageModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="messageModalTitle">Message Details</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="messageModalBody">
+                <!-- Content loaded via AJAX -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a href="#" class="btn btn-primary" id="replyBtn"><i class="fas fa-reply"></i> Reply</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+            </div>
+
+            <!-- Main Dashboard Buttons -->
+            <div class="d-flex flex-wrap justify-content-center">
+                
+                <a class="dashboard-btn m-3" href="{{ url_for('doctor_patients') }}">
+                    <i class="fas fa-user-injured btn-icon"></i>
+                    <span>Patient<br>List</span>
+                </a>
+               
+                
+
+                <a href="{{ url_for('doctor_chat') }}" class="doctor-chat-link">
+                    <div class="card doctor-chat-card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-comments chat-icon"></i>
+                            <h5 class="card-title mt-3">Patient Chat</h5>
+                            <p class="card-text">Live chat with your patients</p>
+                            <span class="badge bg-danger notification-badge">3 New</span>
+                        </div>
+                    </div>
+                </a>
+
+                {% for appointment in upcoming_appointments %}
+                <div class="appointment-card">
+                    <!-- Your existing appointment display code -->
+                    
+                    <a class="dashboard-btn m-3" href="{{ url_for('meeting') }}?appointment_id={{ appointment.id }}">
+                        <i class="fas fa-video btn-icon"></i>
+                        <span>Tele<br>Medicine</span>
+                    </a>
+                </div>
+            {% endfor %}
+               
+                <a class="dashboard-btn m-3" data-mdb-ripple-init href="{{url_for('diseases')}}" role="button">
+                    <i class="fas fa-book-medical btn-icon"></i>
+                    <span>All<br>Disease</span>
+                </a>
+
+               
+                <a class="dashboard-btn m-3" href="#">
+                    <i class="fas fa-user-md btn-icon"></i>
+                    <span>My<br>Profile</span>
+                </a>
+
+                <div class="col-md-4 mb-4">
+                    <a href="{{ url_for('patient_prescriptions', patient_id=selected_patient.id) }}" class="text-decoration-none">
+                        <div class="card h-100 hover-shadow">
+                            <div class="card-body text-center">
+                                <i class="fas fa-prescription-bottle-alt fa-3x text-primary mb-3"></i>
+                                <h5>Patient Prescriptions</h5>
+                                <p class="text-muted">View and manage prescriptions</p>
+                                <span class="badge bg-danger">{{ active_prescriptions_count }} Active</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+
+
+            <!-- Today's Appointments -->
+             
+            <div class="container py-4">
+                <h2 class="mb-4">Your Appointments</h2>
+                
+                <!-- Pending Approvals Section -->
+                <div class="card shadow mb-4">
+                    <div class="card-header bg-warning text-dark">
+                        <h4 class="mb-0"><i class="fas fa-clock me-2"></i>Pending Approvals ({{ pending_appointments|length }})</h4>
+                    </div>
+                    <div class="card-body">
+                        {% if pending_appointments %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Requested Date</th>
+                                        <th>Patient</th>
+                                        <th>Symptoms</th>
+                                        <th>Urgency</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for appt in pending_appointments %}
+                                    <tr>
+                                        <td>{{ appt.appointment_date.strftime('%Y-%m-%d %H:%M') }}</td>
+                                        <td>{{ appt.patient.first_name }} {{ appt.patient.surname }}</td>
+                                        <td>{{ appt.symptoms|truncate(50) }}</td>
+                                        <td>
+                                            <span class="badge bg-{{ 'danger' if 'emergency' in appt.symptoms|lower else 'warning' }}">
+                                                {{ 'High' if 'emergency' in appt.symptoms|lower else 'Normal' }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <a href="{{ url_for('view_appointment', appointment_id=appt.id) }}" 
+                                               class="btn btn-sm btn-primary">
+                                               <i class="fas fa-clipboard-check"></i> Review
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% else %}
+                        <div class="alert alert-success">No pending appointments requiring approval.</div>
+                        {% endif %}
+                    </div>
+                </div>
+            
+                <!-- Upcoming Approved Appointments -->
+                <div class="card shadow mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0"><i class="fas fa-calendar-check me-2"></i>Upcoming Appointments ({{ upcoming_appointments|length }})</h4>
+                    </div>
+                    <div class="card-body">
+                        {% if upcoming_appointments %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Date & Time</th>
+                                        <th>Patient</th>
+                                        <th>Contact</th>
+                                        <th>Symptoms</th>
+                                        <th>Meeting Link</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for appt in upcoming_appointments %}
+                                    <tr class="{{ 'table-info' if is_today(appt.appointment_date) }}">
+                                        <td>
+                                            {{ appt.appointment_date.strftime('%a, %b %d %Y @ %H:%M') }}
+                                            {% if is_soon(appt.appointment_date) %}
+                                            <span class="badge bg-danger ms-2">
+                                                SOON
+                                            </span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {{ appt.patient.first_name }} {{ appt.patient.surname }}
+                                            {% if appt.patient.date_of_birth %}
+                                            <br><small class="text-muted">Age: {{ calculate_age(appt.patient.date_of_birth) }}</small>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <small>{{ appt.patient.phone_number }}</small>
+                                            <br><small>{{ appt.patient.email }}</small>
+                                        </td>
+                                        <td>{{ appt.symptoms|truncate(30) }}</td>
+                                        <td>
+                                            {% if appt.meeting_link %}
+                                            <a href="{{ appt.meeting_link }}" target="_blank" class="badge bg-success text-white">
+                                                JOIN LINK
+                                            </a>
+                                            {% else %}
+                                            <span class="badge bg-secondary">Not generated</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <a href="{{ url_for('view_appointment', appointment_id=appt.id) }}" 
+                                                   class="btn btn-primary">
+                                                   <i class="fas fa-file-medical"></i>
+                                                </a>
+                                                <a href="{{ appt.meeting_link if appt.meeting_link else '#' }}" 
+                                                   class="btn btn-success {{ 'disabled' if not appt.meeting_link }}" 
+                                                   target="_blank">
+                                                   <i class="fas fa-video"></i>
+                                                </a>
+                                                <form action="{{ url_for('cancel_appointment', appointment_id=appt.id) }}" method="POST">
+                                                    <button type="submit" class="btn btn-danger" 
+                                                            onclick="return confirm('Cancel this appointment?')">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% else %}
+                        <div class="alert alert-info">No upcoming appointments scheduled.</div>
+                        {% endif %}
+                    </div>
+                </div>
+            
+                <!-- Past Appointments -->
+                <div class="card shadow">
+                    <div class="card-header bg-secondary text-white">
+                        <h4 class="mb-0"><i class="fas fa-history me-2"></i>Recent History</h4>
+                    </div>
+                    <div class="card-body">
+                        {% if past_appointments %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Patient</th>
+                                        <th>Status</th>
+                                        <th>Notes</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for appt in past_appointments %}
+                                    <tr>
+                                        <td>{{ appt.appointment_date.strftime('%b %d, %Y') }}</td>
+                                        <td>{{ appt.patient.first_name }} {{ appt.patient.surname }}</td>
+                                        <td>
+                                            <span class="badge bg-{{ 'success' if appt.status == 'Completed' else 'danger' if appt.status == 'Cancelled' else 'info' }}">
+                                                {{ appt.status }}
+                                            </span>
+                                        </td>
+                                        <td>{{ appt.doctor_notes|truncate(40) if appt.doctor_notes else '-' }}</td>
+                                        <td>
+                                            <a href="{{ url_for('view_appointment', appointment_id=appt.id) }}" 
+                                               class="btn btn-sm btn-outline-primary">
+                                               Details
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% else %}
+                        <div class="alert alert-info">No past appointments found.</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer same as your template -->
+       <!-- Start Footer Area -->
+    <section class="footer-area pt-100 pb-70">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h3>AI-MEDICAL RECOMMENDER</h3>
+                        <ul class="footer-social">
+                            <li>
+                                <a href="https://www.facebook.com/login/" target="_blank" class="facebook">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/i/flow/login" target="_blank" class="twitter">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.pinterest.com/" target="_blank" class="pinterest">
+                                        <i class="fab fa-pinterest-p"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" class="instagram">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h3>Instagram</h3>
+
+                        <ul class="instagram">
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='dashboard/assets/img/instagram/1.jpg')}}" alt="image">
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='dashboard/assets/img/instagram/2.jpg')}}" alt="image">
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='dashboard/assets/img/instagram/3.jpg')}}" alt="image">
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='dashboard/assets/img/instagram/4.jpg')}}" alt="image">
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='dashboard/assets/img/instagram/1.jpg')}}" alt="image">
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='dashboard/assets/img/instagram/2.jpg')}}" alt="image">
+                                    </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-footer-widget pl-5">
+                        <h3>Useful Links</h3>
+
+                        <ul class="footer-quick-links">
+                            <li>
+                                <a href="{{url_for('index')}}">Home</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('about')}}">About</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('solution')}}">Solution</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('services')}}">Services</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('blog1')}}">Blog</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('contact')}}">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h3>Contact</h3>
+
+                        <div class="footer-info-contact">
+                            <i class="flaticon-call"></i>
+                            <h3>Phone</h3>
+                            <span><a href="tel:123456123">+263-776-060-788</a></span>
+                        </div>
+
+                        <div class="footer-info-contact">
+                            <i class="flaticon-email"></i>
+                            <h3>Email</h3>
+                            <span><a href="/cdn-cgi/l/email-protection#ff96919990bf8b9691859a8dd19c9092"><span class="__cf_email__" data-cfemail="6d04030b022d19040317081f430e0200">ichirume99@gmail.com</span></a>
+                            </span>
+                        </div>
+
+                        <div class="footer-info-contact">
+                            <i class="flaticon-pin"></i>
+                            <h3>Address</h3>
+                            <span>630 Churchill Avenue, Mt Pleasant, Harare</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lines">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </section>
+    <!-- End Footer Area -->
+
+    <!-- Start Copy Right Section -->
+    
+    <!-- End Copy Right Section -->
+
+    <!-- Start Go Top Area -->
+    <div class="go-top">
+        <i class="fa fa-chevron-up"></i>
+        <i class="fa fa-chevron-up"></i>
+    </div>
+    <!-- End Go Top Area -->
+
+    <!-- dark version -->
+    <div class="dark-version">
+        <label id="switch" class="switch">
+                <input type="checkbox" onchange="toggleTheme()" id="slider">
+                <span class="slider round"></span>
+            </label>
+    </div>
+    <!-- dark version -->
+
+    <!-- Jquery Slim JS -->
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="{{url_for('static', filename='dashboard/assets/js/jquery.min.js')}}"></script>
+    <!-- Bootstrap JS -->
+    <script src="{{url_for('static', filename='dashboard/assets/js/bootstrap.bundle.min.js')}}"></script>
+    <!-- Meanmenu JS -->
+    <script src="{{url_for('static', filename='dashboard/assets/js/jquery.meanmenu.js')}}"></script>
+    <!-- Nice Select JS -->
+    <script src="{{url_for('static', filename='dashboard/assets/js/jquery.nice-select.min.js')}}"></script>
+    <!-- Odometer JS -->
+    <script src="{{url_for('static', filename='dashboard/assets/js/odometer.min.js')}}"></script>
+    <!-- Appear JS -->
+    <script src="{{url_for('static', filename='dashboard/assets/js/jquery.appear.js')}}"></script>
+    <!-- Datepicker JS -->
+    <script src="{{url_for('static', filename='dashboard/assets/js/datepicker.min.js')}}"></script>
+    <!-- Magnific JS -->
+    <script src="{{url_for('static', filename='dashboard/assets/js/jquery.magnific-popup.min.js')}}"></script>
+    <!-- Carousel JS -->
+    <script src="{{url_for('static', filename='dashboard/assets/js/owl.carousel.min.js')}}"></script>
+    <!-- Form Ajaxchimp JS -->
+    <script src="{{url_for('static', filename='dashboard/assets/js/jquery.ajaxchimp.min.js')}}"></script>
+    <!-- Form Validator JS -->
+    <script src="{{url_for('static', filename='dashboard/assets/js/form-validator.min.js')}}"></script>
+    <!-- Contact JS -->
+    <script src="{{url_for('static', filename='dashboard/assets/js/contact-form-script.js')}}"></script>
+    <!-- Custom JS -->
+    <script src="{{url_for('static', filename='dashboard/assets/js/main.js')}}"></script>
+     <!-- MDB -->
+     <script type="text/javascript" src="static/mdb/js/mdb.umd.min.js"></script>
+     <!-- Custom scripts -->
+     <script type="text/javascript"></script>
+    
+
+
+</body>
+</html>

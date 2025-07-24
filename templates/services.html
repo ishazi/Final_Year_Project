@@ -1,0 +1,998 @@
+<!doctype html>
+<html lang="zxx" class="theme-light">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='services/assets/css/bootstrap.min.css')}}">
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='services/assets/css/animate.min.css')}}">
+    <!-- Meanmenu CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='services/assets/css/meanmenu.css')}}">
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='services/assets/css/fontawesome.min.css')}}">
+    <!-- Flaticon CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='services/assets/css/flaticon.css')}}">
+    <!-- Nice Select CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='services/assets/css/nice-select.min.css')}}">
+    <!-- Odometer CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='services/assets/css/odometer.min.css')}}">
+    <!-- Magnific CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='services/assets/css/magnific-popup.min.css')}}">
+    <!-- Carousel CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='services/assets/css/owl.carousel.min.css')}}">
+    <!-- Carousel Default CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='assets/css/owl.theme.default.min.css')}}">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='services/assets/css/style.css')}}">
+    <!-- Dark CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='services/assets/css/dark.css')}}">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='services/assets/css/responsive.css')}}">
+
+    <title>Artificial Intelligence-Powered Medical Recommender System with Telemedicine Support </title>
+    <link rel="icon" type="image/png" href="{{url_for('static', filename='index/assets/img/favicon.png')}}">
+
+</head>
+
+<body>
+
+    <!-- Start Preloader Area -->
+    <div class="preloader">
+        <div class="spinner"></div>
+    </div>
+    <!-- End Preloader Area -->
+
+    <!-- Start Header Area -->
+    <header class="header-area">
+        <div class="top-header">
+            <div class="container">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-lg-6">
+                        <ul class="top-list">
+                            <li>
+                                <i class='flaticon-clock'></i> Mon-Sun 06-00:00
+                            </li>
+                            <li>
+                                <i class='flaticon-phone-call'></i>
+                                <a href="tel:821-456-241">Call Us: +263-776-060-788</a>
+                            </li>
+                            <li>
+                                <i class='flaticon-paper-plane'></i>
+                                <a href="/cdn-cgi/l/email-protection#4e262b2222210e27202821602d2123"><span class="__cf_email__" data-cfemail="91f9f4fdfdfed1f8fff7febff2fefc">ic@gmail.com</span></a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <ul class="top-social">
+                            <li>
+                                <a href="https://www.facebook.com/login/" target="_blank" class="facebook">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/i/flow/login" target="_blank" class="twitter">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.pinterest.com/" target="_blank" class="pinterest">
+                                        <i class="fab fa-pinterest-p"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" class="instagram">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                            </li>
+
+                            {% if current_user.is_authenticated and current_user.role == 'admin' %}
+                            <li>
+                                <a href="{{ url_for('admin_dashboard')}}" class="log-in">
+                                        Admin Dashboard
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('logout')}}" class="log-in">
+                                        Logout
+                                    </a>
+                            </li>
+                            {% elif current_user.is_authenticated and current_user.role == 'patient' %}
+
+                            <li>
+                                <a href="{{ url_for('patient_dashboard')}}" class="log-in">
+                                        Patient Dashboard
+                                    </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ url_for('logout')}}" class="log-in">
+                                        Logout
+                                    </a>
+                            </li>
+
+                            {% elif current_user.is_authenticated and current_user.role == 'doctor' %}
+
+                            <li>
+                                <a href="{{ url_for('doctor_dashboard')}}" class="log-in">
+                                        Doctor Dashboard
+                                    </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ url_for('logout')}}" class="log-in">
+                                        Logout
+                                    </a>
+                            </li>
+
+
+                            {% else %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle log-in" href="#" id="signinDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Sign In
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="signinDropdown">
+                                    <li><a class="dropdown-item" href="{{ url_for('patient_login') }}">Patient</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('doctor_login') }}">Doctor</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('admin_login') }}">Admin</a></li>
+                                </ul>
+                            </li>
+
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle sign-in" href="#" id="signupDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Sign Up
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="signupDropdown">
+                                    <li><a class="dropdown-item" href="{{ url_for('patient_signup') }}">Patient</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('doctor_signup') }}">Doctor</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('admin_signup') }}">Admin</a></li>
+                                </ul>
+                            </li>
+                            
+
+
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Start Navbar Area -->
+        <div class="navbar-area navbar-two">
+            <div class="main-responsive-nav">
+                <div class="container">
+                    <div class="main-responsive-menu">
+                        <div class="logo">
+                            <a href="index.html">
+                                <img src="{{url_for('static', filename='services/assets/img/logo.png')}}" class="black-logo" alt="image">
+                                <img src="{{url_for('static', filename='services/assets/img/logo-2.png')}}" class="white-logo" alt="image">        
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-navbar">
+                <div class="container">
+                    <nav class="navbar navbar-expand-md navbar-light">
+                        <a href="index.html">
+                                <img src="{{url_for('static', filename='services/assets/img/logo.png')}}" class="black-logo" alt="image">
+                                <img src="{{url_for('static', filename='services/assets/img/logo-2.png')}}" class="white-logo" alt="image">        
+                            </a>
+
+                        <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a href="{{url_for('index')}}" class="nav-link">
+                                            Home 
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="{{url_for('index')}}" class="nav-link">
+                                                    Home One
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="index-6.html" class="nav-link">
+                                                    Video Home
+                                                </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{url_for('about')}}" class="nav-link">
+                                            About
+                                        </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{url_for('services')}}" class="nav-link">
+                                            Services 
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="{{url_for('services')}}" class="nav-link active">
+                                                    Services
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="{{url_for('singleServices')}}" class="nav-link">
+                                                    Services Details
+                                                </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                            Pages 
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="{{url_for('about')}}" class="nav-link">
+                                                    About
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="team.html" class="nav-link">
+                                                    Team
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="faq.html" class="nav-link">
+                                                    FAQ
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="{{url_for('appointment')}}" class="nav-link">
+                                                    Appointment
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="testimonials.html" class="nav-link">
+                                                    Testimonials
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="how-it-works.html" class="nav-link">
+                                                    How It Works
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                    Projects 
+                                                    <i class="fa fa-angle-down"></i>
+                                                </a>
+
+                                            <ul class="dropdown-menu">
+                                                <li class="nav-item">
+                                                    <a href="projects.html" class="nav-link">
+                                                            Projects
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="single-projects.html" class="nav-link">
+                                                            Projects details
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="{{url_for('solution')}}" class="nav-link">
+                                                    Solution 
+                                                    <i class="fa fa-angle-down"></i>
+                                                </a>
+                                            <ul class="dropdown-menu">
+                                                <li class="nav-item">
+                                                    <a href="{{url_for('solution')}}" class="nav-link">
+                                                            Solution
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="{{url_for('solutionDetails')}}" class="nav-link">
+                                                            Solution Details
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                    Shop 
+                                                    <i class="fa fa-angle-down"></i>
+                                                </a>
+
+                                            <ul class="dropdown-menu">
+                                                <li class="nav-item">
+                                                    <a href="shop.html" class="nav-link">
+                                                            Shop
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="cart.html" class="nav-link">
+                                                            Cart
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="checkout.html" class="nav-link">
+                                                            Checkout
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="single-product.html" class="nav-link">
+                                                            Products Details
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                    User 
+                                                    <i class="fa fa-angle-down"></i>
+                                                </a>
+
+                                            <ul class="dropdown-menu">
+                                                <li class="nav-item">
+                                                    <a href="sign-in.html" class="nav-link">
+                                                            Sign In
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="sign-up.html" class="nav-link">
+                                                            Sign Up
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="terms-condition.html" class="nav-link">
+                                                    Terms & Conditions
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="privacy-policy.html" class="nav-link">
+                                                    Privacy Policy
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="error-404.html" class="nav-link">
+                                                    404 Error
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="{{url_for('contact')}}" class="nav-link">
+                                                    Contact
+                                                </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{url_for('blog1')}}" class="nav-link">
+                                            Blog 
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="{{url_for('blog1')}}" class="nav-link">
+                                                    Blog Grid
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="{{url_for('blog2')}}" class="nav-link">
+                                                    Blog Right Sidebar
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="blog-details.html" class="nav-link">
+                                                    Blog Details
+                                                </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{url_for('contact')}}" class="nav-link">
+                                            Contact
+                                        </a>
+                                </li>
+                            </ul>
+
+                            <div class="others-options">
+                                <a href="{{url_for('appointment')}}" class="default-btn-two">
+                                        Get a Quote
+                                        <span></span>
+                                    </a>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- End Navbar Area -->
+    </header>
+    <!-- End Header Area -->
+
+    <!-- Start Page Title Area -->
+    <div class="page-title-area item-bg-6">
+        <div class="d-table">
+            <div class="d-table-cell">
+                <div class="container">
+                    <div class="page-title-content">
+                        <h2>Services</h2>
+                        <ul>
+                            <li><a href="{{url_for('index')}}">Home</a></li>
+                            <li>Services</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Title Area -->
+
+    <!-- Start Services Area -->
+    <section class="services-section bg-f4f6fe pt-100 pb-100">
+        <div class="container">
+            <div class="section-title">
+                <span>Our Services</span>
+                <h2>Our Intelligent Medical Healthcare Services</h2>
+                <p>Experience next-generation healthcare powered by artificial intelligence with 24/7 telemedicine support. Our system provides comprehensive, personalized care tailored to your unique health needs.</p>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-6">
+                    <div class="services-item-two">
+                        <div class="icon">
+                            <i class="flaticon-bacteria"></i>
+                        </div>
+                        <a href="single-services.html">
+                             <h3>AI Disease Prediction</h3>
+                        </a>
+                        <p>Our advanced algorithms analyze your symptoms to predict potential health conditions with high accuracy, enabling early intervention and prevention.</p>
+                        
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="services-item-two">
+                        <div class="icon">
+                            <i class="flaticon-shield"></i>
+                        </div>
+                        <a href="single-services.html">
+                           
+                            <h3>Personalized Medication</h3>
+                        </a>
+                        <p>Receive customized medication recommendations based on your diagnosis, medical history, and potential drug interactions for optimal treatment.</p>
+                        
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="services-item-two">
+                        <div class="icon">
+                            <i class="flaticon-beauty-treatment"></i>
+                        </div>
+                        <a href="single-services.html">
+                            <h3>AI Nutrition Plans</h3>
+                        </a>
+                        <p>Get scientifically-backed dietary recommendations tailored to your health condition, preferences, and nutritional requirements.</p>
+                       
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="services-item-two">
+                        <div class="icon">
+                            <i class="flaticon-mental-health"></i>
+                        </div>
+                        <a href="single-services.html">
+                            <h3>Custom Workout Programs</h3>
+                        </a>
+                        <p>AI-generated exercise routines designed for your fitness level, health status, and recovery needs with progress tracking.</p>
+                        
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="services-item-two">
+                        <div class="icon">
+                            <i class="flaticon-crutches"></i>
+                        </div>
+                        <a href="single-services.html">
+                             <h3>Comprehensive Health Education</h3>
+                        </a>
+                        <p>Detailed explanations about your condition, treatment options, and preventive measures in easy-to-understand language.</p>
+                       
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="services-item-two">
+                        <div class="icon">
+                            <i class="flaticon-pregnancy"></i>
+                        </div>
+                        <a href="single-services.html">
+                              <h3>Video Consultations</h3>
+                        </a>
+                        <p>Secure one-on-one video calls with licensed physicians for personalized diagnosis and treatment discussions from anywhere.</p>
+                        <a href="single-services.html" class="read-btn">Read More +</a>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="services-item-two">
+                        <div class="icon">
+                            <i class="flaticon-pregnancy"></i>
+                        </div>
+                        <a href="single-services.html">
+                              <h3>24/7 Doctor Chat</h3>
+                        </a>
+                        <p>Instant messaging with healthcare professionals for quick medical advice, anytime you need it, day or night.</p>
+                        
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="services-item-two">
+                        <div class="icon">
+                            <i class="flaticon-pregnancy"></i>
+                        </div>
+                        <a href="single-services.html">
+                              <h3>Chronic Disease Management</h3>
+                        </a>
+                         <p>Continuous monitoring and AI-powered adjustments to your treatment plan for long-term health conditions.</p>
+                        <a href="single-services.html" class="read-btn">Read More +</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="services-item-two">
+                        <div class="icon">
+                            <i class="flaticon-pregnancy"></i>
+                        </div>
+                        <a href="single-services.html">
+                              <h3>Health Tracking & Alerts</h3>
+                        </a>
+                        <p>Monitor your vital signs and receive AI-generated alerts about concerning changes in your health metrics.</p>
+                        
+                    </div>
+                </div>
+
+
+
+
+                <div class="col-lg-12 col-md-12">
+                    <div class="pagination-area">
+                        <a href="services.html" class="prev page-numbers">
+                                <i class="fa fa-chevron-left"></i>
+                            </a>
+                        <a href="services.html" class="page-numbers">1</a>
+                        <span class="page-numbers current" aria-current="page">2</span>
+                        <a href="services.html" class="page-numbers">3</a>
+                        <a href="services.html" class="page-numbers">4</a>
+                        <a href="services.html" class="next page-numbers">
+                                <i class="fa fa-chevron-right"></i>
+                            </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Services Area -->
+
+    <!-- Start Step Three Area -->
+    <section class="step-three ptb-100">
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-lg-6">
+                    <div class="step-three-image">
+                        <img src="{{url_for('static', filename='services/assets/img/step-three-image.png')}}" alt="image">
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="step-three-content">
+                        <span>Step 3</span>
+                        <h3>Pick Up Your Prescription from Your Local Doctor.</h3>
+                        <p>Many healthcare systems around the world together with government agencies and startup companies are building and delivering Telehealth</p>
+                        <b>We can send your prescription directly to your local pharmacy for easy pick-up. Many healthcare systems around the world together with government agencies and startup companies are building and delivering Telehealth</b>
+
+                        <div class="step-btn">
+                            <a href="{{url_for('appointment')}}" class="default-btn">
+                                    Make Appointment
+                                    <span></span>
+                                </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Step Three Area -->
+
+    <!-- Start Appointment Area -->
+    <section class="appointment-area ptb-100">
+        <div class="container-fluid">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-lg-6">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-6 col-md-6">
+                            <div class="single-fun-fact">
+                                <h3>
+                                    <span class="odometer" data-count="2700">00</span>
+                                    <span class="sign-icon">+</span>
+                                </h3>
+                                <p>Care Locations</p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6">
+                            <div class="single-fun-fact">
+                                <h3>
+                                    <span class="odometer" data-count="2.7">00</span>
+                                    <span class="sign-icon">K</span>
+                                </h3>
+                                <p>Virtual Care Solutions</p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6">
+                            <div class="single-fun-fact">
+                                <h3>
+                                    <span class="odometer" data-count="99.60">00</span>
+                                    <span class="sign-icon">%</span>
+                                </h3>
+                                <p>Connections Success Rate</p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6">
+                            <div class="single-fun-fact">
+                                <h3>
+                                    <span class="odometer" data-count="30">00</span>
+                                    <span class="sign-icon">+</span>
+                                </h3>
+                                <p>Award Winning</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="appointment-form">
+                        <div class="content">
+                            <span>Call to Action</span>
+                            <h3>Make An Appointment</h3>
+                        </div>
+                        <form>
+                            <div class="row justify-content-center">
+                                <div class="col-lg-6 col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="Name" placeholder="Enter Your Name">
+                                        <i class="flaticon-user"></i>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="Email" placeholder="Enter Email">
+                                        <i class="flaticon-email"></i>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="Phone" placeholder="Enter Phone Number">
+                                        <i class="flaticon-call"></i>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-sm-6">
+                                    <div class="form-group">
+                                        <select>
+                                                <option value="">Select Category</option>
+                                                <option value="">Cardiologists</option>
+                                                <option value="">Dermatologists</option>
+                                                <option value="">Endocrinologists</option>
+                                                <option value="">Gastroenterologists</option>
+                                                <option value="">Allergists</option>
+                                                <option value="">Immunologists</option>
+                                            </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-sm-6">
+                                    <div class="form-group">
+                                        <select>
+                                                <option value="">Select Doctor</option>
+                                                <option value="">Dr. James Adult</option>
+                                                <option value="">Dr. James Alison</option>
+                                                <option value="">Dr. Peter Adlock</option>
+                                                <option value="">Dr. Jelin Alis</option>
+                                                <option value="">Dr. Josh Taylor</option>
+                                                <option value="">Dr. Steven Smith</option>
+                                            </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-sm-6">
+                                    <div class="form-group">
+                                        <div class="input-group date" id="datetimepicker">
+                                            <input type="text" class="form-control" placeholder="Date">
+                                            <span class="input-group-addon"></span>
+                                        </div>
+                                        <i class="flaticon-calendar"></i>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="appointment-btn">
+                                        <button type="submit" class="default-btn">
+                                                Confirm Appointment
+                                                <span></span>
+                                            </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Appointment Area -->
+
+    <!-- Start Consult Area -->
+    <section class="consult-area ptb-100">
+        <div class="container-fluid pl-0">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-lg-7">
+                    <div class="consult-image">
+                        <img src="{{url_for('static', filename='services/assets/img/consult.jpg')}}" alt="image">
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="consult-content">
+                        <span>Smart Virtual Care</span>
+                        <h3>AI-Enhanced Doctor Consultations Available 24/7</h3>
+                        <p>Our system intelligently matches you with the right specialist and prepares your case before consultation. Experience shorter wait times and more productive visits with doctors who already understand your symptoms and medical history.</p>
+                        <ul class="list">
+                            <li>
+                                <i class="flaticon-check-1"></i> Get unlimited 24/7 Video Chat with a provider at no extra cost
+                            </li>
+                            <li>
+                                <i class="flaticon-check-1"></i> Easily book appointments and renew prescriptions
+                            </li>
+                            <li>
+                                <i class="flaticon-check-1"></i> Skip unnecessary trips to the ER or urgent care
+                            </li>
+                            <li>
+                                <i class="flaticon-check-1"></i> Have a Remote Visit with your primary care provider over video
+                            </li>
+                            <li>
+                                <i class="flaticon-check-1"></i> Message with your provider
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Consult Area -->
+
+    <!-- Start Footer Area -->
+    <section class="footer-area pt-100 pb-70">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h3>AI-MedCare</h3>
+                        <p>An intelligent healthcare platform that delivers personalized medical recommendations and telemedicine support, improving access to quality care anytime, anywhere.</p>
+                        <ul class="footer-social">
+                            <li>
+                                <a href="https://www.facebook.com/login/" target="_blank" class="facebook">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/i/flow/login" target="_blank" class="twitter">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.pinterest.com/" target="_blank" class="pinterest">
+                                        <i class="fab fa-pinterest-p"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" class="instagram">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h3>Instagram</h3>
+
+                        <ul class="instagram">
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='services/assets/img/instagram/1.jpg')}}" alt="image">
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='services/assets/img/instagram/2.jpg')}}" alt="image">
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='services/assets/img/instagram/3.jpg')}}" alt="image">
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='services/assets/img/instagram/4.jpg')}}" alt="image">
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='services/assets/img/instagram/1.jpg')}}" alt="image">
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='services/assets/img/instagram/2.jpg')}}" alt="image">
+                                    </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-footer-widget pl-5">
+                        <h3>Useful Links</h3>
+
+                        <ul class="footer-quick-links">
+                            <li>
+                                <a href="{{url_for('index')}}">Home</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('about')}}">About</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('solution')}}">Solution</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('services')}}">Services</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('blog1')}}">Blog</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('contact')}}">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h3>Contact</h3>
+
+                        <div class="footer-info-contact">
+                            <i class="flaticon-call"></i>
+                            <h3>Phone</h3>
+                            <span><a href="tel:123456123">+263-776-060-788</a></span>
+                        </div>
+
+                        <div class="footer-info-contact">
+                            <i class="flaticon-email"></i>
+                            <h3>Email</h3>
+                            <span><a href="/cdn-cgi/l/email-protection#7811161e17380c1116021d0a561b1715"><span class="__cf_email__" data-cfemail="c4adaaa2ab84b0adaabea1b6eaa7aba9">ichirume99@gmail.com</span></a>
+                            </span>
+                        </div>
+
+                        <div class="footer-info-contact">
+                            <i class="flaticon-pin"></i>
+                            <h3>Address</h3>
+                            <span>630 Churchill Avenue, Mt Pleasant Harare, Zimbabwe</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lines">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </section>
+    <!-- End Footer Area -->
+
+
+
+    <!-- Start Go Top Area -->
+    <div class="go-top">
+        <i class="fa fa-chevron-up"></i>
+        <i class="fa fa-chevron-up"></i>
+    </div>
+    <!-- End Go Top Area -->
+
+    <!-- dark version -->
+    <div class="dark-version">
+        <label id="switch" class="switch">
+                <input type="checkbox" onchange="toggleTheme()" id="slider">
+                <span class="slider round"></span>
+            </label>
+    </div>
+    <!-- dark version -->
+
+    <!-- Jquery Slim JS -->
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="{{url_for('static', filename='services/assets/js/jquery.min.js')}}"></script>
+    <!-- Bootstrap JS -->
+    <script src="{{url_for('static', filename='services/assets/js/bootstrap.bundle.min.js')}}"></script>
+    <!-- Meanmenu JS -->
+    <script src="{{url_for('static', filename='services/assets/js/jquery.meanmenu.js')}}"></script>
+    <!-- Nice Select JS -->
+    <script src="{{url_for('static', filename='services/assets/js/jquery.nice-select.min.js')}}"></script>
+    <!-- Odometer JS -->
+    <script src="url_for('static', filename='services/assets/js/odometer.min.js')"></script>
+    <!-- Appear JS -->
+    <script src="{{url_for('static', filename='services/assets/js/jquery.appear.js')}}"></script>
+    <!-- Datepicker JS -->
+    <script src="{{url_for('static', filename='services/assets/js/datepicker.min.js')}}"></script>
+    <!-- Magnific JS -->
+    <script src="{{url_for('static', filename='services/assets/js/jquery.magnific-popup.min.js')}}"></script>
+    <!-- Carousel JS -->
+    <script src="url_for('static', filename='services/assets/js/owl.carousel.min.js')"></script>
+    <!-- Form Ajaxchimp JS -->
+    <script src="{{url_for('static', filename='services/assets/js/jquery.ajaxchimp.min.js')}}"></script>
+    <!-- Form Validator JS -->
+    <script src="{{url_for('static', filename='services/assets/js/form-validator.min.js')}}"></script>
+    <!-- Contact JS -->
+    <script src="{{url_for('static', filename='services/assets/js/contact-form-script.js')}}"></script>
+    <!-- Custom JS -->
+    <script src="{{url_for('static', filename='services/assets/js/main.js')}}"></script>
+</body>
+
+</html>

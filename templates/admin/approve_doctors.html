@@ -1,0 +1,390 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Doctor Approvals</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+     <link rel="icon" type="image/png" href="{{url_for('static', filename='index/assets/img/favicon.png')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+        }
+        
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sidebar {
+            background-color: var(--secondary-color);
+            min-height: calc(100vh - 56px);
+            color: white;
+        }
+        
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 5px;
+            border-radius: 5px;
+            padding: 10px 15px;
+        }
+        
+        .sidebar .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .sidebar .nav-link.active {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .sidebar .nav-link i {
+            margin-right: 10px;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .table-responsive {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .table thead {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-success {
+            background-color: #2ecc71;
+            border-color: #2ecc71;
+        }
+        
+        .btn-danger {
+            background-color: #e74c3c;
+            border-color: #e74c3c;
+        }
+        
+        .btn-info {
+            background-color: #3498db;
+            border-color: #3498db;
+        }
+        
+        .badge-pending {
+            background-color: #f39c12;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-heartbeat me-2"></i>MediCare Admin
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle me-1"></i> Admin User
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{url_for('logout')}}"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 d-md-block sidebar collapse bg-dark">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url_for('admin_dashboard')}}">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
+                            </a>
+                        </li>
+                        
+                        
+                       
+                      
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% if first_pending_id %}{{ url_for('view_doctor_details', doctor_id=first_pending_id) }}{% else %}#{% endif %}">
+                                <i class="fas fa-calendar-check"></i> Doctor Details
+                            </a>
+                        </li>
+                      
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-cog"></i> Settings
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">
+                        <i class="fas fa-user-md text-primary me-2"></i> Pending Doctor Approvals
+                    </h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group me-2">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                <i class="fas fa-download me-1"></i> Export
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                <i class="fas fa-filter me-1"></i> Filter
+                            </button>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-primary">
+                            <i class="fas fa-plus me-1"></i> Add Doctor
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="card bg-primary text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-title text-uppercase">Pending Approvals</h6>
+                                        <h2 class="mb-0">{{ pending_doctors|length }}</h2>
+                                    </div>
+                                    <i class="fas fa-user-clock fa-3x opacity-50"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-success text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-title text-uppercase">Approved Doctors</h6>
+                                        <h2 class="mb-0">{{approved_doctors}}</h2>
+                                    </div>
+                                    <i class="fas fa-check-circle fa-3x opacity-50"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-warning text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-title text-uppercase">Total Doctors</h6>
+                                        <h2 class="mb-0">{{total_doctors}}</h2>
+                                    </div>
+                                    <i class="fas fa-user-md fa-3x opacity-50"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+
+
+                        <div class="card bg-danger text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-title text-uppercase">Rejected Today</h6>
+                                        <h2 class="mb-0">3</h2>
+                                    </div>
+                                    <i class="fas fa-times-circle fa-3x opacity-50"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Block -->
+                
+                <div class="card">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">
+                            <i class="fas fa-list-check me-2"></i> Approval Requests
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        {% if pending_doctors %}
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Specialization</th>
+                                        <th>License</th>
+                                        <th>Hospital</th>
+                                        <th>Status</th>
+                                        <th class="text-end">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for doctor in pending_doctors %}
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar me-3">
+                                                    <span class="avatar-initial rounded-circle bg-primary text-white">
+                                                        {{ doctor.first_name|first }}{{ doctor.surname|first }}
+                                                    </span>
+                                                </div>
+                                                <div>
+                                                    <h6 class="mb-0">{{ doctor.first_name }} {{ doctor.surname }}</h6>
+                                                    <small class="text-muted">ID: DR{{ "%04d"|format(doctor.id) }}</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>{{ doctor.email }}</td>
+                                        <td>
+                                            <span class="badge bg-info text-dark">{{ doctor.specialization }}</span>
+                                        </td>
+                                        <td><code>{{ doctor.license_number }}</code></td>
+                                        <td>{{ doctor.hospital_affiliation }}</td>
+                                        <td>
+                                            <span class="badge badge-pending rounded-pill bg-warning text-dark">
+                                                <i class="fas fa-clock me-1"></i> Pending
+                                            </span>
+                                        </td>
+                                        <td class="text-end">
+                                            <div class="d-flex justify-content-end">
+                                                <a href="{{ url_for('view_doctor_details', doctor_id=doctor.id) }}" class="btn btn-sm btn-outline-info me-2">
+                                                    <i class="fas fa-eye"></i> Details
+                                                </a>
+                                                <form method="POST" action="{{ url_for('approve_doctor', doctor_id=doctor.id) }}" class="me-2">
+                                                    <button type="submit" class="btn btn-sm btn-success">
+                                                        <i class="fas fa-check"></i> Approve
+                                                    </button>
+                                                </form>
+                                                <form method="POST" action="{{ url_for('reject_doctor', doctor_id=doctor.id) }}">
+                                                    <button type="submit" class="btn btn-sm btn-danger">
+                                                        <i class="fas fa-times"></i> Reject
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% else %}
+                        <div class="text-center py-5">
+                            <div class="py-5">
+                                <i class="fas fa-user-md fa-4x text-muted mb-4"></i>
+                                <h4 class="text-muted">No pending doctor approvals</h4>
+                                <p class="text-muted">There are currently no doctors waiting for approval.</p>
+                                <button class="btn btn-primary mt-3">
+                                    <i class="fas fa-sync-alt me-1"></i> Refresh
+                                </button>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% if pending_doctors %}
+                    <div class="card-footer bg-white">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                Showing <strong>1</strong> to <strong>{{ pending_doctors|length }}</strong> of {{ pending_doctors|length }} entries
+                            </div>
+                            <nav>
+                                <ul class="pagination pagination-sm mb-0">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-5 py-4">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2025 MediCare Admin Portal. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-white me-3"><i class="fas fa-question-circle me-1"></i> Help</a>
+                    <a href="#" class="text-white me-3"><i class="fas fa-shield-alt me-1"></i> Privacy</a>
+                    <a href="#" class="text-white"><i class="fas fa-file-alt me-1"></i> Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Enable tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+

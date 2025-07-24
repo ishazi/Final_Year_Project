@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en" class="theme-light">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #00a3c8;
+            --secondary-color: #007bff;
+            --dark-color: #343a40;
+            --light-color: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: #495057;
+        }
+        
+        .appointment-card {
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: none;
+            transition: transform 0.3s ease;
+        }
+        
+        .appointment-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 10px 10px 0 0 !important;
+            padding: 1.5rem;
+        }
+        
+        .detail-item {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .detail-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .btn-telemedicine {
+            background-color: #28a745;
+            border-color: #28a745;
+            padding: 0.5rem 1.5rem;
+            font-weight: 500;
+        }
+        
+        .btn-telemedicine:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+        
+        .status-badge {
+            padding: 0.35rem 0.65rem;
+            font-weight: 500;
+            border-radius: 50px;
+        }
+        
+        .status-approved {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-cancelled {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .meeting-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .meeting-link:hover {
+            text-decoration: underline;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+    </style>
+    <title>Appointment Details</title>
+</head>
+
+<body>
+    <!-- Start Preloader Area -->
+    <div class="preloader">
+        <div class="spinner"></div>
+    </div>
+    <!-- End Preloader Area -->
+
+    <!-- Main Content -->
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h1 class="section-title">Appointment Details</h1>
+                
+                <div class="card appointment-card mb-4">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0 text-white">
+                            {% if current_user.role == 'patient' %}
+                                <i class="fas fa-user-md me-2"></i> With Dr. {{ appointment.doctor.first_name }} {{ appointment.doctor.surname }}
+                            {% else %}
+                                <i class="fas fa-user-injured me-2"></i> Patient: {{ appointment.patient.first_name }} {{ appointment.patient.surname }}
+                            {% endif %}
+                        </h5>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="detail-item">
+                            <span class="detail-label"><i class="far fa-calendar-alt me-2"></i>Date:</span>
+                            {{ appointment.appointment_date.strftime('%Y-%m-%d %H:%M') }}
+                        </div>
+                        
+                        <div class="detail-item">
+                            <span class="detail-label"><i class="far fa-clock me-2"></i>Duration:</span>
+                            {{ appointment.duration }} minutes
+                        </div>
+                        
+                        <div class="detail-item">
+                            <span class="detail-label"><i class="fas fa-info-circle me-2"></i>Status:</span>
+                            <span class="status-badge status-{{ appointment.status|lower }}">
+                                {{ appointment.status }}
+                            </span>
+                        </div>
+                        
+                        {% if appointment.meeting_link %}
+                        <div class="detail-item">
+                            <span class="detail-label"><i class="fas fa-video me-2"></i>Meeting Link:</span>
+                            <a href="{{ appointment.meeting_link }}" class="meeting-link" target="_blank">
+                                Join Meeting <i class="fas fa-external-link-alt ms-1"></i>
+                            </a>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="detail-item">
+                            <span class="detail-label"><i class="fas fa-notes-medical me-2"></i>Symptoms:</span>
+                            {{ appointment.symptoms }}
+                        </div>
+                        
+                        {% if appointment.notes %}
+                        <div class="detail-item">
+                            <span class="detail-label"><i class="fas fa-sticky-note me-2"></i>Patient Notes:</span>
+                            {{ appointment.notes }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    {% if form %}
+                    <div class="card-footer bg-transparent">
+                        <form method="POST" action="" class="needs-validation" novalidate>
+                            {{ form.hidden_tag() }}
+                            
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        {{ form.status.label(class="form-label detail-label") }}
+                                        {{ form.status(class="form-select") }}
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        {{ form.doctor_notes.label(class="form-label detail-label") }}
+                                        {{ form.doctor_notes(class="form-control", rows=3) }}
+                                        <div class="form-text">Add any notes or follow-up instructions for the patient.</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-12">
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        {{ form.submit(class="btn btn-primary px-4") }}
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                {% if appointment.status == 'Approved' and appointment.meeting_link %}
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('start_telemedicine', appointment_id=appointment.id) }}" class="btn btn-telemedicine btn-lg">
+                        <i class="fas fa-video me-2"></i> Start Telemedicine Session
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Enable form validation
+        (function () {
+            'use strict'
+            
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation')
+            
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+        
+        // Remove preloader when page loads
+        window.addEventListener('load', function() {
+            document.querySelector('.preloader').style.display = 'none';
+        });
+    </script>
+</body>
+
+</html>

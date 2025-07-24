@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Training Analysis | MedRec</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+     <link rel="icon" type="image/png" href="{{url_for('static', filename='index/assets/img/favicon.png')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #e53e3e;
+            --accent-color: #3182ce;
+            --light-bg: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+        }
+        
+        .analysis-header {
+            background: linear-gradient(135deg, var(--primary-color), #2c5282);
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .analysis-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+            border: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .analysis-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            border-radius: 10px 10px 0 0 !important;
+            padding: 1rem 1.5rem;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .dataset-table {
+            width: 100%;
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        th {
+            background-color: var(--light-bg);
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: rgba(0,0,0,0.02);
+        }
+        
+        .metrics-highlight {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .confusion-matrix {
+            display: inline-block;
+            border: 1px solid #dee2e6;
+            margin: 10px 0;
+        }
+        
+        .confusion-matrix td {
+            padding: 8px 12px;
+            text-align: center;
+            border: 1px solid #dee2e6;
+        }
+        
+        .disease-list {
+            columns: 3;
+            column-gap: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .disease-list {
+                columns: 2;
+            }
+        }
+        
+        .nav-tabs .nav-link {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: var(--secondary-color);
+            font-weight: 600;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+        
+        .footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: var(--primary-color);">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-heartbeat me-2"></i>MedRec
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard"><i class="fas fa-tachometer-alt me-1"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/data_analysis"><i class="fas fa-chart-bar me-1"></i> Analysis</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/predictions"><i class="fas fa-diagnoses me-1"></i> Predict</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="analysis-header">
+        <div class="container text-center">
+            <h1><i class="fas fa-microscope me-3"></i>Model Training Analysis</h1>
+            <p class="lead mt-3">Detailed performance metrics and data exploration for our SVC-based disease prediction model</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mb-5">
+        <!-- Dataset Overview Section -->
+        <div class="analysis-card">
+            <div class="card-header">
+                <i class="fas fa-database me-2"></i>Dataset Overview
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4><i class="fas fa-table me-2"></i>Dataset Shape</h4>
+                        <p class="metrics-highlight">{{ dataset_shape[0] }} rows × {{ dataset_shape[1] }} columns</p>
+                        <p>Our dataset contains information about {{ dataset_shape[0] }} patient cases with {{ dataset_shape[1]-1 }} symptoms and 1 target prognosis column.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h4><i class="fas fa-check-circle me-2"></i>Missing Values Check</h4>
+                        <p class="metrics-highlight">{{ missing_values }} missing values found</p>
+                        <p>The dataset has been thoroughly cleaned with no missing values in any of the columns.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sample Data Section -->
+        <div class="analysis-card">
+            <div class="card-header">
+                <i class="fas fa-eye me-2"></i>Sample Data (First 5 Rows)
+            </div>
+            <div class="card-body">
+                <div class="dataset-table">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                {% for column in dataset_head.columns %}
+                                <th>{{ column }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for index, row in dataset_head.iterrows() %}
+                            <tr>
+                                {% for value in row %}
+                                <td>{{ value }}</td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-3">
+                    <small class="text-muted">Note: 1 indicates presence of symptom, 0 indicates absence</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Diseases in Dataset -->
+        <div class="analysis-card">
+            <div class="card-header">
+                <i class="fas fa-list-alt me-2"></i>Diseases in Our Dataset
+            </div>
+            <div class="card-body">
+                <p>Our model can predict the following {{ diseases|length }} diseases based on symptom patterns:</p>
+                <ul class="disease-list">
+                    {% for disease in diseases %}
+                    <li>{{ disease }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Model Performance -->
+        <div class="analysis-card">
+            <div class="card-header">
+                <i class="fas fa-tachometer-alt me-2"></i>Model Performance Metrics
+            </div>
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-4 text-center">
+                        <div class="p-3 border rounded bg-light">
+                            <h5>Accuracy</h5>
+                            <p class="metrics-highlight">{{ accuracy }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="p-3 border rounded bg-light">
+                            <h5>Precision (Macro Avg)</h5>
+                            <p class="metrics-highlight">{{ precision }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="p-3 border rounded bg-light">
+                            <h5>Recall (Macro Avg)</h5>
+                            <p class="metrics-highlight">{{ recall }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h4 class="mt-4"><i class="fas fa-file-alt me-2"></i>Classification Report</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Disease</th>
+                                <th>Precision</th>
+                                <th>Recall</th>
+                                <th>F1-Score</th>
+                                <th>Support</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for disease, metrics in classification_report.items() %}
+                            <tr>
+                                <td>{{ disease }}</td>
+                                <td>{{ metrics.precision|round(2) }}</td>
+                                <td>{{ metrics.recall|round(2) }}</td>
+                                <td>{{ metrics.f1_score|round(2) }}</td>
+                                <td>{{ metrics.support }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confusion Matrix -->
+        <div class="analysis-card">
+            <div class="card-header">
+                <i class="fas fa-th me-2"></i>Confusion Matrix
+            </div>
+            <div class="card-body">
+                <p>The confusion matrix shows how often the model correctly or incorrectly predicted each disease:</p>
+                <div class="text-center">
+                    <img src="{{ url_for('static', filename='confusion_matrix.png') }}" alt="Confusion Matrix" class="img-fluid" style="max-width: 600px;">
+                </div>
+                <div class="mt-3">
+                    <small class="text-muted">Note: Darker diagonal elements indicate correct predictions</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Model Insights -->
+        <div class="analysis-card">
+            <div class="card-header">
+                <i class="fas fa-lightbulb me-2"></i>Key Insights
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="p-3 mb-3 border-start border-4 border-primary">
+                            <h5><i class="fas fa-check-circle text-primary me-2"></i>Top Performing Predictions</h5>
+                            <ul class="list-group list-group-flush">
+                                {% for disease in top_performers %}
+                                <li class="list-group-item">{{ disease }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-3 mb-3 border-start border-4 border-warning">
+                            <h5><i class="fas fa-exclamation-triangle text-warning me-2"></i>Areas for Improvement</h5>
+                            <ul class="list-group list-group-flush">
+                                {% for disease in needs_improvement %}
+                                <li class="list-group-item">{{ disease }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-heartbeat me-2"></i>MedRec</h5>
+                    <p>Advanced medical diagnosis using machine learning</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2023 MedRec. All rights reserved.</p>
+                    <p class="mb-0">For research and educational purposes only</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

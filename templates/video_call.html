@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="root" style="width: 100%; height: 80vh;"></div>
+        </div>
+    </div>
+    
+    <div class="row mt-3">
+        <div class="col-md-12 text-center">
+            <div class="card">
+                <div class="card-body">
+                    <h5>Consultation with 
+                        {% if current_user.role == 'doctor' %}
+                            {{ appointment.patient.username }}
+                        {% else %}
+                            Dr. {{ appointment.doctor.username }}
+                        {% endif %}
+                    </h5>
+                    <p>Meeting ID: {{ room_id }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/@zegocloud/zego-uikit-prebuilt/zego-uikit-prebuilt.js"></script>
+<script>
+    const roomID = "{{ room_id }}";
+    const userID = "{{ user_id }}";
+    const userName = "{{ user_name }}";
+    const appID = "{{ zego_app_id }}";
+    const token = "{{ zego_token }}";
+    
+    const zp = ZegoUIKitPrebuilt.create(token);
+    zp.joinRoom({
+        container: document.querySelector("#root"),
+        scenario: {
+            mode: ZegoUIKitPrebuilt.VideoConference,
+        },
+        turnOnMicrophoneWhenJoining: true,
+        turnOnCameraWhenJoining: true,
+        showMyCameraToggleButton: true,
+        showMyMicrophoneToggleButton: true,
+        showAudioVideoSettingsButton: true,
+        showScreenSharingButton: true,
+        showTextChat: true,
+        showUserList: true,
+        maxUsers: 2,
+        layout: "Auto"
+    });
+</script>
+{% endblock %}

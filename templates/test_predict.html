@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+
+            /* Symptoms Form Styling */
+.symptoms-form {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.form-container {
+    padding: 20px;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.doctor-icon {
+    font-size: 3rem;
+    color: #1a365d;
+    margin-bottom: 1rem;
+}
+
+.form-title {
+    color: #1a365d;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.form-subtitle {
+    color: #6c757d;
+    font-size: 1.1rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    color: #1a365d;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.input-group {
+    margin-bottom: 0.5rem;
+}
+
+.input-group-text {
+    background-color: #e9f5ff;
+    color: #1a365d;
+    border: 1px solid #ced4da;
+    border-right: none;
+}
+
+.symptom-input {
+    padding: 15px;
+    font-size: 1.1rem;
+    border: 1px solid #ced4da;
+    border-left: none;
+}
+
+.symptom-input:focus {
+    box-shadow: 0 0 0 0.25rem rgba(26, 54, 93, 0.25);
+    border-color: #1a365d;
+}
+
+.form-text {
+    color: #6c757d;
+    display: block;
+    margin-top: 0.25rem;
+}
+
+.form-features {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 2rem 0;
+    gap: 15px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    color: #1a365d;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.feature-item i {
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+
+.predict-btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    background-color: #e53e3e;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    transition: all 0.3s ease;
+    margin: 1rem 0;
+}
+
+.predict-btn:hover {
+    background-color: #c53030;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(229, 62, 62, 0.3);
+}
+
+.predict-btn:active {
+    transform: translateY(0);
+}
+
+.disclaimer {
+    display: flex;
+    align-items: flex-start;
+    color: #6c757d;
+    font-size: 0.85rem;
+    margin-top: 1.5rem;
+    padding: 10px;
+    background-color: #fff8e6;
+    border-radius: 8px;
+}
+
+.disclaimer i {
+    color: #ffc107;
+    margin-right: 10px;
+    margin-top: 2px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .symptoms-form {
+        padding: 1.5rem;
+    }
+    
+    .form-features {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .predict-btn {
+        padding: 12px;
+        font-size: 1.1rem;
+    }
+}
+
+        </style>
+
+    </head>
+    <body>
+        <form action="/predict" method="post" class="symptoms-form">
+            <div class="form-container">
+                <div class="form-header">
+                    <div class="doctor-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h2 class="form-title">Symptom Checker</h2>
+                    <p class="form-subtitle">Describe your symptoms to get personalized health information</p>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-notes-medical me-2"></i>
+                        Enter Your Symptoms Below:
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <input type="text" class="form-control symptom-input" 
+                               name="symptoms" 
+                               placeholder="Example: fever, headache, nausea..." 
+                               required
+                               aria-describedby="symptomHelp">
+                    </div>
+                    <small id="symptomHelp" class="form-text">
+                        <i class="fas fa-lightbulb me-1"></i> 
+                        Separate multiple symptoms with commas for better results
+                    </small>
+                </div>
+                
+                <div class="form-features">
+                    <div class="feature-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>100% Private & Secure</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Instant Results</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-stethoscope"></i>
+                        <span>Medical Accuracy</span>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn predict-btn">
+                    <i class="fas fa-diagnoses me-2"></i>
+                    Predict Your Disease
+                </button>
+                
+                <div class="disclaimer">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <small>
+                        Note: This tool is not a substitute for professional medical advice. 
+                        Always consult a healthcare provider for proper diagnosis.
+                    </small>
+                </div>
+            </div>
+        </form>
+
+    </body>
+</html>

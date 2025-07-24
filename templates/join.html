@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Join Consultation</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="icon" type="image/png" href="{{url_for('static', filename='index/assets/img/favicon.png')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #4e73df;
+            --secondary-color: #858796;
+            --success-color: #1cc88a;
+            --info-color: #36b9cc;
+            --warning-color: #f6c23e;
+            --danger-color: #e74a3b;
+            --light-color: #f8f9fc;
+            --dark-color: #5a5c69;
+        }
+        
+        body {
+            background-color: #f8f9fc;
+            font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 0.35rem;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        }
+        
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            border-bottom: 1px solid #e3e6f0;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #3a5ccc;
+            border-color: #3a5ccc;
+        }
+        
+        .form-control, .form-select {
+            border-radius: 0.35rem;
+            border: 1px solid #d1d3e2;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+        }
+        
+        .page-container {
+            background: var(--primary-color);
+            color: white;
+            border-radius: 14px;
+            padding: 42px;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .page-title {
+            color: white;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .page-container {
+                padding: 20px;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container page-container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h1 class="h3 mb-0 page-title">
+                    <i class="fas fa-video me-2"></i>Join Consultation
+                </h1>
+                
+                <div class="card shadow">
+                    <div class="card-header py-3">
+                        <h5 class="mb-0 text-white">
+                            <i class="fas fa-video me-2"></i>Enter Meeting Details
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST">
+                            {% if appointment_id %}
+                                <input type="hidden" name="appointment_id" value="{{ appointment_id }}">
+                            {% endif %}
+                            
+                            <div class="form-floating mb-4">
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="roomID" 
+                                       name="roomID" 
+                                       value="{{ room_id or '' }}"
+                                       placeholder="Enter meeting ID" 
+                                       required>
+                                <label for="roomID">Please Enter Your RoomID!</label>
+                            </div>
+                            
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-lg py-3">
+                                    <i class="fas fa-video me-2"></i> Join Meeting
+                                </button>
+                                
+                                {% if not room_id %}
+                                    <a href="{{ url_for('patient_dashboard') }}" class="btn btn-outline-secondary">
+                                        <i class="fas fa-arrow-left me-1"></i> Back to Dashboard
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Add this section below your existing form -->
+{% if meeting_options %}
+<div class="card shadow mt-4">
+    <div class="card-header py-3 bg-success text-white">
+        <h5 class="mb-0">
+            <i class="fas fa-list me-2"></i>Your Active Consultations
+        </h5>
+    </div>
+    <div class="card-body">
+        <div class="list-group">
+            {% for option in meeting_options %}
+            <div class="list-group-item">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6>Dr. {{ option.doctor_name }}</h6>
+                        <small class="text-muted">{{ option.appointment_date }}</small>
+                    </div>
+                    <div>
+                        <a href="{{ url_for('meeting') }}?roomID={{ option.room_id }}" 
+                           class="btn btn-sm btn-primary me-2">
+                           <i class="fas fa-video me-1"></i> Join with Room ID
+                        </a>
+                        <a href="{{ option.meeting_link }}" 
+                           class="btn btn-sm btn-secondary">
+                           <i class="fas fa-link me-1"></i> Use Meeting Link
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

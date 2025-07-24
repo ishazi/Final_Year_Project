@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard - AI-Powered Medical Recommender System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 20px;
+            padding: 20px;
+        }
+        .sidebar {
+            background-color: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .main-content {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2 class="text-xl font-semibold mb-4">Patient Dashboard</h2>
+            <ul>
+                <li class="mb-2"><a href="#" class="text-blue-500 hover:text-blue-700">Profile</a></li>
+                <li class="mb-2"><a href="#" class="text-blue-500 hover:text-blue-700">Appointments</a></li>
+                <li class="mb-2"><a href="#" class="text-blue-500 hover:text-blue-700">Telemedicine</a></li>
+                <li class="mb-2"><a href="#" class="text-blue-500 hover:text-blue-700">Medical History</a></li>
+                <li class="mb-2"><a href="#" class="text-blue-500 hover:text-blue-700">AI Recommendations</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Patient Information -->
+            <div class="card">
+                <h3 class="text-lg font-semibold mb-4">Patient Information</h3>
+                <p><strong>Name:</strong> John Doe</p>
+                <p><strong>Age:</strong> 35</p>
+                <p><strong>Gender:</strong> Male</p>
+                <p><strong>Last Visit:</strong> 2023-10-01</p>
+            </div>
+
+            <!-- Upcoming Appointments -->
+            <div class="card">
+                <h3 class="text-lg font-semibold mb-4">Upcoming Appointments</h3>
+                <ul>
+                    <li class="mb-2">2023-10-15 - Dr. Smith (Cardiologist)</li>
+                    <li class="mb-2">2023-10-20 - Dr. Johnson (Dermatologist)</li>
+                </ul>
+                <button class="bg-blue-500 text-white px-4 py-2 rounded mt-4">Schedule New Appointment</button>
+            </div>
+
+            <!-- Telemedicine Support -->
+            <div class="card">
+                <h3 class="text-lg font-semibold mb-4">Telemedicine Support</h3>
+                <p>Connect with your healthcare provider via video call.</p>
+                <button class="bg-green-500 text-white px-4 py-2 rounded mt-4">Start Telemedicine Session</button>
+            </div>
+
+            <!-- AI-Powered Recommendations -->
+            <div class="card">
+                <h3 class="text-lg font-semibold mb-4">AI-Powered Recommendations</h3>
+                <p>Based on your medical history and current health status, here are some recommendations:</p>
+                <ul class="list-disc pl-5 mt-2">
+                    <li>Increase daily water intake to 2 liters.</li>
+                    <li>Consider a low-sodium diet to manage blood pressure.</li>
+                    <li>Schedule a follow-up with your cardiologist in 3 months.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

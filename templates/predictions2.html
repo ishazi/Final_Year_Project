@@ -1,0 +1,1427 @@
+<!doctype html>
+<html lang="zxx" class="theme-light">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='faq/assets/css/bootstrap.min.css')}}">
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='faq/assets/css/animate.min.css')}}">
+    <!-- Meanmenu CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='faq/assets/css/meanmenu.css')}}">
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='faq/assets/css/fontawesome.min.css')}}">
+    <!-- Flaticon CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='faq/assets/css/flaticon.css')}}">
+    <!-- Nice Select CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='faq/assets/css/nice-select.min.css')}}">
+    <!-- Odometer CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='faq/assets/css/odometer.min.css')}}">
+    <!-- Magnific CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='faq/assets/css/magnific-popup.min.css')}}">
+    <!-- Carousel CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='faq/assets/css/owl.carousel.min.css')}}">
+    <!-- Carousel Default CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='faq/assets/css/owl.theme.default.min.css')}}">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='faq/assets/css/style.css')}}">
+    <!-- Dark CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='faq/assets/css/dark.css')}}">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='faq/assets/css/responsive.css')}}">
+
+     <!-- predicted_disease_modal CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='predicted_disease_modal/assets/css/predicted_disease.css')}}">
+
+      <!-- precaution_modal CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='precaution_modal/assets/css/precaution_modal.css')}}">
+
+     <!-- medications_modal CSS -->
+     <link rel="stylesheet" href="{{url_for('static', filename='medications_modal/assets/css/medications_modal.css')}}">
+
+    <!-- workout_modal CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='workout_modal/assets/css/workout_modal.css')}}">
+
+    <!-- diets_modal CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='diet_modal/assets/css/diets_modal.css')}}">
+
+    <title>Artificial Intelligence-Powered Medical Recommender System with Telemedicine Support </title>
+
+    <link rel="icon" type="image/png" href="{{url_for('static', filename='faq/assets/img/favicon.png')}}">
+
+    <style>
+        /* Prediction Buttons Container */
+.prediction-buttons-container {
+    gap: 15px;
+    margin: 20px 0;
+    justify-content: center;
+}
+
+/* Base Button Style */
+.prediction-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 160px;
+    height: 100px;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Button Icons */
+.prediction-btn i {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+/* Hover Effects */
+.prediction-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.prediction-btn:active {
+    transform: translateY(1px);
+}
+
+/* Individual Button Colors */
+.disease-btn { background-color: #E67E22; } /* Orange */
+.description-btn { background-color: #3498DB; } /* Blue */
+.precaution-btn { background-color: #9B59B6; } /* Purple */
+.medications-btn { background-color: #E74C3C; } /* Red */
+.workouts-btn { background-color: #2ECC71; } /* Green */
+.diets-btn { background-color: #F1C40F; } /* Yellow */
+
+/* Active State Indicator */
+.prediction-btn.active {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 0 0 3px rgba(255,255,255,0.3);
+}
+
+/* Ripple Effect */
+.prediction-btn::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 1%, transparent 1%) center/15000%;
+    opacity: 0;
+    transition: opacity 0.5s, background-size 0.5s;
+}
+
+.prediction-btn:active::after {
+    background-size: 100%;
+    opacity: 1;
+    transition: background-size 0s;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .prediction-btn {
+        width: 140px;
+        height: 90px;
+        font-size: 14px;
+    }
+    
+    .prediction-btn i {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .prediction-buttons-container {
+        gap: 10px;
+    }
+    
+    .prediction-btn {
+        width: 120px;
+        height: 80px;
+        padding: 8px;
+    }
+}
+
+/* Disease Modal Styling */
+.disease-modal {
+    border-radius: 15px;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.disease-modal-header {
+    background-color: #1a365d;
+    color: white;
+    padding: 1.5rem;
+    border-bottom: none;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.disease-icon-container {
+    background-color: rgba(255, 255, 255, 0.2);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+}
+
+.disease-icon {
+    font-size: 1.8rem;
+    color: white;
+}
+
+.disease-modal-title {
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 0.2rem;
+}
+
+.disease-subtitle {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.disease-modal-body {
+    padding: 2rem;
+    background-color: #f8f9fa;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.disease-description-content {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #333;
+}
+
+.disease-description-content p {
+    margin-bottom: 1.2rem;
+}
+
+.disease-modal-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .disease-modal-header {
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem;
+    }
+    
+    .disease-icon-container {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+    
+    .disease-modal-body {
+        padding: 1.5rem;
+    }
+    
+    .disease-modal-footer {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .disease-modal-footer .btn {
+        width: 100%;
+    }
+}
+
+/* Print-specific styles */
+@media print {
+    .disease-modal {
+        box-shadow: none;
+        border-radius: 0;
+    }
+    
+    .disease-modal-header {
+        background-color: #1a365d !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    .btn-close, .disease-modal-footer {
+        display: none !important;
+    }
+}
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Start Preloader Area -->
+    <div class="preloader">
+        <div class="spinner"></div>
+    </div>
+    <!-- End Preloader Area -->
+
+    <!-- Start Header Area -->
+    <header class="header-area">
+        <div class="top-header">
+            <div class="container">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-lg-6">
+                        <ul class="top-list">
+                            <li>
+                                <i class='flaticon-clock'></i> Mon-Sun 06-00:00
+                            </li>
+                            <li>
+                                <i class='flaticon-phone-call'></i>
+                                <a href="tel:821-456-241">Call Us: +263-776-060-788</a>
+                            </li>
+                            <li>
+                                <i class='flaticon-paper-plane'></i>
+                                <a href="/cdn-cgi/l/email-protection#bfd7dad3d3d0ffd6d1d9d091dcd0d2"><span class="__cf_email__" data-cfemail="553d3039393a153c3b333a7b363a38">ic@gmail.com</span></a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <ul class="top-social">
+                            <li>
+                                <a href="https://www.facebook.com/login/" target="_blank" class="facebook">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/i/flow/login" target="_blank" class="twitter">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.pinterest.com/" target="_blank" class="pinterest">
+                                        <i class="fab fa-pinterest-p"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" class="instagram">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                            </li>
+                            {% if current_user.is_authenticated%}
+                            <li>
+                                <a href="{{url_for('logout')}}" class="log-in">
+                                        Logout
+                                    </a>
+                            </li>
+
+                            <li>
+                                <a href="{{url_for('patient_dashboard')}}" class="log-in">
+                                        Dashboard
+                                    </a>
+                            </li>
+
+                            {% else %}
+
+                            <li>
+                                <a href="{{url_for('patient_login')}}" class="log-in">
+                                        Sign In
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('patient_signup')}}" class="sign-in">
+                                        Sign Up
+                                    </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Start Navbar Area -->
+        <div class="navbar-area navbar-two">
+            <div class="main-responsive-nav">
+                <div class="container">
+                    <div class="main-responsive-menu">
+                        <div class="logo">
+                            <a href="index.html">
+                                <img src="{{url_for('static', filename='faq/assets/img/logo.png')}}" class="black-logo" alt="image">
+                                <img src="{{url_for('static', filename='faq/assets/img/logo-2.png')}}" class="white-logo" alt="image">        
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-navbar">
+                <div class="container">
+                    <nav class="navbar navbar-expand-md navbar-light">
+                        <a href="index.html">
+                                <img src="{{url_for('static', filename='faq/assets/img/logo.png')}}" class="black-logo" alt="image">
+                                <img src="{{url_for('static', filename='faq/assets/img/logo-2.png')}}" class="white-logo" alt="image">        
+                            </a>
+
+                        <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a href="{{url_for('index')}}" class="nav-link">
+                                            Home 
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="{{url_for('index')}}" class="nav-link">
+                                                    Home One
+                                                </a>
+                                        </li>
+
+                                        
+                                        <li class="nav-item">
+                                            <a href="index-6.html" class="nav-link">
+                                                    Video Home
+                                                </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{url_for('dashboard')}}" class="nav-link">
+                                            Dashboard
+                                        </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{url_for('services')}}" class="nav-link">
+                                            Services 
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="{{url_for('services')}}" class="nav-link">
+                                                    Services
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="{{url_for('singleServices')}}" class="nav-link">
+                                                    Services Details
+                                                </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link active">
+                                            Pages 
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="{{url_for('about')}}" class="nav-link">
+                                                    About
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="team.html" class="nav-link">
+                                                    Team
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="faq.html" class="nav-link active">
+                                                    FAQ
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="{{url_for('appointment')}}" class="nav-link">
+                                                    Appointment
+                                                </a>
+                                        </li>
+
+                                      
+
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                    Projects 
+                                                    <i class="fa fa-angle-down"></i>
+                                                </a>
+
+
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                    Solution 
+                                                    <i class="fa fa-angle-down"></i>
+                                                </a>
+                                            <ul class="dropdown-menu">
+                                                <li class="nav-item">
+                                                    <a href="solution.html" class="nav-link">
+                                                            Solution
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="solution-details.html" class="nav-link">
+                                                            Solution Details
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                    Shop 
+                                                    <i class="fa fa-angle-down"></i>
+                                                </a>
+
+                                            <ul class="dropdown-menu">
+                                                <li class="nav-item">
+                                                    <a href="shop.html" class="nav-link">
+                                                            Shop
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="cart.html" class="nav-link">
+                                                            Cart
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="checkout.html" class="nav-link">
+                                                            Checkout
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="single-product.html" class="nav-link">
+                                                            Products Details
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                    User 
+                                                    <i class="fa fa-angle-down"></i>
+                                                </a>
+
+                                            <ul class="dropdown-menu">
+                                                <li class="nav-item">
+                                                    <a href="sign-in.html" class="nav-link">
+                                                            Sign In
+                                                        </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="sign-up.html" class="nav-link">
+                                                            Sign Up
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="terms-condition.html" class="nav-link">
+                                                    Terms & Conditions
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="privacy-policy.html" class="nav-link">
+                                                    Privacy Policy
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="error-404.html" class="nav-link">
+                                                    404 Error
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="{{url_for('contact')}}" class="nav-link">
+                                                    Contact
+                                                </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                            Blog 
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="blog-1.html" class="nav-link">
+                                                    Blog Grid
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="blog-2.html" class="nav-link">
+                                                    Blog Right Sidebar
+                                                </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="blog-details.html" class="nav-link">
+                                                    Blog Details
+                                                </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="contact.html" class="nav-link">
+                                            Contact
+                                        </a>
+                                </li>
+                            </ul>
+
+                            <div class="others-options">
+                                <a href="{{url_for('new_appointment')}}" class="default-btn-two">
+                                        Make an Appointment
+                                        <span></span>
+                                    </a>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- End Navbar Area -->
+    </header>
+    <!-- End Header Area -->
+
+    <!-- Start Page Title Area -->
+    <div class="page-title-area item-bg-4">
+        <div class="d-table">
+            <div class="d-table-cell">
+                <div class="container">
+                    <div class="page-title-content">
+                        <h2>Welcome To Our Disease Prediction Centre</h2>
+                        <ul>
+                            <li><a href="{{url_for('dashboard')}}">Dashboard</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Title Area -->
+
+    
+    <section class="faq-area ptb-100">
+        <div class="container">
+            <div class="section-title">
+                
+                <h2> Get Personalized Health Insights Based on Your Symptoms</h2>
+                <p> Our advanced medical AI analyzes your symptoms and compares them with thousands of 
+                    verified medical cases to provide you with possible conditions. </p>
+            </div>
+
+            <!-- Flash Messages Section -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    {% endfor %}
+{% endif %}
+{% endwith %}
+
+            <div class="container my-4 mt-4" style="background: blue; color: white; border-radius: 14px; padding: 42;">
+
+                <form action="/predict" method="post">
+                    <div class="form-group">
+                        <label class="form-label fs-4 fw-bold text-success">Enter Your Symptoms Below:</label>
+                        <input type="text" class="form-control" name="symptoms" placeholder="enter your symptoms..... " required>
+                    </div>
+                    <br>
+                    <button class="btn btn-danger" style="padding: 14px; margin: 10px;">Predict Your Disease</button>
+                </form>
+
+
+                
+            </div>
+
+            {% if predicted_disease %}
+            <h1 class="text-primary">CLICK THE BUTTONS BELOW TO SEE YOUR HEALTH RESULTS:</h1>
+            <div class="container">
+                <div class="result-container">
+                    <!-- Buttons to toggle display -->
+
+                    <div class="d-flex flex-wrap prediction-buttons-container">
+                        <button class="prediction-btn disease-btn" data-bs-toggle="modal" data-bs-target="#diseaseModal">
+                            <i class="fas fa-diagnosis"></i>
+                            <span>Disease</span>
+                        </button>
+                        <button class="prediction-btn description-btn" data-bs-toggle="modal" data-bs-target="#descriptionModal">
+                            <i class="fas fa-file-alt"></i>
+                            <span>Description</span>
+                        </button>
+                        <button class="prediction-btn precaution-btn" data-bs-toggle="modal" data-bs-target="#precautionModal">
+                            <i class="fas fa-shield-virus"></i>
+                            <span>Precaution</span>
+                        </button>
+                        <button class="prediction-btn medications-btn" data-bs-toggle="modal" data-bs-target="#medicationsModal">
+                            <i class="fas fa-pills"></i>
+                            <span>Medications</span>
+                        </button>
+                        <button class="prediction-btn workouts-btn" data-bs-toggle="modal" data-bs-target="#workoutsModal">
+                            <i class="fas fa-running"></i>
+                            <span>Workouts</span>
+                        </button>
+                        <button class="prediction-btn diets-btn" data-bs-toggle="modal" data-bs-target="#dietsModal">
+                            <i class="fas fa-utensils"></i>
+                            <span>Diets</span>
+                        </button>
+                    </div>
+
+               </div>
+            </div>
+            {% endif %}
+
+            <!-- Disease Modal -->
+            <div class="modal fade" id="diseaseModal" tabindex="-1" aria-labelledby="diseaseModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content disease-modal">
+                        <div class="modal-header disease-modal-header">
+                            <div class="disease-icon-container">
+                                <i class="fas fa-diagnoses disease-icon"></i> <!-- Changed icon to be more relevant for prediction -->
+                            </div>
+                            <div>
+                                <h2 class="modal-title disease-modal-title" id="diseaseModalLabel">Predicted Disease</h2>
+                                <p class="disease-subtitle mb-0">Based on your symptoms analysis</p>
+                            </div>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body disease-modal-body">
+                            <div class="disease-description-container">
+                                <div class="disease-description-content">
+                                    <h3 class="predicted-disease-result">{{ predicted_disease }}</h3>
+                                    <div class="prediction-confidence mt-3">
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 85%;" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">85% Confidence</div>
+                                        </div>
+                                        <small class="text-muted">Prediction confidence level</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer disease-modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                <i class="fas fa-times me-2"></i>Close
+                            </button>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+    <!-- Description Modal -->
+
+
+   <div class="modal fade" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content disease-modal">
+            <div class="modal-header disease-modal-header">
+                <div class="disease-icon-container">
+                    <i class="fas fa-info-circle disease-icon"></i>
+                </div>
+                <div>
+                    <h2 class="modal-title disease-modal-title" id="descriptionModalLabel">Disease Description</h2>
+                    <p class="disease-subtitle mb-0">Detailed medical information</p>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body disease-modal-body">
+                <div class="disease-description-container">
+                    <div class="disease-description-content">
+                        {{ descriptions }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer disease-modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-2"></i>Close
+                </button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Precaution Modal -->
+<div class="modal fade" id="precautionModal" tabindex="-1" aria-labelledby="precautionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content disease-modal">
+            <div class="modal-header disease-modal-header">
+                <div class="disease-icon-container">
+                    <i class="fas fa-shield-alt disease-icon"></i> <!-- Shield icon for precautions -->
+                </div>
+                <div>
+                    <h2 class="modal-title disease-modal-title" id="precautionModalLabel">Recommended Precautions</h2>
+                    <p class="disease-subtitle mb-0">Preventive measures for better health</p>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body disease-modal-body">
+                <div class="disease-description-container">
+                    <div class="disease-description-content">
+                        <ul class="precaution-list">
+                            {% for i in precautions %}
+                                <li class="precaution-item">
+                                    <i class="fas fa-check-circle precaution-icon"></i>
+                                    <span>{{ i }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer disease-modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-2"></i>Close
+                </button>
+                <button type="button" class="btn btn-primary">
+                    <i class="fas fa-print me-2"></i>Print
+                </button>
+                <button type="button" class="btn btn-success">
+                    <i class="fas fa-calendar-check me-2"></i>Add to Plan
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- Medications Modal -->
+    <div class="modal fade" id="medicationsModal" tabindex="-1" aria-labelledby="medicationsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content disease-modal">
+                <div class="modal-header disease-modal-header">
+                    <div class="disease-icon-container">
+                        <i class="fas fa-prescription-bottle-alt disease-icon"></i> <!-- Medical bottle icon -->
+                    </div>
+                    <div>
+                        <h2 class="modal-title disease-modal-title" id="medicationsModalLabel">Recommended Medications</h2>
+                        <p class="disease-subtitle mb-0">Treatment options and dosages</p>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body disease-modal-body">
+                    <div class="disease-description-container">
+                        <div class="disease-description-content">
+                            <ul class="medication-list">
+                                {% for i in medications %}
+                                <li class="medication-item">
+                                    <div class="medication-icon-container">
+                                        <i class="fas fa-pills medication-icon"></i>
+                                    </div>
+                                    <div class="medication-details">
+                                        <span class="medication-name">{{ i }}</span>
+                                        <!-- Optional dosage information could be added here -->
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer disease-modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>Close
+                    </button>
+                    <button type="button" class="btn btn-primary">
+                        <i class="fas fa-print me-2"></i>Print
+                    </button>
+                    <button type="button" class="btn btn-success">
+                        <i class="fas fa-prescription me-2"></i>Get Prescription
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Workouts Modal -->
+  <div class="modal fade" id="workoutsModal" tabindex="-1" aria-labelledby="workoutsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content disease-modal">
+            <div class="modal-header disease-modal-header">
+                <div class="disease-icon-container">
+                    <i class="fas fa-dumbbell disease-icon"></i> <!-- Dumbbell icon for workouts -->
+                </div>
+                <div>
+                    <h2 class="modal-title disease-modal-title" id="workoutsModalLabel">Recommended Workouts</h2>
+                    <p class="disease-subtitle mb-0">Physical activities for better health</p>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body disease-modal-body">
+                <div class="disease-description-container">
+                    <div class="disease-description-content">
+                        <ul class="workout-list">
+                            {% for i in workout %}
+                            <li class="workout-item">
+                                <div class="workout-icon-container">
+                                    <i class="fas fa-running workout-icon"></i> <!-- Can use different exercise icons -->
+                                </div>
+                                <div class="workout-details">
+                                    <span class="workout-name">{{ i }}</span>
+                              
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer disease-modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-2"></i>Close
+                </button>
+                <button type="button" class="btn btn-primary">
+                    <i class="fas fa-print me-2"></i>Print
+                </button>
+                <button type="button" class="btn btn-success">
+                    <i class="fas fa-calendar-plus me-2"></i>Schedule Workouts
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- Diets Modal -->
+    <div class="modal fade" id="dietsModal" tabindex="-1" aria-labelledby="dietsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content disease-modal">
+                <div class="modal-header disease-modal-header">
+                    <div class="disease-icon-container">
+                        <i class="fas fa-utensils disease-icon"></i> <!-- Utensils icon for diets -->
+                    </div>
+                    <div>
+                        <h2 class="modal-title disease-modal-title" id="dietsModalLabel">Recommended Diet Plan</h2>
+                        <p class="disease-subtitle mb-0">Nutritional guidelines for better health</p>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body disease-modal-body">
+                    <div class="disease-description-container">
+                        <div class="disease-description-content">
+                            <div class="diet-plan-container">
+                                {% for i in diets %}
+                                <div class="diet-item">
+                                    <div class="diet-number">{{ loop.index }}</div>
+                                    <div class="diet-details">
+                                        <div class="diet-name">{{ i }}</div>
+                                        <div class="diet-benefits">
+                                            <i class="fas fa-check-circle benefit-icon"></i>
+                                            <span>Rich in essential nutrients</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer disease-modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>Close
+                    </button>
+                    <button type="button" class="btn btn-primary">
+                        <i class="fas fa-print me-2"></i>Print
+                    </button>
+                    <button type="button" class="btn btn-success">
+                        <i class="fas fa-shopping-basket me-2"></i>Grocery List
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <!-- Add this right after your prediction modals section -->
+{% if predicted_disease %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card telemedicine-card border-0 shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-video me-3 fs-4"></i>
+                        <h4 class="mb-0">Consult with a Doctor</h4>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5 class="card-title text-dark mb-4">Professional Medical Consultation Recommended</h5>
+                            <p class="card-text text-muted mb-4">
+                                While our AI has predicted <strong class="text-dark">{{ predicted_disease }}</strong>, we strongly recommend 
+                                consulting with a licensed healthcare professional for:
+                            </p>
+                            <ul class="list-group list-group-flush mb-4">
+                                <li class="list-group-item border-0 ps-0 py-2">
+                                    <div class="d-flex align-items-center">
+                                        <div class="icon-circle bg-success me-3">
+                                            <i class="fas fa-check-circle text-white"></i>
+                                        </div>
+                                        <span>Confirmation of your diagnosis</span>
+                                    </div>
+                                </li>
+                                <li class="list-group-item border-0 ps-0 py-2">
+                                    <div class="d-flex align-items-center">
+                                        <div class="icon-circle bg-success me-3">
+                                            <i class="fas fa-check-circle text-white"></i>
+                                        </div>
+                                        <span>Personalized treatment plan</span>
+                                    </div>
+                                </li>
+                                <li class="list-group-item border-0 ps-0 py-2">
+                                    <div class="d-flex align-items-center">
+                                        <div class="icon-circle bg-success me-3">
+                                            <i class="fas fa-check-circle text-white"></i>
+                                        </div>
+                                        <span>Prescription medications if needed</span>
+                                    </div>
+                                </li>
+                                <li class="list-group-item border-0 ps-0 py-2">
+                                    <div class="d-flex align-items-center">
+                                        <div class="icon-circle bg-success me-3">
+                                            <i class="fas fa-check-circle text-white"></i>
+                                        </div>
+                                        <span>Professional medical advice</span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="alert alert-warning d-flex align-items-center mt-4">
+                                <i class="fas fa-exclamation-triangle me-3 fs-4"></i>
+                                <div>
+                                    <strong>Important:</strong> For emergency symptoms like chest pain, difficulty breathing, 
+                                    or severe bleeding, please seek immediate in-person medical attention.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 d-flex align-items-center">
+                            <div class="text-center w-100 p-3 bg-light rounded">
+                                <div class="mb-4">
+                                    <div class="icon-circle-lg bg-primary mx-auto mb-3">
+                                        <i class="fas fa-user-md text-white fs-4"></i>
+                                    </div>
+                                    <h5 class="text-dark">Available Doctors</h5>
+                                    <p class="text-muted small">Connect within minutes</p>
+                                </div>
+                                <a href="{{url_for('new_appointment')}}" class="btn btn-primary btn-lg w-100 py-3">
+                                    <i class="fas fa-calendar-check me-2"></i>
+                                    Click Here to Book Telemedicine Consultation
+                                </a>
+                                
+                                <p class="small text-muted mt-3 mb-0">24/7 availability</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-light">
+                    <div class="row text-center">
+                        <div class="col-md-4 mb-2 mb-md-0">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="icon-circle-sm bg-success me-2">
+                                    <i class="fas fa-shield-alt text-white small"></i>
+                                </div>
+                                <span class="small">HIPAA-compliant & secure</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-2 mb-md-0">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="icon-circle-sm bg-primary me-2">
+                                    <i class="fas fa-clock text-white small"></i>
+                                </div>
+                                <span class="small">Average wait: 15 mins</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="icon-circle-sm bg-info me-2">
+                                    <i class="fas fa-dollar-sign text-white small"></i>
+                                </div>
+                                <span class="small">From $25/consultation</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Telemedicine Card Styling */
+    .telemedicine-card {
+        border-radius: 15px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .telemedicine-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .telemedicine-card .card-header {
+        border-radius: 15px 15px 0 0 !important;
+        padding: 1.25rem 1.5rem;
+    }
+    
+    /* Icon styling */
+    .icon-circle {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .icon-circle-sm {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .icon-circle-lg {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .telemedicine-card .col-md-4 {
+            margin-top: 1.5rem;
+            border-top: 1px solid #eee;
+            padding-top: 1.5rem;
+        }
+        
+        .telemedicine-card .card-footer .col-md-4 {
+            margin-bottom: 1rem;
+        }
+    }
+</style>
+{% endif %}
+
+
+          
+
+           
+
+            <div class="faq-contact">
+                <div class="section-title">
+                    <span>Questions</span>
+                    <h2>Do You Have Any Questions?</h2>
+                    <p class="lead text-muted">Please enter the required details below and write anything - challenges, questions, or anything you want to know about our prediction system in the message text.</p>
+                </div>
+
+
+                <div class="faq-contact-form">
+                    <form  method="POST" action="{{ url_for('patients_message') }}">
+                        {{ form.hidden_tag() }}
+                        <div class="row justify-content-center">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="form-group">
+                                    {{ form.name(class="form-control", placeholder="Name") }}
+                                    {% for error in form.name.errors %}
+                                        <div class="help-block with-errors text-danger">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                
+                            <div class="col-lg-6 col-md-6">
+                                <div class="form-group">
+                                    {{ form.email(class="form-control", placeholder="Email") }}
+                                    {% for error in form.email.errors %}
+                                        <div class="help-block with-errors text-danger">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                
+                            <div class="form-group">
+                                {{ form.phone_number.label(class="form-label") }}
+                                {{ form.phone_number(
+                                    class="form-control",
+                                    placeholder="e.g. +1 (123) 456-7890 or 0123 456 789",
+                                    pattern="[\d\s\+\-\(\)]{10,15}",
+                                    title="Enter 10-15 digits with optional +, (), or spaces"
+                                ) }}
+                                <small class="form-text text-muted">
+                                    Include country code if international (e.g. +44 for UK)
+                                </small>
+                                {% for error in form.phone_number.errors %}
+                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+
+                
+                            <div class="col-lg-6 col-md-6">
+                                <div class="form-group">
+                                    {{ form.subject(class="form-control", placeholder="Subject") }}
+                                    {% for error in form.subject.errors %}
+                                        <div class="help-block with-errors text-danger">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label">Message Priority</label>
+                                    {{ form.urgency(class="form-control") }}
+                                    {% for error in form.urgency.errors %}
+                                        <div class="alert alert-danger mt-2">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                
+                            <div class="col-lg-12 col-md-12">
+                                <div class="form-group">
+                                    {{ form.message(class="form-control", rows="6", placeholder="Your Message") }}
+                                    {% for error in form.message.errors %}
+                                        <div class="help-block with-errors text-danger">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                
+                            <div class="col-lg-12 col-md-12">
+                                <div class="send-btn">
+                                    {{ form.submit(class="default-btn") }}
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                
+            </div>
+        </div>
+    </section>
+    <!-- End FAQ Area -->
+
+    <!-- Start Footer Area -->
+    <section class="footer-area pt-100 pb-70">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h3>AI-MedCare</h3>
+                        <p>An intelligent healthcare platform that delivers personalized medical recommendations and telemedicine support, improving access to quality care anytime, anywhere.</p>
+                        <ul class="footer-social">
+                            <li>
+                                <a href="https://www.facebook.com/login/" target="_blank" class="facebook">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/i/flow/login" target="_blank" class="twitter">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.pinterest.com/" target="_blank" class="pinterest">
+                                        <i class="fab fa-pinterest-p"></i>
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" class="instagram">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h3>Instagram</h3>
+
+                        <ul class="instagram">
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='faq/assets/img/instagram/1.jpg')}}" alt="image">
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='faq/assets/img/instagram/2.jpg')}}" alt="image">
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='faq/assets/img/instagram/3.jpg')}}" alt="image">
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='faq/assets/img/instagram/4.jpg')}}" alt="image">
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='faq/assets/img/instagram/1.jpg')}}" alt="image">
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                        <img src="{{url_for('static', filename='faq/assets/img/instagram/2.jpg')}}" alt="image">
+                                    </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-footer-widget pl-5">
+                        <h3>Useful Links</h3>
+
+                        <ul class="footer-quick-links">
+                            <li>
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li>
+                                <a href="about.html">About</a>
+                            </li>
+                            <li>
+                                <a href="solution.html">Solution</a>
+                            </li>
+                            <li>
+                                <a href="services.html">Services</a>
+                            </li>
+                            <li>
+                                <a href="blog.html">Blog</a>
+                            </li>
+                            <li>
+                                <a href="contact.html">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h3>Contact</h3>
+
+                        <div class="footer-info-contact">
+                            <i class="flaticon-call"></i>
+                            <h3>Phone</h3>
+                            <span><a href="tel:123456123">+263-776-060-788</a></span>
+                        </div>
+
+                        <div class="footer-info-contact">
+                            <i class="flaticon-email"></i>
+                            <h3>Email</h3>
+                            <span><a href="/cdn-cgi/l/email-protection#224b4c444d62564b4c5847500c414d4f"><span class="__cf_email__" data-cfemail="0d64636b624d79646377687f236e6260">ichirume99@gmail.com</span></a>
+                            </span>
+                        </div>
+
+                        <div class="footer-info-contact">
+                            <i class="flaticon-pin"></i>
+                            <h3>Address</h3>
+                            <span>63O Churchill Avenue, Mt Pleasant, Harare</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lines">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </section>
+    <!-- End Footer Area -->
+
+    <!-- Start Go Top Area -->
+    <div class="go-top">
+        <i class="fa fa-chevron-up"></i>
+        <i class="fa fa-chevron-up"></i>
+    </div>
+    <!-- End Go Top Area -->
+
+    <!-- dark version -->
+    <div class="dark-version">
+        <label id="switch" class="switch">
+                <input type="checkbox" onchange="toggleTheme()" id="slider">
+                <span class="slider round"></span>
+            </label>
+    </div>
+    <!-- dark version -->
+
+    <!-- Jquery Slim JS -->
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="{{url_for('static', filename='faq/assets/js/jquery.min.js')}}"></script>
+    <!-- Bootstrap JS -->
+    <script src="{{url_for('static', filename='faq/assets/js/bootstrap.bundle.min.js')}}"></script>
+    <!-- Meanmenu JS -->
+    <script src="{{url_for('static', filename='faq/assets/js/jquery.meanmenu.js')}}"></script>
+    <!-- Nice Select JS -->
+    <script src="{{url_for('static', filename='faq/assets/js/jquery.nice-select.min.js')}}"></script>
+    <!-- Odometer JS -->
+    <script src="{{url_for('static', filename='faq/assets/js/odometer.min.js')}}"></script>
+    <!-- Appear JS -->
+    <script src="{{url_for('static', filename='faq/assets/js/jquery.appear.js')}}"></script>
+    <!-- Datepicker JS -->
+    <script src="{{url_for('static', filename='faq/assets/js/datepicker.min.js')}}"></script>
+    <!-- Magnific JS -->
+    <script src="{{url_for('static', filename='faq/assets/js/jquery.magnific-popup.min.js')}}"></script>
+    <!-- Carousel JS -->
+    <script src="{{url_for('static', filename='faq/assets/js/owl.carousel.min.js')}}"></script>
+    <!-- Form Ajaxchimp JS -->
+    <script src="{{url_for('static', filename='faq/assets/js/jquery.ajaxchimp.min.js')}}"></script>
+    <!-- Form Validator JS -->
+    <script src="{{url_for('static', filename='faq/assets/js/form-validator.min.js')}}"></script>
+    <!-- Contact JS -->
+    <script src="{{url_for('static', filename='faq/assets/js/contact-form-script.js')}}"></script>
+    <!-- Custom JS -->
+    <script src="{{url_for('static', filename='faq/assets/js/main.js')}}"></script>
+</body>
+
+</html>

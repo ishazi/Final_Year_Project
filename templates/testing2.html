@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Learning Dataset Viewer</title>
+    <style>
+        .data {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data th, .data td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .data th {
+            background-color: #f2f2f2;
+        }
+
+        .button-group {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .button-group button {
+            margin-left: 10px;
+        }
+
+        #searchBar {
+            margin-top: 10px;
+        }
+
+        .pagination {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .pagination button {
+            margin-left: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="button-group">
+        <form action="/search" method="POST" style="display:inline;">
+            <input type="text" id="searchBar" name="search_query" placeholder="Search..." required>
+            <button type="submit">Search</button>
+        </form>
+        <button onclick="copyToClipboard()">Copy</button>
+        <a href="/download_csv"><button>CSV</button></a>
+        <a href="/download_excel"><button>Excel</button></a>
+        <a href="/download_pdf"><button>PDF</button></a>
+        <button onclick="window.print()">Print</button>
+    </div>
+
+    <h1>Dataset</h1>
+
+    <div id="table-container">
+        {{ table | safe }}
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        {% if prev_page %}
+            <a href="{{ url_for('index', page=prev_page) }}"><button>Previous</button></a>
+        {% endif %}
+        {% if next_page %}
+            <a href="{{ url_for('index', page=next_page) }}"><button>Next</button></a>
+        {% endif %}
+    </div>
+
+    <script>
+        function copyToClipboard() {
+            const table = document.querySelector(".data");
+            const range = document.createRange();
+            range.selectNode(table);
+            window.getSelection().addRange(range);
+            document.execCommand('copy');
+            alert("Table copied to clipboard!");
+        }
+    </script>
+
+</body>
+</html>

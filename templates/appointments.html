@@ -1,0 +1,73 @@
+
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">My Appointments</h2>
+    <div class="card shadow">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Date & Time</th>
+                            {% if current_user.role == 'patient' %}
+                            <th>Doctor</th>
+                            {% else %}
+                            <th>Patient</th>
+                            {% endif %}
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for appointment in appointments %}
+                        <tr>
+                            <td>{{ appointment.appointment_time.strftime('%Y-%m-%d %H:%M') }}</td>
+                            <td>
+                                {% if current_user.role == 'patient' %}
+                                Dr. {{ appointment.doctor.first_name }} {{ appointment.doctor.surname }}
+                                {% else %}
+                                {{ appointment.patient.first_name }} {{ appointment.patient.surname }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                <span class="badge 
+                                    {% if appointment.status == 'scheduled' %}badge-primary
+                                    {% elif appointment.status == 'in_progress' %}badge-warning
+                                    {% elif appointment.status == 'completed' %}badge-success
+                                    {% else %}badge-danger{% endif %}">
+                                    {{ appointment.status|replace('_', ' ')|title }}
+                                </span>
+                            </td>
+                            <td>
+                                {% if appointment.status == 'scheduled' %}
+                                    <a href="{{ url_for('start_video', appointment_id=appointment.id) }}" 
+                                       class="btn btn-sm btn-primary">Join</a>
+                                    <a href="{{ url_for('cancel_appointment', appointment_id=appointment.id) }}" 
+                                       class="btn btn-sm btn-danger">Cancel</a>
+                                {% elif appointment.status == 'in_progress' %}
+                                    {% if current_user.role == 'doctor' %}
+                                    <a href="{{ url_for('complete_appointment', appointment_id=appointment.id) }}" 
+                                       class="btn btn-sm btn-success">Complete</a>
+                                    {% endif %}
+                                    <a href="{{ url_for('start_video', appointment_id=appointment.id) }}" 
+                                       class="btn btn-sm btn-primary">Rejoin</a>
+                                {% elif appointment.status == 'completed' %}
+                                    <span class="text-muted">Completed</span>
+                                {% else %}
+                                    <span class="text-muted">Cancelled</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="4" class="text-center">No appointments found</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
